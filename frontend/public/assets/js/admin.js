@@ -119,13 +119,6 @@ function renderCard(inv) {
             <span style="font-style:italic;color:var(--text-muted)">${escHtml(inv.message)}</span>
           </div>` : ''}
         
-        <div class="info-row" style="margin-top: 4px;">
-          <svg class="svg-icon" style="color:var(--gold);" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          <span style="font-weight:600;color:var(--gold-light);">
-            RSVPs: ${inv.rsvp_count ?? 0} guests (${inv.attending_count ?? 0} attending)
-          </span>
-        </div>
-
         <div class="info-row" style="margin-top: 8px;">
           <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">
             <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.02058 19.162 5.09214 19.3953 5.04838 19.6207C4.94559 20.15 5.25867 20.6724 5.79093 20.8252C7.75549 21.3892 9.84365 21.6792 12 22Z"></path><circle cx="7.5" cy="10.5" r="1.5" fill="currentColor"></circle><circle cx="11.5" cy="7.5" r="1.5" fill="currentColor"></circle><circle cx="16.5" cy="9.5" r="1.5" fill="currentColor"></circle></svg>
@@ -166,18 +159,6 @@ function renderCard(inv) {
         <button class="btn btn-danger btn-sm" onclick="deleteInvitation('${escAttr(inv.slug)}')">
           <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
         </button>
-      </div>
-
-      <div class="rsvp-card-toggle" onclick="toggleRsvps('${escAttr(inv.slug)}')">
-        <span>View guest RSVPs</span>
-        <svg class="svg-icon" id="rsvp-arrow-${inv.slug}" viewBox="0 0 24 24" style="transition: transform var(--transition);"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </div>
-
-      <div class="rsvp-drawer" id="rsvp-drawer-${inv.slug}">
-        <div class="rsvp-drawer-title">Responses</div>
-        <div class="rsvp-list" id="rsvp-list-${inv.slug}">
-          <div class="rsvp-list-empty">Click expand to load responses...</div>
-        </div>
       </div>
     </div>`;
 }

@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const slug = getSlug();
   if (!slug) { showError('No invitation ID in the URL.', 'Missing Link'); return; }
   await loadInvitation(slug);
-  setupRsvpForm(slug);
 });
 
 // ─── Load Invitation ──────────────────────────────────────────
@@ -118,79 +117,7 @@ function setCount(id, val) {
   if (el) el.textContent = String(val).padStart(2, '0');
 }
 
-// ─── RSVP Form Submission ─────────────────────────────────────
-function setupRsvpForm(slug) {
-  const form = document.getElementById('rsvp-form');
-  if (!form) return;
 
-  const btnAttendingYes = document.getElementById('btn-attending-yes');
-  const btnAttendingNo = document.getElementById('btn-attending-no');
-  const radioYes = btnAttendingYes.querySelector('input[type="radio"]');
-  const radioNo = btnAttendingNo.querySelector('input[type="radio"]');
-
-  btnAttendingYes.addEventListener('click', () => {
-    btnAttendingYes.classList.add('active');
-    btnAttendingNo.classList.remove('active');
-    radioYes.checked = true;
-  });
-
-  btnAttendingNo.addEventListener('click', () => {
-    btnAttendingNo.classList.add('active');
-    btnAttendingYes.classList.remove('active');
-    radioNo.checked = true;
-  });
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById('guest_name').value.trim();
-    const message = document.getElementById('guest_message').value.trim();
-    const attending = form.attending.value === 'yes';
-
-    const rsvpMsg = document.getElementById('rsvp-response-message');
-    rsvpMsg.style.display = 'none';
-    rsvpMsg.className = 'rsvp-response-message';
-
-    if (!name) {
-      rsvpMsg.textContent = 'Please enter your name.';
-      rsvpMsg.classList.add('error');
-      rsvpMsg.style.display = 'block';
-      return;
-    }
-
-    const submitBtn = document.getElementById('rsvp-submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px"></span> Sending...';
-
-    try {
-      const apiBase = await getApiBaseUrl();
-      const res = await fetch(`${apiBase}/api/public/${encodeURIComponent(slug)}/rsvp`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ guest_name: name, attending, message: message || undefined }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to submit RSVP');
-
-      rsvpMsg.textContent = data.message || 'Thank you for your response!';
-      rsvpMsg.classList.add('success');
-      rsvpMsg.style.display = 'block';
-
-      form.reset();
-      // Keep selected state default
-      btnAttendingYes.classList.add('active');
-      btnAttendingNo.classList.remove('active');
-    } catch (err) {
-      rsvpMsg.textContent = err.message;
-      rsvpMsg.classList.add('error');
-      rsvpMsg.style.display = 'block';
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<span>Send Response</span>';
-    }
-  });
-}
 
 // ─── Error state ──────────────────────────────────────────────
 function showError(detail, title = 'Error') {

@@ -585,7 +585,7 @@ body.layout-polaroid-center .inv-content-wrapper {
 /* ─── Responsive Adaptation ──────────────────────────────────── */
 
 @media (max-width: 768px) {
-  /* Enforce beautiful layout adapt on mobile */
+  /* Enforce beautiful layout adapt on mobile - Full Screen Edge-to-Edge */
   body.layout-split-left .inv-container,
   body.layout-split-right .inv-container {
     flex-direction: column;
@@ -593,49 +593,74 @@ body.layout-polaroid-center .inv-content-wrapper {
   body.layout-split-left .inv-image-wrapper,
   body.layout-split-right .inv-image-wrapper {
     width: 100%;
-    height: 45vh;
+    height: 48vh;
     position: relative;
   }
   body.layout-split-left .inv-content-wrapper,
   body.layout-split-right .inv-content-wrapper {
     width: 100%;
     min-height: auto;
-    padding: 48px 24px;
-    margin-top: -30px;
-    border-radius: 28px 28px 0 0;
+    padding: 48px 20px;
+    margin-top: 0;
+    border-radius: 0;
     background: var(--inv-bg);
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
-  }
-  body.theme-royal-elegance.layout-split-left .inv-content-wrapper,
-  body.theme-royal-elegance.layout-split-right .inv-content-wrapper {
-    box-shadow: inset 0 20px 40px rgba(0,0,0,0.3), 0 -10px 30px rgba(0,0,0,0.2);
+    box-shadow: none;
+    border: none;
   }
 
+  body.layout-polaroid-center .inv-container {
+    padding: 32px 0;
+    width: 100%;
+  }
   body.layout-polaroid-center .inv-image-wrapper {
-    max-width: 320px;
+    max-width: 88%;
     border-width: 10px;
-    border-bottom-width: 44px;
-    margin-bottom: -16px;
+    border-bottom-width: 48px;
+    margin-bottom: -12px;
   }
   body.layout-polaroid-center .inv-content-wrapper {
-    padding-top: 48px;
+    padding: 36px 20px;
+    width: 100%;
   }
 
+  body.layout-full-overlay .inv-container {
+    padding: 0;
+  }
   body.layout-full-overlay .inv-content-wrapper {
-    padding: 48px 24px;
-    margin: 24px 16px;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    padding: 56px 20px;
+    background: rgba(var(--inv-bg-rgb), 0.85);
+    border: none;
+    box-shadow: none;
   }
 
+  body.layout-classic-card .inv-container {
+    padding: 0;
+  }
   body.layout-classic-card .inv-content-wrapper {
-    padding: 48px 24px;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    padding: 56px 20px;
+    border: none;
+    box-shadow: none;
+  }
+
+  body.layout-hero-top .inv-image-wrapper {
+    height: 48vh;
+  }
+  body.layout-hero-top .inv-content-wrapper {
+    padding: 48px 20px;
+    border-radius: 0;
   }
 
   .ornament {
-    width: 50px;
-    height: 50px;
+    display: none !important; /* Fully remove corner ornaments on mobile */
   }
-  .ornament-top-left { top: 12px; left: 12px; }
-  .ornament-bottom-right { bottom: 12px; right: 12px; }
   .ornament-divider { width: 140px; margin-bottom: 24px; }
 }
 

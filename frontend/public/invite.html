@@ -51,8 +51,6 @@
     <!-- Text Half -->
     <div class="inv-content-wrapper">
       <!-- Ornaments -->
-      <svg class="ornament ornament-top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0 L50 0 C50 50, 0 50, 0 100 Z" fill="currentColor"/></svg>
-      <svg class="ornament ornament-bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M100 100 L50 100 C50 50, 100 50, 100 0 Z" fill="currentColor"/></svg>
       <svg class="ornament-divider" viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L80 10 L100 0 L120 10 L200 10" stroke="currentColor" fill="none" stroke-width="1.25"/></svg>
 
       <div class="inv-eyebrow inv-animate d-1">You are cordially invited to the wedding of</div>
@@ -91,41 +89,6 @@
         <div class="cd-box"><div class="cd-val" id="cd-hours">00</div><div class="cd-lbl">Hours</div></div>
         <div class="cd-box"><div class="cd-val" id="cd-mins">00</div><div class="cd-lbl">Mins</div></div>
         <div class="cd-box"><div class="cd-val" id="cd-secs">00</div><div class="cd-lbl">Secs</div></div>
-      </div>
-
-      <!-- RSVP Section -->
-      <div id="rsvp-section" class="inv-rsvp-section inv-animate d-5">
-        <h2 class="rsvp-heading">RSVP</h2>
-        <p class="rsvp-subheading">Kindly respond</p>
-        
-        <form id="rsvp-form" class="rsvp-form" novalidate>
-          <div class="rsvp-form-group">
-            <input class="rsvp-input" id="guest_name" name="guest_name" type="text" placeholder="Your Full Name" required autocomplete="off" />
-          </div>
-          
-          <div class="rsvp-toggle-group">
-            <label class="rsvp-toggle-btn active" id="btn-attending-yes">
-              <input type="radio" name="attending" value="yes" checked style="display:none;" />
-              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-              <span>Joyfully Accepts</span>
-            </label>
-            <label class="rsvp-toggle-btn" id="btn-attending-no">
-              <input type="radio" name="attending" value="no" style="display:none;" />
-              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-              <span>Regretfully Declines</span>
-            </label>
-          </div>
-          
-          <div class="rsvp-form-group">
-            <textarea class="rsvp-textarea" id="guest_message" name="guest_message" placeholder="Send a warm message to the couple (optional)..." rows="3"></textarea>
-          </div>
-          
-          <button type="submit" class="rsvp-submit-btn" id="rsvp-submit-btn">
-            <span>Send Response</span>
-          </button>
-        </form>
-        
-        <div id="rsvp-response-message" class="rsvp-response-message" style="display:none;"></div>
       </div>
     </div>
 
