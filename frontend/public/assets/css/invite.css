@@ -795,6 +795,11 @@ body.layout-polaroid-center .inv-content-wrapper {
   font-family: 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
 }
 
+[dir="rtl"] .inv-message {
+  font-family: 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
+  font-style: normal !important;
+}
+
 @media (max-width: 480px) {
   .inv-content-wrapper {
     padding: 32px 14px;

@@ -82,7 +82,7 @@ function renderInvitation() {
   document.getElementById('detail-date').textContent = lang === 'fa' ? formatFaDate(invitation.date) : formatDate(invitation.date);
   
   if (invitation.time) {
-    document.getElementById('detail-time').textContent = invitation.time;
+    document.getElementById('detail-time').textContent = lang === 'fa' ? toPersianDigits(invitation.time) : invitation.time;
     document.getElementById('time-container').style.display = 'flex';
   } else {
     document.getElementById('time-container').style.display = 'none';
@@ -215,8 +215,7 @@ function formatFaDate(dateStr) {
   }
 }
 
-function toPersianDigits(num) {
-  const p = String(num).padStart(2, '0');
+function toPersianDigits(val) {
   const fa = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-  return p.replace(/[0-9]/g, w => fa[+w]);
+  return String(val).replace(/[0-9]/g, w => fa[+w]);
 }
