@@ -152,7 +152,7 @@ body.invite-page {
 
 .inv-names {
   font-family: var(--inv-font-script);
-  font-size: clamp(48px, 8vw, 80px);
+  font-size: clamp(32px, 8vw, 80px);
   line-height: 1.1;
   margin: 0 0 32px;
   color: var(--inv-text);
@@ -225,6 +225,13 @@ body.layout-hero-top .inv-content-wrapper {
   padding-bottom: 64px;
 }
 
+@media (max-width: 480px) {
+  body.layout-hero-top .inv-image-wrapper {
+    min-height: 250px;
+    height: 50vh;
+  }
+}
+
 /* 2. Split Screen (Left / Right) */
 body.layout-split-left .inv-container {
   flex-direction: row;
@@ -245,6 +252,35 @@ body.layout-split-right .inv-content-wrapper {
   width: 50%;
   min-height: 100vh;
   padding: 64px 48px;
+}
+
+@media (max-width: 768px) {
+  body.layout-split-left .inv-container,
+  body.layout-split-right .inv-container {
+    flex-direction: column;
+  }
+  body.layout-split-left .inv-image-wrapper,
+  body.layout-split-right .inv-image-wrapper {
+    width: 100%;
+    height: 50vh;
+    position: relative;
+  }
+  body.layout-split-left .inv-content-wrapper,
+  body.layout-split-right .inv-content-wrapper {
+    width: 100%;
+    min-height: auto;
+    padding: 48px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ornament {
+    width: 50px;
+    height: 50px;
+  }
+  .ornament-top-left { top: 10px; left: 10px; }
+  .ornament-bottom-right { bottom: 10px; right: 10px; }
+  .ornament-divider { width: 150px; margin-bottom: 24px; }
 }
 
 /* 3. Full Overlay */

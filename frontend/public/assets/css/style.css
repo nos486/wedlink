@@ -400,3 +400,18 @@ h1, h2, h3, h4 {
   .navbar { padding: 16px 20px; }
   .modal  { padding: 24px; }
 }
+
+@media (max-width: 580px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+  .navbar > div {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .user-badge {
+    display: none; /* Hide user badge on very small screens to save space */
+  }
+}
