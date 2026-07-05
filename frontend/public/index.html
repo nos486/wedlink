@@ -141,16 +141,31 @@
       <form id="create-form" novalidate>
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label" for="bride">Bride's Name</label>
+            <label class="form-label" for="bride">Bride's Name (EN)</label>
             <input class="form-input" id="bride" name="bride" type="text"
-                   placeholder="e.g. Sarah" autocomplete="off" />
+                   placeholder="Sarah" autocomplete="off" />
             <span class="field-error" id="error-bride"></span>
           </div>
           <div class="form-group">
-            <label class="form-label" for="groom">Groom's Name</label>
+            <label class="form-label" for="groom">Groom's Name (EN)</label>
             <input class="form-input" id="groom" name="groom" type="text"
-                   placeholder="e.g. James" autocomplete="off" />
+                   placeholder="James" autocomplete="off" />
             <span class="field-error" id="error-groom"></span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="bride_fa">Bride's Name (FA / optional)</label>
+            <input class="form-input" id="bride_fa" name="bride_fa" type="text"
+                   placeholder="سارا" autocomplete="off" />
+            <span class="field-error" id="error-bride_fa"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="groom_fa">Groom's Name (FA / optional)</label>
+            <input class="form-input" id="groom_fa" name="groom_fa" type="text"
+                   placeholder="آرش" autocomplete="off" />
+            <span class="field-error" id="error-groom_fa"></span>
           </div>
         </div>
 
@@ -171,11 +186,20 @@
 
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label" for="venue">Venue</label>
+            <label class="form-label" for="venue">Venue / Address (EN)</label>
             <input class="form-input" id="venue" name="venue" type="text"
-                   placeholder="e.g. The Grand Ballroom, New York" />
+                   placeholder="The Grand Ballroom, New York" />
             <span class="field-error" id="error-venue"></span>
           </div>
+          <div class="form-group">
+            <label class="form-label" for="venue_fa">Venue / Address (FA / optional)</label>
+            <input class="form-input" id="venue_fa" name="venue_fa" type="text"
+                   placeholder="باغ تالار هما، تهران" />
+            <span class="field-error" id="error-venue_fa"></span>
+          </div>
+        </div>
+
+        <div class="form-grid">
           <div class="form-group">
             <label class="form-label" for="slug">
               Custom Link Slug
@@ -242,11 +266,21 @@
 
         <div class="form-group">
           <label class="form-label" for="message">
-            Personal Message
+            Personal Message (EN)
             <span style="color:var(--text-muted);font-weight:400;text-transform:none">(optional)</span>
           </label>
           <textarea class="form-textarea" id="message" name="message"
                     placeholder="Share a heartfelt message with your guests…"
+                    style="min-height:88px"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message_fa">
+            Personal Message (FA)
+            <span style="color:var(--text-muted);font-weight:400;text-transform:none">(optional)</span>
+          </label>
+          <textarea class="form-textarea" id="message_fa" name="message_fa"
+                    placeholder="پیام صمیمانه خود را با مهمانان به اشتراک بگذارید..."
                     style="min-height:88px"></textarea>
         </div>
 

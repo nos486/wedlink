@@ -36,6 +36,27 @@ function renderInvitation() {
   applyLayout();
   window.addEventListener('resize', applyLayout);
 
+  const lang = getLang();
+
+  // Set direction and language
+  const body = document.getElementById('invite-body');
+  if (lang === 'fa') {
+    body.setAttribute('dir', 'rtl');
+  } else {
+    body.removeAttribute('dir');
+  }
+
+  // Configure Language Switcher Button
+  const langText = document.getElementById('lang-text');
+  const langSwitcher = document.getElementById('lang-switcher');
+  const otherLang = lang === 'en' ? 'fa' : 'en';
+  const otherLangLabel = lang === 'en' ? 'فارسی' : 'English';
+  
+  langText.textContent = otherLangLabel;
+  const switcherUrl = new URL(window.location.href);
+  switcherUrl.searchParams.set('lang', otherLang);
+  langSwitcher.href = switcherUrl.toString();
+
   // Image
   const imgEl = document.getElementById('invite-image');
   const placeholderEl = document.getElementById('invite-image-placeholder');
@@ -48,24 +69,55 @@ function renderInvitation() {
     placeholderEl.style.display = 'block';
   }
 
-  // Text Content
-  document.title = `${invitation.bride} & ${invitation.groom} — WedLink`;
-  document.getElementById('couple-names').textContent = `${invitation.bride} & ${invitation.groom}`;
-  document.getElementById('detail-date').textContent = formatDate(invitation.date);
+  // Names, Venue, Message (bilingual check)
+  const brideName = (lang === 'fa' && invitation.bride_fa) ? invitation.bride_fa : invitation.bride;
+  const groomName = (lang === 'fa' && invitation.groom_fa) ? invitation.groom_fa : invitation.groom;
+  const venueText = (lang === 'fa' && invitation.venue_fa) ? invitation.venue_fa : invitation.venue;
+  const messageText = (lang === 'fa' && invitation.message_fa) ? invitation.message_fa : invitation.message;
+
+  document.title = `${brideName} & ${groomName} — WedLink`;
+  document.getElementById('couple-names').textContent = `${brideName} ${lang === 'fa' ? 'و' : '&'} ${groomName}`;
+  
+  // Date format based on lang
+  document.getElementById('detail-date').textContent = lang === 'fa' ? formatFaDate(invitation.date) : formatDate(invitation.date);
   
   if (invitation.time) {
     document.getElementById('detail-time').textContent = invitation.time;
     document.getElementById('time-container').style.display = 'flex';
+  } else {
+    document.getElementById('time-container').style.display = 'none';
   }
 
-  document.getElementById('detail-venue').textContent = invitation.venue;
+  document.getElementById('detail-venue').textContent = venueText;
+
+  // Eyebrow translation
+  const eyebrowEl = document.querySelector('.inv-eyebrow');
+  if (eyebrowEl) {
+    eyebrowEl.textContent = lang === 'fa' 
+      ? 'با کمال مسرت شما را به جشن ازدواج خود دعوت می‌نماییم' 
+      : 'You are cordially invited to the wedding of';
+  }
 
   const msgSection = document.getElementById('message-section');
-  if (invitation.message) {
-    document.getElementById('invite-message').textContent = invitation.message;
+  if (messageText) {
+    document.getElementById('invite-message').textContent = messageText;
     msgSection.style.display = 'block';
   } else {
     msgSection.style.display = 'none';
+  }
+
+  // Translate countdown labels
+  const labels = document.querySelectorAll('.cd-lbl');
+  if (labels.length === 3) {
+    if (lang === 'fa') {
+      labels[0].textContent = 'روز';
+      labels[1].textContent = 'ساعت';
+      labels[2].textContent = 'دقیقه';
+    } else {
+      labels[0].textContent = 'Days';
+      labels[1].textContent = 'Hours';
+      labels[2].textContent = 'Mins';
+    }
   }
 
   startCountdown(invitation.date);
@@ -80,20 +132,25 @@ function applyLayout() {
   const layoutToUse = isMobile ? mobileLayout : desktopLayout;
   const themeToUse = invitation.theme || 'modern-minimal';
   
-  document.getElementById('invite-body').className = `invite-page theme-${themeToUse} layout-${layoutToUse}`;
+  const body = document.getElementById('invite-body');
+  const dir = body.getAttribute('dir') || '';
+  body.className = `invite-page theme-${themeToUse} layout-${layoutToUse}`;
+  if (dir) body.setAttribute('dir', dir);
 }
 
 // ─── Countdown ────────────────────────────────────────────────
 function startCountdown(dateStr) {
   const target = new Date(dateStr + 'T00:00:00').getTime();
+  const lang = getLang();
 
   function tick() {
     const diff = target - Date.now();
     if (diff <= 0) {
+      const todayMsg = lang === 'fa' ? 'امروز روز موعود است! 🎊' : "Today's the Day!";
       document.getElementById('countdown-grid').innerHTML =
         `<div style="grid-column:1/-1;text-align:center;font-size:24px;font-family:var(--inv-font-script);color:var(--inv-accent); display:inline-flex; align-items:center; justify-content:center; gap:8px;">
            <svg class="svg-icon" style="width:24px;height:24px;" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"></path></svg>
-           Today's the Day!
+           ${todayMsg}
            <svg class="svg-icon" style="width:24px;height:24px;" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"></path></svg>
          </div>`;
       clearInterval(countdownTimer);
@@ -102,9 +159,11 @@ function startCountdown(dateStr) {
     const days  = Math.floor(diff / 86400000);
     const hours = Math.floor((diff % 86400000) / 3600000);
     const mins  = Math.floor((diff % 3600000)  / 60000);
-    setCount('cd-days', days);
-    setCount('cd-hours', hours);
-    setCount('cd-mins', mins);
+    
+    // Format numerals to Persian if lang=fa
+    setCount('cd-days', lang === 'fa' ? toPersianDigits(days) : days);
+    setCount('cd-hours', lang === 'fa' ? toPersianDigits(hours) : hours);
+    setCount('cd-mins', lang === 'fa' ? toPersianDigits(mins) : mins);
   }
   tick();
   countdownTimer = setInterval(tick, 1000);
@@ -131,7 +190,33 @@ function getSlug() {
   const p = new URLSearchParams(window.location.search);
   return p.get('slug') || p.get('id') || '';
 }
+
+function getLang() {
+  const p = new URLSearchParams(window.location.search);
+  const lang = p.get('lang') || 'en';
+  return lang.toLowerCase() === 'fa' ? 'fa' : 'en';
+}
+
 function formatDate(dateStr) {
   try { return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' }); }
   catch { return dateStr; }
+}
+
+function formatFaDate(dateStr) {
+  try {
+    return new Date(dateStr + 'T00:00:00').toLocaleDateString('fa-IR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  } catch {
+    return dateStr;
+  }
+}
+
+function toPersianDigits(num) {
+  const p = String(num).padStart(2, '0');
+  const fa = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return p.replace(/[0-9]/g, w => fa[+w]);
 }

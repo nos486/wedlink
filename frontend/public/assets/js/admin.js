@@ -92,6 +92,8 @@ function renderInvitations() {
 function renderCard(inv) {
   const inviteUrl = `${window.location.origin}/invite.html?slug=${inv.slug}`;
   const formattedDate = formatDate(inv.date);
+  const inviteUrlEn = `${inviteUrl}&lang=en`;
+  const inviteUrlFa = `${inviteUrl}&lang=fa`;
 
   return `
     <div class="invitation-card" id="card-${inv.slug}">
@@ -140,15 +142,24 @@ function renderCard(inv) {
       </div>
 
       <div class="link-preview">
-        <span id="url-${inv.slug}" title="${escHtml(inviteUrl)}">${escHtml(inviteUrl)}</span>
+        <div style="font-size:12px; margin-bottom: 4px;">
+          <strong>EN:</strong> <span id="url-en-${inv.slug}" title="${escHtml(inviteUrlEn)}">${escHtml(inviteUrlEn)}</span>
+        </div>
+        <div style="font-size:12px;">
+          <strong>FA:</strong> <span id="url-fa-${inv.slug}" title="${escHtml(inviteUrlFa)}">${escHtml(inviteUrlFa)}</span>
+        </div>
       </div>
 
-      <div class="invitation-card-footer">
-        <button class="btn btn-ghost btn-sm" onclick="copyLink('${escAttr(inv.slug)}','${escAttr(inviteUrl)}')" id="copy-btn-${inv.slug}">
+      <div class="invitation-card-footer" style="flex-wrap: wrap; gap: 8px;">
+        <button class="btn btn-ghost btn-sm" onclick="copyLink('copy-btn-en-${inv.slug}','${escAttr(inviteUrlEn)}')" id="copy-btn-en-${inv.slug}">
           <svg class="svg-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          Copy Link
+          Copy EN
         </button>
-        <button class="btn btn-ghost btn-sm" onclick="openInvite('${escAttr(inviteUrl)}')">
+        <button class="btn btn-ghost btn-sm" onclick="copyLink('copy-btn-fa-${inv.slug}','${escAttr(inviteUrlFa)}')" id="copy-btn-fa-${inv.slug}">
+          <svg class="svg-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copy FA
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="openInvite('${escAttr(inviteUrlEn)}')">
           <svg class="svg-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
           Preview
         </button>
@@ -177,15 +188,15 @@ async function deleteInvitation(slug) {
   }
 }
 
-// ─── Copy & Preview ───────────────────────────────────────────
-async function copyLink(slug, url) {
+async function copyLink(buttonId, url) {
   try {
     await navigator.clipboard.writeText(url);
-    const btn = document.getElementById(`copy-btn-${slug}`);
+    const btn = document.getElementById(buttonId);
+    const originalText = btn.innerHTML;
     btn.innerHTML = '<span>✅</span> Copied!';
     btn.classList.add('copy-success');
     setTimeout(() => {
-      btn.innerHTML = '<span>📋</span> Copy Link';
+      btn.innerHTML = originalText;
       btn.classList.remove('copy-success');
     }, 2000);
     showToast('Link copied to clipboard!', 'success');
@@ -256,11 +267,15 @@ function openModalForEdit(slug) {
   const form = document.getElementById('create-form');
   form.bride.value = inv.bride;
   form.groom.value = inv.groom;
+  form.bride_fa.value = inv.bride_fa || '';
+  form.groom_fa.value = inv.groom_fa || '';
   form.date.value = inv.date;
   form.time.value = inv.time || '';
   form.venue.value = inv.venue;
+  form.venue_fa.value = inv.venue_fa || '';
   form.slug.value = inv.slug;
   form.message.value = inv.message || '';
+  form.message_fa.value = inv.message_fa || '';
   form.image_url.value = uploadedImageBase64 ? '(Uploaded Photo)' : (inv.image_url || '');
   form.theme.value = inv.theme || 'modern-minimal';
   form.desktop_layout.value = inv.desktop_layout || inv.layout || 'split-left';
@@ -288,11 +303,15 @@ function setupForm() {
     const body = {
       bride:     form.bride.value.trim(),
       groom:     form.groom.value.trim(),
+      bride_fa:  form.bride_fa.value.trim() || undefined,
+      groom_fa:  form.groom_fa.value.trim() || undefined,
       date:      form.date.value,
       time:      form.time.value.trim() || undefined,
       venue:     form.venue.value.trim(),
+      venue_fa:  form.venue_fa.value.trim() || undefined,
       slug:      form.slug.value.trim() || undefined,
       message:   form.message.value.trim() || undefined,
+      message_fa: form.message_fa.value.trim() || undefined,
       image_url: uploadedImageBase64 || form.image_url.value.trim() || undefined,
       theme:     form.theme.value,
       desktop_layout: form.desktop_layout.value,
