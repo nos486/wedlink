@@ -585,145 +585,151 @@ body.layout-polaroid-center .inv-content-wrapper {
 /* ─── Responsive Adaptation ──────────────────────────────────── */
 
 @media (max-width: 768px) {
-  /* Enforce beautiful layout adapt on mobile - Full Screen Edge-to-Edge */
-  body.layout-split-left .inv-container,
-  body.layout-split-right .inv-container {
-    flex-direction: column;
-  }
-  body.layout-split-left .inv-image-wrapper,
-  body.layout-split-right .inv-image-wrapper {
-    width: 100%;
-    height: 40vh; /* Reduced height to save space */
-    position: relative;
-  }
-  body.layout-split-left .inv-content-wrapper,
-  body.layout-split-right .inv-content-wrapper {
-    width: 100%;
-    min-height: auto;
-    padding: 24px 20px; /* Highly compact padding */
-    margin-top: 0;
-    border-radius: 0;
-    background: var(--inv-bg);
-    box-shadow: none;
-    border: none;
+  /* Lock page and container to exactly 100vh to prevent vertical scrolling */
+  body.invite-page {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
   }
 
+  .inv-container {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    width: 100% !important;
+  }
+
+  /* Image takes exactly 38% of viewport height */
+  .inv-image-wrapper {
+    width: 100% !important;
+    height: 38vh !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+  }
+
+  /* Content wrapper takes remaining 62% of viewport height and distributes space evenly */
+  .inv-content-wrapper {
+    width: 100% !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-evenly !important;
+    align-items: center !important;
+    padding: 16px 20px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Polaroid Specific Sizing */
   body.layout-polaroid-center .inv-container {
-    padding: 20px 0;
-    width: 100%;
+    padding: 12px 0 !important;
   }
   body.layout-polaroid-center .inv-image-wrapper {
-    max-width: 84%;
-    border-width: 8px;
-    border-bottom-width: 40px;
-    margin-bottom: -10px;
+    max-width: 80% !important;
+    height: 32vh !important;
+    border-width: 8px !important;
+    border-bottom-width: 36px !important;
+    margin-bottom: 0 !important;
+    transform: rotate(-1.5deg) !important;
   }
   body.layout-polaroid-center .inv-content-wrapper {
-    padding: 20px 20px;
-    width: 100%;
+    height: 52vh !important;
+    padding: 8px 20px !important;
   }
 
-  body.layout-full-overlay .inv-container {
-    padding: 0;
+  /* Overlay Specific Sizing */
+  body.layout-full-overlay .inv-image-wrapper {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
   }
   body.layout-full-overlay .inv-content-wrapper {
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    border-radius: 0;
-    padding: 32px 20px;
-    background: rgba(var(--inv-bg-rgb), 0.85);
-    border: none;
-    box-shadow: none;
+    height: 100vh !important;
+    padding: 32px 20px !important;
+    background: rgba(var(--inv-bg-rgb), 0.85) !important;
   }
 
-  body.layout-classic-card .inv-container {
-    padding: 0;
-  }
+  /* Classic Card Specific Sizing */
   body.layout-classic-card .inv-content-wrapper {
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    border-radius: 0;
-    padding: 32px 20px;
-    border: none;
-    box-shadow: none;
-  }
-
-  body.layout-hero-top .inv-image-wrapper {
-    height: 40vh; /* Reduced height to save space */
-  }
-  body.layout-hero-top .inv-content-wrapper {
-    padding: 24px 20px;
-    border-radius: 0;
+    height: 100vh !important;
+    padding: 32px 20px !important;
   }
 
   .ornament {
     display: none !important; /* Fully remove corner ornaments on mobile */
   }
 
-  /* Compact margins for elements to fit cleanly on mobile viewports */
+  /* Reset all margins to let justify-content: space-evenly control vertical flow */
   body.invite-page .inv-eyebrow {
-    margin-bottom: 12px;
-    font-size: 11px;
-    letter-spacing: 0.15em;
+    margin: 0 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.12em !important;
   }
   body.invite-page .inv-names {
-    margin-bottom: 16px;
-    font-size: clamp(26px, 5vw, 42px); /* Tighter fonts */
+    margin: 0 !important;
+    font-size: clamp(24px, 5vw, 36px) !important; /* Tighter scripts */
+    line-height: 1.1 !important;
   }
   body.invite-page .inv-divider {
-    margin-bottom: 16px;
+    margin: 0 !important;
+    width: 60px !important;
   }
   body.invite-page .inv-details {
-    margin-bottom: 20px;
-    gap: 8px; /* Tighter gap */
-    font-size: 14px;
+    margin: 0 !important;
+    gap: 6px !important; /* Extremely tight details flow */
   }
   body.invite-page .inv-detail-item {
-    font-size: 14px;
-    gap: 8px;
+    font-size: 13.5px !important;
+    gap: 6px !important;
   }
   body.invite-page .inv-message {
-    margin-bottom: 16px;
-    font-size: 13.5px;
-    line-height: 1.6;
+    margin: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
   }
   body.invite-page .inv-countdown {
-    margin: 16px auto 0;
-    gap: 10px;
+    margin: 0 !important;
+    gap: 8px !important;
   }
   body.invite-page .cd-box {
-    padding: 8px 12px;
-    min-width: 60px;
-    border-radius: 8px;
+    padding: 6px 10px !important;
+    min-width: 56px !important;
+    border-radius: 6px !important;
   }
   body.invite-page .cd-val {
-    font-size: 18px;
+    font-size: 16px !important;
   }
   body.invite-page .cd-lbl {
-    font-size: 9px;
+    font-size: 8px !important;
   }
   body.invite-page .ornament-divider {
-    width: 120px;
-    margin-bottom: 16px;
+    width: 100px !important;
+    margin: 0 !important;
   }
 }
 
 @media (max-width: 480px) {
-  /* Additional micro-adjustments for very small screens */
+  /* Extra spacing constraint for very small devices */
   body.invite-page .inv-content-wrapper {
-    padding: 20px 16px;
+    padding: 12px 14px !important;
   }
   body.invite-page .inv-names {
-    font-size: 32px;
+    font-size: 28px !important;
   }
   body.invite-page .cd-box {
-    padding: 6px 10px;
-    min-width: 54px;
+    padding: 5px 8px !important;
+    min-width: 50px !important;
   }
   body.invite-page .cd-val {
-    font-size: 16px;
+    font-size: 15px !important;
   }
 }
 
