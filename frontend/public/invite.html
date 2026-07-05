@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Invitation — WedLink</title>
+  <meta name="description" content="You are cordially invited. View this beautiful wedding invitation and RSVP online." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/invite.css" />
+
+  <style>
+    .field-error {
+      display: none; color: #f87171; font-size: 12px; margin-top: 2px;
+    }
+    .form-group { margin-bottom: 18px; }
+  </style>
+</head>
+<body class="invite-page">
+
+  <!-- ─── Decorative Particles ─────────────────────────────────── -->
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <!-- ─── Loading State ────────────────────────────────────────── -->
+  <div id="invite-loading" style="z-index:1">
+    <div class="spinner" style="width:36px;height:36px;border-width:3px;border-top-color:var(--gold)"></div>
+    <span>Loading your invitation…</span>
+  </div>
+
+  <!-- ─── Error State ───────────────────────────────────────────── -->
+  <div id="invite-error" style="z-index:1">
+    <div class="error-icon">💔</div>
+    <h2 id="error-title">Invitation Not Found</h2>
+    <p id="error-detail" style="max-width:380px;margin:0 auto 28px">
+      This invitation link may be invalid or expired.
+    </p>
+    <a href="/" class="btn btn-ghost">← Back to Home</a>
+  </div>
+
+  <!-- ─── Main Invitation Content ──────────────────────────────── -->
+  <div id="invite-main" style="display:none;width:100%">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <a href="/" class="navbar-brand">
+        <div class="logo-icon">💍</div>
+        <span class="logo-text">WedLink</span>
+      </a>
+      <span class="badge badge-gold">💌 You're Invited</span>
+    </nav>
+
+    <!-- Hero -->
+    <section class="invite-hero">
+      <p class="invite-eyebrow" id="hero-eyebrow">You are cordially invited to the wedding of</p>
+
+      <div class="couple-script" id="couple-names">Loading…</div>
+
+      <p class="invite-tag">Together with their families, joyfully request your presence</p>
+
+      <div class="invite-ornament">
+        <span>✦</span>
+        <span style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--text-soft)">
+          Celebrating Love
+        </span>
+        <span>✦</span>
+      </div>
+    </section>
+
+    <!-- Invitation Content -->
+    <main class="invite-content">
+
+      <!-- Detail Cards -->
+      <div class="detail-cards">
+        <div class="detail-card" style="animation-delay:0.1s">
+          <span class="detail-card-icon">📅</span>
+          <div class="detail-card-label">Date</div>
+          <div class="detail-card-value" id="detail-date">—</div>
+        </div>
+        <div class="detail-card" style="animation-delay:0.2s">
+          <span class="detail-card-icon">📍</span>
+          <div class="detail-card-label">Venue</div>
+          <div class="detail-card-value" id="detail-venue">—</div>
+        </div>
+      </div>
+
+      <!-- Personal Message -->
+      <div class="message-card" id="message-section" style="display:none">
+        <blockquote class="message-quote" id="invite-message"></blockquote>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-section">
+        <p class="countdown-title">Counting down to the big day…</p>
+        <div class="countdown-grid" id="countdown-grid">
+          <div class="countdown-unit">
+            <div class="countdown-value" id="cd-days">--</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-unit">
+            <div class="countdown-value" id="cd-hours">--</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-unit">
+            <div class="countdown-value" id="cd-mins">--</div>
+            <div class="countdown-label">Minutes</div>
+          </div>
+          <div class="countdown-unit">
+            <div class="countdown-value" id="cd-secs">--</div>
+            <div class="countdown-label">Seconds</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ornament Divider -->
+      <div class="ornament" style="margin:8px 0">
+        <span>💍</span>
+      </div>
+
+      <!-- RSVP Section -->
+      <section class="rsvp-section" aria-label="RSVP Form">
+        <h2 class="rsvp-section-title">Will You Be There?</h2>
+        <p class="rsvp-section-subtitle">
+          Kindly let us know by filling in the form below
+        </p>
+
+        <!-- RSVP Form -->
+        <div id="rsvp-form-container">
+          <form id="rsvp-form" onsubmit="submitRsvp(event)" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="guest_name">Your Name</label>
+              <input class="form-input" id="guest_name" name="guest_name" type="text"
+                     placeholder="Enter your full name" autocomplete="name" />
+              <span class="field-error" id="err-name"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Will you attend?</label>
+              <div class="rsvp-attend-options">
+                <label class="attend-option">
+                  <input type="radio" name="attending" value="yes" id="attend-yes" />
+                  <span class="attend-label" for="attend-yes">
+                    <span>🥂</span> Joyfully Accepts
+                  </span>
+                </label>
+                <label class="attend-option">
+                  <input type="radio" name="attending" value="no" id="attend-no" />
+                  <span class="attend-label" for="attend-no">
+                    <span>💌</span> Regretfully Declines
+                  </span>
+                </label>
+              </div>
+              <span class="field-error" id="err-attend"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="rsvp_message">
+                Message to the couple <span style="color:var(--text-muted);text-transform:none;font-weight:400">(optional)</span>
+              </label>
+              <textarea class="form-textarea" id="rsvp_message" name="rsvp_message"
+                        placeholder="Share your wishes, blessings, or any dietary needs…"
+                        style="min-height:80px"></textarea>
+            </div>
+
+            <span class="field-error" id="err-submit" style="display:none;margin-bottom:12px;display:block"></span>
+
+            <button type="submit" class="btn btn-primary" id="rsvp-submit"
+                    style="width:100%;justify-content:center;padding:14px">
+              💌 Send RSVP
+            </button>
+          </form>
+        </div>
+
+        <!-- Success State (shown after submit) -->
+        <div id="rsvp-success" style="display:none" class="rsvp-success">
+          <div class="success-icon">🎉</div>
+          <h3>Thank You!</h3>
+          <p class="success-message" style="color:var(--text-soft)"></p>
+          <br />
+          <p style="color:var(--text-muted);font-size:13px">
+            We can't wait to celebrate with you!
+          </p>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="invite-footer">
+      Invitation created with <a href="/" target="_blank">WedLink</a> 💍
+    </footer>
+
+  </div><!-- /#invite-main -->
+
+  <script src="assets/js/invite.js"></script>
+</body>
+</html>

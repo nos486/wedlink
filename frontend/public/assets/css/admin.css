@@ -1,0 +1,254 @@
+/* ============================================================
+   WedLink — Admin Dashboard Styles
+   ============================================================ */
+
+/* ─── Page Layout ───────────────────────────────────────────── */
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-hero {
+  padding: 60px 40px 40px;
+  text-align: center;
+  background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+  border-bottom: 1px solid var(--border);
+}
+
+.page-hero .hero-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.page-hero h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--text) 40%, var(--rose-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-hero .subtitle {
+  color: var(--text-soft);
+  font-size: 16px;
+  max-width: 480px;
+  margin: 0 auto 28px;
+}
+
+/* ─── Stats Strip ───────────────────────────────────────────── */
+.stats-strip {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  padding: 28px 40px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.stat-item { text-align: center; }
+
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+/* ─── Main Content ──────────────────────────────────────────── */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--text);
+}
+
+/* ─── Invitation Cards Grid ─────────────────────────────────── */
+#invitations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.invitation-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.invitation-card:hover {
+  border-color: rgba(201, 149, 108, 0.4);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card), var(--shadow-gold);
+}
+
+.invitation-card-header {
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.04), rgba(201, 149, 108, 0.04));
+}
+
+.couple-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: 28px;
+  color: var(--gold-light);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.invitation-date {
+  font-size: 13px;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.invitation-card-body {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.info-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+.invitation-card-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.link-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  overflow: hidden;
+  margin: 0 20px 14px;
+}
+
+.link-preview span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* ─── RSVP Panel ────────────────────────────────────────────── */
+.rsvp-panel {
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.rsvp-panel-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.rsvp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.rsvp-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.rsvp-guest { color: var(--text); font-weight: 500; }
+.rsvp-msg   { color: var(--text-muted); font-size: 12px; font-style: italic; }
+
+/* ─── Skeleton Cards ────────────────────────────────────────── */
+.skeleton-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.skeleton-header {
+  height: 80px;
+  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-body {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .page-hero { padding: 40px 20px 30px; }
+  .stats-strip { gap: 28px; padding: 20px; }
+  .main-content { padding: 24px 20px; }
+  #invitations-grid { grid-template-columns: 1fr; }
+}

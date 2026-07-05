@@ -1,0 +1,17 @@
+name = "wedlink-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# ─────────────────────────────────────────────────────────────
+# D1 Database binding
+# After creating your D1 database in the Cloudflare dashboard,
+# replace YOUR_D1_DATABASE_ID with the actual database ID.
+# ─────────────────────────────────────────────────────────────
+[[d1_databases]]
+binding = "DB"
+database_name = "wedlink-db"
+database_id = "YOUR_D1_DATABASE_ID"
+
+[vars]
+ENVIRONMENT = "production"

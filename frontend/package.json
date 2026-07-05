@@ -1,0 +1,9 @@
+{
+  "name": "wedlink-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve public -p 3000",
+    "preview": "npx serve public -p 3000"
+  }
+}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WedLink — Admin Dashboard</title>
+  <meta name="description" content="WedLink Admin Dashboard — Create and manage beautiful wedding invitation links." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+
+  <style>
+    /* Inline page-specific micro-touches */
+    .invite-link-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--gold-dim); border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 20px; padding: 4px 12px;
+      font-size: 12px; color: var(--gold-light);
+      font-weight: 500; cursor: pointer; transition: all var(--transition);
+    }
+    .invite-link-chip:hover { background: rgba(212,175,55,0.22); }
+
+    .field-error {
+      display: none; color: #f87171; font-size: 12px; margin-top: 2px;
+    }
+
+    .form-group { margin-bottom: 18px; }
+
+    .modal-form-actions {
+      display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px;
+    }
+  </style>
+</head>
+<body class="admin-layout">
+
+  <!-- ─── Navbar ─────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">
+      <div class="logo-icon">💍</div>
+      <span class="logo-text">WedLink</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="font-size:13px;color:var(--text-muted)">Admin Dashboard</span>
+      <button id="open-modal-btn" class="btn btn-primary">
+        <span>✨</span> New Invitation
+      </button>
+    </div>
+  </nav>
+
+  <!-- ─── Hero ───────────────────────────────────────────────── -->
+  <section class="page-hero">
+    <div class="hero-eyebrow">Wedding Invitation Manager</div>
+    <h1>Craft Moments That Last Forever</h1>
+    <p class="subtitle">Generate beautiful, shareable wedding invitation links in seconds.</p>
+    <button id="open-modal-btn-hero" class="btn btn-primary" onclick="document.getElementById('create-modal').classList.add('active')">
+      <span>💌</span> Create Your First Invitation
+    </button>
+  </section>
+
+  <!-- ─── Stats Strip ─────────────────────────────────────────── -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-value" id="stat-invitations">—</div>
+      <div class="stat-label">Invitations</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">∞</div>
+      <div class="stat-label">Links</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">💍</div>
+      <div class="stat-label">Memories</div>
+    </div>
+  </div>
+
+  <!-- ─── Main Content ─────────────────────────────────────────── -->
+  <main class="main-content">
+    <div class="section-header">
+      <h2 class="section-title">Your Invitations</h2>
+      <button class="btn btn-ghost btn-sm" onclick="loadInvitations()">
+        <span>🔄</span> Refresh
+      </button>
+    </div>
+
+    <div id="invitations-grid">
+      <!-- Cards rendered by admin.js -->
+    </div>
+  </main>
+
+  <!-- ─── Create Invitation Modal ────────────────────────────── -->
+  <div class="modal-overlay" id="create-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title" style="font-size:22px">
+          <span style="color:var(--gold)">✨</span> New Invitation
+        </h2>
+        <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      </div>
+
+      <form id="create-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="bride">Bride's Name</label>
+            <input class="form-input" id="bride" name="bride" type="text"
+                   placeholder="e.g. Sarah" autocomplete="off" />
+            <span class="field-error" id="error-bride"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="groom">Groom's Name</label>
+            <input class="form-input" id="groom" name="groom" type="text"
+                   placeholder="e.g. James" autocomplete="off" />
+            <span class="field-error" id="error-groom"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="date">Wedding Date</label>
+          <input class="form-input" id="date" name="date" type="date" />
+          <span class="field-error" id="error-date"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="venue">Venue</label>
+          <input class="form-input" id="venue" name="venue" type="text"
+                 placeholder="e.g. The Grand Ballroom, New York" />
+          <span class="field-error" id="error-venue"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">Personal Message <span style="color:var(--text-muted);font-weight:400;text-transform:none">(optional)</span></label>
+          <textarea class="form-textarea" id="message" name="message"
+                    placeholder="Share a heartfelt message with your guests…"
+                    style="min-height:88px"></textarea>
+        </div>
+
+        <div class="modal-form-actions">
+          <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submit-btn">
+            ✨ Create Invitation
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ─── Toast Container ──────────────────────────────────────── -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- ─── Footer ───────────────────────────────────────────────── -->
+  <footer style="padding:28px 40px;text-align:center;border-top:1px solid var(--border);color:var(--text-muted);font-size:13px;margin-top:auto">
+    <span>Made with 💍 by <strong style="color:var(--gold)">WedLink</strong></span>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/nos486/wedlink" target="_blank" rel="noopener"
+       style="color:var(--rose);text-decoration:none">GitHub</a>
+  </footer>
+
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
