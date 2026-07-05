@@ -14,7 +14,14 @@ invitations.get('/', async (c) => {
   const userId = c.get('userId');
 
   const { results } = await c.env.DB
-    .prepare('SELECT * FROM invitations WHERE user_id = ? ORDER BY created_at DESC')
+    .prepare(`
+      SELECT *,
+             (SELECT COUNT(*) FROM rsvps WHERE rsvps.invitation_id = invitations.id) as rsvp_count,
+             (SELECT COUNT(*) FROM rsvps WHERE rsvps.invitation_id = invitations.id AND rsvps.attending = 1) as attending_count
+        FROM invitations
+       WHERE user_id = ?
+       ORDER BY created_at DESC
+    `)
     .bind(userId)
     .all<Invitation>();
 

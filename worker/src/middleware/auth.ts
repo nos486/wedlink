@@ -36,5 +36,5 @@ export const requireAuth = createMiddleware<{
   c.set('userId', session.user_id);
   c.set('username', session.username);
 
-  await next();
+  return await next();
 });

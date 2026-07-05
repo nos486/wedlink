@@ -2,133 +2,322 @@
    WedLink — Admin Dashboard Styles
    ============================================================ */
 
-.admin-layout { min-height: 100vh; display: flex; flex-direction: column; }
+/* ─── Page Layout ───────────────────────────────────────────── */
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-/* ─── Hero Section ──────────────────────────────────────────── */
 .page-hero {
-  padding: 80px 40px 60px;
+  padding: 60px 48px 48px;
   text-align: center;
-  background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+  background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
   border-bottom: 1px solid var(--border);
 }
-.hero-eyebrow {
-  font-size: 13px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.2em; color: var(--accent); margin-bottom: 16px;
+
+.page-hero .hero-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 14px;
 }
+
 .page-hero h1 {
-  font-size: clamp(32px, 5vw, 56px); margin-bottom: 20px;
-  background: linear-gradient(135deg, #ffffff 30%, #94a3b8);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  font-size: clamp(32px, 5vw, 48px);
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, var(--text) 30%, var(--rose-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-weight: 700;
 }
+
 .page-hero .subtitle {
-  color: var(--text-soft); font-size: 18px; max-width: 540px; margin: 0 auto 32px;
+  color: var(--text-soft);
+  font-size: 17px;
+  max-width: 520px;
+  margin: 0 auto 32px;
 }
 
 /* ─── Stats Strip ───────────────────────────────────────────── */
 .stats-strip {
-  display: flex; justify-content: center; gap: 64px;
-  padding: 32px 40px; border-bottom: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.01);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  padding: 24px 48px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(14, 14, 24, 0.4);
+  backdrop-filter: blur(10px);
 }
-.stat-item { text-align: center; }
+
+.stat-item { 
+  text-align: center; 
+}
+
 .stat-value {
-  font-family: 'Playfair Display', serif; font-size: 36px;
-  font-weight: 600; color: var(--text); line-height: 1; margin-bottom: 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.1;
 }
+
 .stat-label {
-  font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 6px;
+  font-weight: 600;
 }
 
 /* ─── Main Content ──────────────────────────────────────────── */
 .main-content {
-  flex: 1; padding: 60px 40px; max-width: 1200px; width: 100%; margin: 0 auto;
+  flex: 1;
+  padding: 48px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
 }
+
 .section-header {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px;
-}
-.section-title { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--text); }
-
-/* Limit warning */
-#limit-warning {
-  display: none; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--border-focus);
-  color: var(--accent-light); border-radius: var(--radius-sm); padding: 12px 20px;
-  font-size: 14px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
 }
 
-/* ─── Invitation Cards ──────────────────────────────────────── */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ─── Invitation Cards Grid ─────────────────────────────────── */
 #invitations-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px;
 }
+
 .invitation-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden;
-  transition: all var(--transition); display: flex; flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all var(--transition);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(12px);
 }
+
 .invitation-card:hover {
-  border-color: rgba(255,255,255,0.15); transform: translateY(-4px); box-shadow: var(--shadow-lg);
+  border-color: rgba(201, 149, 108, 0.45);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card), var(--shadow-gold);
 }
+
 .invitation-card-header {
-  padding: 24px; border-bottom: 1px solid var(--border);
-  background: linear-gradient(135deg, rgba(255,255,255,0.02), transparent);
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.03), rgba(201, 149, 108, 0.03));
 }
+
 .couple-names {
-  font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 500;
-  color: var(--text); margin-bottom: 8px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 32px;
+  color: var(--gold-light);
+  line-height: 1.1;
+  margin-bottom: 6px;
 }
+
 .invitation-date {
-  font-size: 14px; color: var(--text-soft); display: flex; align-items: center; gap: 8px;
+  font-size: 13px;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.invitation-card-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-.info-row { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--text-soft); }
-.info-icon { color: var(--text-muted); flex-shrink: 0; margin-top: 2px; }
+.invitation-date .svg-icon {
+  color: var(--gold);
+}
 
-.badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-.badge {
-  display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
-  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-  border-radius: 20px; font-size: 12px; color: var(--text-soft);
+.invitation-card-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13.5px;
+  color: var(--text-soft);
+  line-height: 1.4;
+}
+
+.info-row .svg-icon {
+  color: var(--rose);
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 16px;
+}
+
+.invitation-card-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.01);
 }
 
 .link-preview {
-  display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.3);
-  border: 1px solid var(--border); border-radius: var(--radius-xs);
-  padding: 10px 14px; font-size: 13px; color: var(--text-muted);
-  margin: 0 24px 16px; overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--text-soft);
+  overflow: hidden;
+  margin: 0 24px 16px;
 }
-.link-preview span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
 
-.invitation-card-footer {
-  padding: 16px 24px; border-top: 1px solid var(--border);
-  display: flex; gap: 12px; flex-wrap: wrap; background: rgba(255,255,255,0.01);
+.link-preview span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  font-family: monospace;
+}
+
+/* ─── RSVP Collapsible Panel ────────────────────────────────── */
+.rsvp-card-toggle {
+  border-top: 1px solid var(--border);
+  padding: 12px 24px;
+  background: rgba(255,255,255,0.01);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold-light);
+  transition: background var(--transition);
+}
+.rsvp-card-toggle:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.rsvp-drawer {
+  display: none;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid var(--border);
+  padding: 18px 24px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+.rsvp-drawer.active {
+  display: block;
+}
+
+.rsvp-drawer-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.rsvp-list-empty {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 12px 0;
+  font-style: italic;
+}
+
+.rsvp-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.rsvp-item:last-child {
+  border-bottom: none;
+}
+
+.rsvp-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.rsvp-guest-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.rsvp-guest-message {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  padding-left: 4px;
+  border-left: 2px solid var(--border);
+  margin-top: 2px;
 }
 
 /* ─── Skeleton Cards ────────────────────────────────────────── */
-.skeleton-card { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
-.skeleton-header { height: 90px; }
-.skeleton-body { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
-.skeleton-line { height: 14px; border-radius: 4px; }
-
-/* ─── Empty State ───────────────────────────────────────────── */
-.empty-state { text-align: center; padding: 80px 24px; color: var(--text-muted); }
-.empty-icon { color: var(--border-focus); margin-bottom: 20px; display: flex; justify-content: center; }
-.empty-state h3 { font-size: 24px; color: var(--text); margin-bottom: 8px; }
-.empty-state p { font-size: 15px; }
-
-/* ─── User Badge ────────────────────────────────────────────── */
-.user-badge {
-  display: flex; align-items: center; gap: 8px; padding: 8px 16px;
-  border: 1px solid var(--border); border-radius: 24px; font-size: 14px;
-  color: var(--text-soft); background: var(--bg-card); transition: all var(--transition);
+.skeleton-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
 }
-.user-badge:hover { background: var(--bg-card-hover); }
-.user-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
 
-/* Responsive */
+.skeleton-header {
+  height: 90px;
+  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .page-hero { padding: 60px 24px 40px; }
-  .stats-strip { gap: 32px; padding: 24px; }
-  .main-content { padding: 40px 24px; }
+  .page-hero { padding: 40px 24px 32px; }
+  .stats-strip { gap: 32px; padding: 20px 24px; flex-wrap: wrap; }
+  .main-content { padding: 32px 24px; }
   #invitations-grid { grid-template-columns: 1fr; }
 }
