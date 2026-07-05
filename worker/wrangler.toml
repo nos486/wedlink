@@ -11,7 +11,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "wedlink-db"
-database_id = "YOUR_D1_DATABASE_ID"
+database_id = "87c51e08-27df-4f19-aa54-f66fede70bd0"
 
 [vars]
 ENVIRONMENT = "production"
