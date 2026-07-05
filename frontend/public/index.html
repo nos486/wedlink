@@ -181,12 +181,19 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="image_url">
-            Cover Image URL
-            <span style="color:var(--text-muted);font-weight:400;text-transform:none">(optional)</span>
+          <label class="form-label">
+            Cover Image
+            <span style="color:var(--text-muted);font-weight:400;text-transform:none">(max 5MB)</span>
           </label>
-          <input class="form-input" id="image_url" name="image_url" type="url"
-                 placeholder="e.g. https://example.com/photo.jpg" />
+          <div style="display:flex;gap:12px;margin-bottom:8px;">
+            <input class="form-input" id="image_url" name="image_url" type="url"
+                   placeholder="Paste URL or upload a file..." style="flex:1" />
+            <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0 16px;">
+              <span>📁</span> Upload
+              <input type="file" id="image_file" accept="image/*" style="display:none;" />
+            </label>
+          </div>
+          <span class="field-error" id="error-image_file"></span>
         </div>
 
         <div class="form-grid">
@@ -196,6 +203,9 @@
               <option value="modern-minimal">Modern Minimal</option>
               <option value="dark-luxury">Dark Luxury</option>
               <option value="light-floral">Light Floral</option>
+              <option value="royal-elegance">Royal Elegance ✨</option>
+              <option value="starlight-glamour">Starlight Glamour ✨</option>
+              <option value="enchanted-forest">Enchanted Forest ✨</option>
             </select>
           </div>
           <div class="form-group">

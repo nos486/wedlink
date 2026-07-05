@@ -7,6 +7,7 @@
 let API_BASE = '';
 let invitations = [];
 let editingSlug = null;
+let uploadedImageBase64 = null;
 
 // ─── Init ─────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
@@ -25,8 +26,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     logoutAndRedirect(API_BASE);
   });
 
-  // Modal & form wiring
+  if (!API_BASE) return;
   setupModal();
+  setupImageUpload();
   setupForm();
 
   // Load invitations
@@ -203,6 +205,7 @@ function openModalForCreate() {
     return;
   }
   editingSlug = null;
+  uploadedImageBase64 = null;
   document.getElementById('modal-title').innerHTML = '<span style="color:var(--gold)">✨</span> New Invitation';
   document.getElementById('submit-btn').innerHTML = '✨ Create Invitation';
   document.getElementById('create-form').reset();
@@ -214,6 +217,8 @@ function openModalForEdit(slug) {
   if (!inv) return;
 
   editingSlug = slug;
+  uploadedImageBase64 = inv.image_url && inv.image_url.startsWith('data:image') ? inv.image_url : null;
+  
   document.getElementById('modal-title').innerHTML = '<span style="color:var(--gold)">✏️</span> Edit Invitation';
   document.getElementById('submit-btn').innerHTML = '💾 Save Changes';
   
@@ -225,7 +230,7 @@ function openModalForEdit(slug) {
   form.venue.value = inv.venue;
   form.slug.value = inv.slug;
   form.message.value = inv.message || '';
-  form.image_url.value = inv.image_url || '';
+  form.image_url.value = uploadedImageBase64 ? '(Uploaded Photo)' : (inv.image_url || '');
   form.theme.value = inv.theme || 'modern-minimal';
   form.layout.value = inv.layout || 'image-top';
 
@@ -237,6 +242,7 @@ function closeModal() {
   document.getElementById('create-modal').classList.remove('active');
   document.getElementById('create-form').reset();
   editingSlug = null;
+  uploadedImageBase64 = null;
   clearFormErrors();
 }
 
@@ -255,7 +261,7 @@ function setupForm() {
       venue:     form.venue.value.trim(),
       slug:      form.slug.value.trim() || undefined,
       message:   form.message.value.trim() || undefined,
-      image_url: form.image_url.value.trim() || undefined,
+      image_url: uploadedImageBase64 || form.image_url.value.trim() || undefined,
       theme:     form.theme.value,
       layout:    form.layout.value,
     };
@@ -310,6 +316,82 @@ function validateForm({ bride, groom, date, venue, slug }) {
   return errors;
 }
 
+// ─── Image Upload & Compress ──────────────────────────────────
+function setupImageUpload() {
+  const fileInput = document.getElementById('image_file');
+  const urlInput = document.getElementById('image_url');
+  const errorSpan = document.getElementById('error-image_file');
+
+  fileInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    errorSpan.textContent = '';
+    urlInput.value = 'Processing image...';
+    urlInput.disabled = true;
+
+    try {
+      if (file.size > 15 * 1024 * 1024) throw new Error('File is too large (max 15MB before compression)');
+      
+      const compressedDataUrl = await compressImage(file);
+      
+      const base64Size = Math.round((compressedDataUrl.length * 3) / 4);
+      if (base64Size > 5 * 1024 * 1024) throw new Error('Image too complex, please use a smaller image');
+
+      uploadedImageBase64 = compressedDataUrl;
+      urlInput.value = '(Uploaded Photo)';
+      showToast('Image processed successfully!', 'success');
+    } catch (err) {
+      errorSpan.textContent = err.message;
+      urlInput.value = '';
+      uploadedImageBase64 = null;
+    } finally {
+      urlInput.disabled = false;
+    }
+  });
+
+  urlInput.addEventListener('input', () => {
+    if (urlInput.value !== '(Uploaded Photo)') {
+      uploadedImageBase64 = null;
+    }
+  });
+}
+
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        const max_dim = 1920;
+
+        if (width > height && width > max_dim) {
+          height = Math.round(height * (max_dim / width));
+          width = max_dim;
+        } else if (height > max_dim) {
+          width = Math.round(width * (max_dim / height));
+          height = max_dim;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        resolve(canvas.toDataURL('image/jpeg', 0.8));
+      };
+      img.onerror = () => reject(new Error('Invalid image file'));
+    };
+    reader.onerror = () => reject(new Error('Failed to read file'));
+  });
+}
+
+// ─── API & Auth Utils ─────────────────────────────────────────
 function setFieldError(field, msg) {
   const el = document.getElementById(`error-${field}`);
   if (el) { el.textContent = msg; el.style.display = 'block'; }
@@ -374,7 +456,10 @@ function formatTheme(theme) {
   const map = {
     'modern-minimal': 'Modern Minimal',
     'dark-luxury': 'Dark Luxury',
-    'light-floral': 'Light Floral'
+    'light-floral': 'Light Floral',
+    'royal-elegance': 'Royal Elegance ✨',
+    'starlight-glamour': 'Starlight Glamour ✨',
+    'enchanted-forest': 'Enchanted Forest ✨'
   };
   return map[theme] || 'Modern Minimal';
 }

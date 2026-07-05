@@ -32,6 +32,63 @@ body.theme-light-floral {
   --inv-font-script: 'Great Vibes', cursive;
 }
 
+body.theme-royal-elegance {
+  --inv-bg: #2a0a18; /* Deep Velvet Crimson */
+  --inv-text: #fdf5e6;
+  --inv-accent: #e5b365; /* Elegant Gold */
+  --inv-accent-light: rgba(229, 179, 101, 0.15);
+  --inv-font-primary: 'Playfair Display', serif;
+  --inv-font-script: 'Great Vibes', cursive;
+}
+body.theme-royal-elegance .inv-container {
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+}
+body.theme-royal-elegance .inv-names {
+  background: linear-gradient(135deg, #e5b365, #ffdf99, #e5b365);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+body.theme-royal-elegance .inv-content-wrapper {
+  animation: slowPulseGlow 8s infinite alternate;
+}
+
+body.theme-starlight-glamour {
+  --inv-bg: #09090b; /* Pitch Black */
+  --inv-text: #e2e8f0;
+  --inv-accent: #e2e8f0; /* Platinum/Silver */
+  --inv-accent-light: rgba(255, 255, 255, 0.05);
+  --inv-font-primary: 'Inter', sans-serif;
+  --inv-font-script: 'Playfair Display', serif;
+  background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: driftBackground 60s linear infinite;
+}
+body.theme-starlight-glamour .inv-names {
+  text-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+body.theme-enchanted-forest {
+  --inv-bg: #0f1f15; /* Emerald / Deep Forest */
+  --inv-text: #e8f4ed;
+  --inv-accent: #86c49e; /* Soft Leaf Green */
+  --inv-accent-light: rgba(134, 196, 158, 0.1);
+  --inv-font-primary: 'Playfair Display', serif;
+  --inv-font-script: 'Great Vibes', cursive;
+  position: relative;
+}
+body.theme-enchanted-forest::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(134,196,158,0.15) 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(229,179,101,0.1) 0%, transparent 40%);
+  pointer-events: none;
+  animation: lightLeak 15s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
 /* Base Body Application */
 body.invite-page {
   background-color: var(--inv-bg);
@@ -292,3 +349,22 @@ body.theme-dark-luxury.layout-image-background .inv-content-wrapper {
 .d-3 { animation-delay: 0.6s; }
 .d-4 { animation-delay: 0.8s; }
 .d-5 { animation-delay: 1.0s; }
+
+/* Theme specific animations */
+@keyframes shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+@keyframes slowPulseGlow {
+  0% { box-shadow: 0 0 20px rgba(229,179,101,0.05); }
+  100% { box-shadow: 0 0 50px rgba(229,179,101,0.2); }
+}
+@keyframes driftBackground {
+  0% { background-position: 0 0; }
+  100% { background-position: 400px 400px; }
+}
+@keyframes lightLeak {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.6; }
+  50% { transform: scale(1.1) translate(2%, 3%); opacity: 0.9; }
+  100% { transform: scale(1) translate(-2%, -1%); opacity: 0.6; }
+}
