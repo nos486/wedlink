@@ -32,17 +32,10 @@ function authHeaders() {
 
 // ─── Runtime API URL ─────────────────────────────────────────
 // Fetches API_BASE_URL from the Cloudflare Pages Function /api/config.
-// Caches in sessionStorage so it's only fetched once per tab.
 let _resolvedApiUrl = null;
 
 async function getApiBaseUrl() {
   if (_resolvedApiUrl) return _resolvedApiUrl;
-
-  const cached = sessionStorage.getItem('wedlink_api_url');
-  if (cached) {
-    _resolvedApiUrl = cached;
-    return _resolvedApiUrl;
-  }
 
   try {
     const res = await fetch('/api/config');
@@ -54,7 +47,6 @@ async function getApiBaseUrl() {
     _resolvedApiUrl = window.location.origin;
   }
 
-  sessionStorage.setItem('wedlink_api_url', _resolvedApiUrl);
   return _resolvedApiUrl;
 }
 
