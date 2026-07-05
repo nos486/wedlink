@@ -51,13 +51,24 @@ invitations.post('/', async (c) => {
     return c.json({ success: false, error: 'Invalid JSON body' }, 400);
   }
 
-  const { bride, groom, date, time, venue, message, image_url, theme, layout } = body;
+  const { slug: customSlug, bride, groom, date, time, venue, message, image_url, theme, layout } = body;
 
   if (!bride?.trim() || !groom?.trim() || !date?.trim() || !venue?.trim()) {
     return c.json({ success: false, error: 'bride, groom, date, and venue are required' }, 400);
   }
 
-  const slug = generateSlug(bride.trim(), groom.trim());
+  let finalSlug = customSlug?.trim();
+  if (finalSlug) {
+    if (!/^[a-z0-9-]+$/.test(finalSlug)) {
+      return c.json({ success: false, error: 'Slug can only contain lowercase letters, numbers, and hyphens' }, 400);
+    }
+    const existing = await c.env.DB.prepare('SELECT id FROM invitations WHERE slug = ?').bind(finalSlug).first();
+    if (existing) {
+      return c.json({ success: false, error: 'That custom slug is already taken' }, 409);
+    }
+  } else {
+    finalSlug = generateSlug(bride.trim(), groom.trim());
+  }
 
   const result = await c.env.DB
     .prepare(
@@ -65,7 +76,7 @@ invitations.post('/', async (c) => {
     )
     .bind(
       userId, 
-      slug, 
+      finalSlug, 
       bride.trim(), 
       groom.trim(), 
       date.trim(), 
@@ -106,6 +117,72 @@ invitations.get('/:slug/rsvps', async (c) => {
     .all();
 
   return c.json({ success: true, data: results });
+});
+
+// ─── PUT /api/invitations/:slug ──────────────────────────────
+invitations.put('/:slug', async (c) => {
+  const oldSlug = c.req.param('slug');
+  const userId = c.get('userId');
+
+  const invitation = await c.env.DB
+    .prepare('SELECT id FROM invitations WHERE slug = ? AND user_id = ?')
+    .bind(oldSlug, userId)
+    .first<{ id: number }>();
+
+  if (!invitation) {
+    return c.json({ success: false, error: 'Invitation not found' }, 404);
+  }
+
+  let body: CreateInvitationBody;
+  try {
+    body = await c.req.json<CreateInvitationBody>();
+  } catch {
+    return c.json({ success: false, error: 'Invalid JSON body' }, 400);
+  }
+
+  const { slug: customSlug, bride, groom, date, time, venue, message, image_url, theme, layout } = body;
+
+  if (!bride?.trim() || !groom?.trim() || !date?.trim() || !venue?.trim()) {
+    return c.json({ success: false, error: 'bride, groom, date, and venue are required' }, 400);
+  }
+
+  let finalSlug = oldSlug;
+  if (customSlug?.trim() && customSlug.trim() !== oldSlug) {
+    finalSlug = customSlug.trim();
+    if (!/^[a-z0-9-]+$/.test(finalSlug)) {
+      return c.json({ success: false, error: 'Slug can only contain lowercase letters, numbers, and hyphens' }, 400);
+    }
+    const existing = await c.env.DB.prepare('SELECT id FROM invitations WHERE slug = ?').bind(finalSlug).first();
+    if (existing) {
+      return c.json({ success: false, error: 'That custom slug is already taken' }, 409);
+    }
+  }
+
+  await c.env.DB
+    .prepare(
+      'UPDATE invitations SET slug = ?, bride = ?, groom = ?, date = ?, time = ?, venue = ?, message = ?, image_url = ?, theme = ?, layout = ? WHERE id = ?'
+    )
+    .bind(
+      finalSlug,
+      bride.trim(),
+      groom.trim(),
+      date.trim(),
+      time?.trim() ?? null,
+      venue.trim(),
+      message?.trim() ?? null,
+      image_url?.trim() ?? null,
+      theme?.trim() ?? 'modern-minimal',
+      layout?.trim() ?? 'image-top',
+      invitation.id
+    )
+    .run();
+
+  const updated = await c.env.DB
+    .prepare('SELECT * FROM invitations WHERE id = ?')
+    .bind(invitation.id)
+    .first<Invitation>();
+
+  return c.json({ success: true, data: updated });
 });
 
 // ─── DELETE /api/invitations/:slug ────────────────────────────

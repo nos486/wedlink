@@ -6,6 +6,7 @@
 // ─── State ────────────────────────────────────────────────────
 let API_BASE = '';
 let invitations = [];
+let editingSlug = null;
 
 // ─── Init ─────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
@@ -119,6 +120,9 @@ function renderCard(inv) {
         <button class="btn btn-ghost btn-sm" onclick="openInvite('${escAttr(inviteUrl)}')">
           <span>👁</span> Preview
         </button>
+        <button class="btn btn-ghost btn-sm" onclick="openModalForEdit('${escAttr(inv.slug)}')">
+          <span>✏️</span> Edit
+        </button>
         <button class="btn btn-danger btn-sm" onclick="deleteInvitation('${escAttr(inv.slug)}')">
           <span>🗑</span>
         </button>
@@ -184,20 +188,8 @@ function updateStats() {
 
 // ─── Modal ────────────────────────────────────────────────────
 function setupModal() {
-  document.getElementById('open-modal-btn')?.addEventListener('click', () => {
-    if (invitations.length >= 10) {
-      showToast('You have reached the maximum of 10 invitations.', 'error');
-      return;
-    }
-    document.getElementById('create-modal').classList.add('active');
-  });
-  document.getElementById('open-modal-btn-hero')?.addEventListener('click', () => {
-    if (invitations.length >= 10) {
-      showToast('You have reached the maximum of 10 invitations.', 'error');
-      return;
-    }
-    document.getElementById('create-modal').classList.add('active');
-  });
+  document.getElementById('open-modal-btn')?.addEventListener('click', () => openModalForCreate());
+  document.getElementById('open-modal-btn-hero')?.addEventListener('click', () => openModalForCreate());
   document.getElementById('modal-close')?.addEventListener('click', closeModal);
   document.getElementById('create-modal')?.addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeModal();
@@ -205,9 +197,46 @@ function setupModal() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 }
 
+function openModalForCreate() {
+  if (invitations.length >= 10) {
+    showToast('You have reached the maximum of 10 invitations.', 'error');
+    return;
+  }
+  editingSlug = null;
+  document.getElementById('modal-title').innerHTML = '<span style="color:var(--gold)">✨</span> New Invitation';
+  document.getElementById('submit-btn').innerHTML = '✨ Create Invitation';
+  document.getElementById('create-form').reset();
+  document.getElementById('create-modal').classList.add('active');
+}
+
+function openModalForEdit(slug) {
+  const inv = invitations.find(i => i.slug === slug);
+  if (!inv) return;
+
+  editingSlug = slug;
+  document.getElementById('modal-title').innerHTML = '<span style="color:var(--gold)">✏️</span> Edit Invitation';
+  document.getElementById('submit-btn').innerHTML = '💾 Save Changes';
+  
+  const form = document.getElementById('create-form');
+  form.bride.value = inv.bride;
+  form.groom.value = inv.groom;
+  form.date.value = inv.date;
+  form.time.value = inv.time || '';
+  form.venue.value = inv.venue;
+  form.slug.value = inv.slug;
+  form.message.value = inv.message || '';
+  form.image_url.value = inv.image_url || '';
+  form.theme.value = inv.theme || 'modern-minimal';
+  form.layout.value = inv.layout || 'image-top';
+
+  clearFormErrors();
+  document.getElementById('create-modal').classList.add('active');
+}
+
 function closeModal() {
   document.getElementById('create-modal').classList.remove('active');
   document.getElementById('create-form').reset();
+  editingSlug = null;
   clearFormErrors();
 }
 
@@ -224,6 +253,7 @@ function setupForm() {
       date:      form.date.value,
       time:      form.time.value.trim() || undefined,
       venue:     form.venue.value.trim(),
+      slug:      form.slug.value.trim() || undefined,
       message:   form.message.value.trim() || undefined,
       image_url: form.image_url.value.trim() || undefined,
       theme:     form.theme.value,
@@ -235,33 +265,48 @@ function setupForm() {
 
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner"></span> Creating…';
+    submitBtn.innerHTML = '<span class="spinner"></span> Saving…';
 
     try {
-      const { data: created } = await apiFetch('/invitations', {
-        method: 'POST',
+      const isEdit = !!editingSlug;
+      const url = isEdit ? `/invitations/${editingSlug}` : '/invitations';
+      
+      const { data: savedData } = await apiFetch(url, {
+        method: isEdit ? 'PUT' : 'POST',
         body: JSON.stringify(body),
       });
-      invitations.unshift(created);
+
+      if (isEdit) {
+        invitations = invitations.map(i => i.slug === editingSlug ? savedData : i);
+        showToast('💾 Invitation updated successfully!', 'success');
+      } else {
+        invitations.unshift(savedData);
+        showToast('🎉 Invitation created successfully!', 'success');
+      }
+
       renderInvitations();
       updateStats();
       closeModal();
-      showToast('🎉 Invitation created successfully!', 'success');
     } catch (err) {
-      showToast('Failed to create: ' + err.message, 'error');
+      if (err.message.includes('slug')) {
+        setFieldError('slug', err.message);
+      } else {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
     } finally {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = '✨ Create Invitation';
+      submitBtn.innerHTML = editingSlug ? '💾 Save Changes' : '✨ Create Invitation';
     }
   });
 }
 
-function validateForm({ bride, groom, date, venue }) {
+function validateForm({ bride, groom, date, venue, slug }) {
   const errors = [];
   if (!bride) errors.push({ field: 'bride', msg: "Bride's name is required" });
   if (!groom) errors.push({ field: 'groom', msg: "Groom's name is required" });
   if (!date)  errors.push({ field: 'date',  msg: 'Wedding date is required' });
   if (!venue) errors.push({ field: 'venue', msg: 'Venue is required' });
+  if (slug && !/^[a-z0-9-]+$/.test(slug)) errors.push({ field: 'slug', msg: 'Lowercase letters, numbers, hyphens only' });
   return errors;
 }
 
@@ -346,5 +391,6 @@ function formatLayout(layout) {
 // Expose for inline onclick handlers
 window.copyLink          = copyLink;
 window.openInvite        = openInvite;
+window.openModalForEdit  = openModalForEdit;
 window.deleteInvitation  = deleteInvitation;
 window.closeModal        = closeModal;

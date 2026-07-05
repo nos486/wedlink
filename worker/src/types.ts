@@ -53,6 +53,7 @@ export interface Rsvp {
 }
 
 export interface CreateInvitationBody {
+  slug?: string;
   bride: string;
   groom: string;
   date: string;

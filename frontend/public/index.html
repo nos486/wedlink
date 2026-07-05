@@ -162,11 +162,22 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="venue">Venue</label>
-          <input class="form-input" id="venue" name="venue" type="text"
-                 placeholder="e.g. The Grand Ballroom, New York" />
-          <span class="field-error" id="error-venue"></span>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="venue">Venue</label>
+            <input class="form-input" id="venue" name="venue" type="text"
+                   placeholder="e.g. The Grand Ballroom, New York" />
+            <span class="field-error" id="error-venue"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="slug">
+              Custom Link Slug
+              <span style="color:var(--text-muted);font-weight:400;text-transform:none">(optional)</span>
+            </label>
+            <input class="form-input" id="slug" name="slug" type="text"
+                   placeholder="e.g. sarah-and-james" pattern="[a-z0-9-]*" />
+            <span class="field-error" id="error-slug"></span>
+          </div>
         </div>
 
         <div class="form-group">
