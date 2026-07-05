@@ -34,8 +34,12 @@ export interface Invitation {
   bride: string;
   groom: string;
   date: string;
+  time: string | null;
   venue: string;
   message: string | null;
+  image_url: string | null;
+  theme: string;
+  layout: string;
   created_at: string;
 }
 
@@ -52,8 +56,12 @@ export interface CreateInvitationBody {
   bride: string;
   groom: string;
   date: string;
+  time?: string;
   venue: string;
   message?: string;
+  image_url?: string;
+  theme?: string;
+  layout?: string;
 }
 
 export interface CreateRsvpBody {

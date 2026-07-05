@@ -29,8 +29,12 @@ CREATE TABLE IF NOT EXISTS invitations (
   bride      TEXT    NOT NULL,
   groom      TEXT    NOT NULL,
   date       TEXT    NOT NULL,
+  time       TEXT,
   venue      TEXT    NOT NULL,
   message    TEXT,
+  image_url  TEXT,
+  theme      TEXT    DEFAULT 'modern-minimal',
+  layout     TEXT    DEFAULT 'image-top',
   created_at TEXT    NOT NULL DEFAULT (datetime('now'))
 );
 

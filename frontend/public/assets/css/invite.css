@@ -1,360 +1,294 @@
 /* ============================================================
-   WedLink — Invitation Page Styles
+   WedLink — Invitation Themes and Layouts
    ============================================================ */
 
-/* ─── Full-page Invitation Layout ──────────────────────────── */
-.invite-page {
+/* ─── Themes (CSS Variables) ─────────────────────────────────── */
+
+:root {
+  /* Default: Modern Minimal */
+  --inv-bg: #ffffff;
+  --inv-text: #1a1a1a;
+  --inv-accent: #000000;
+  --inv-accent-light: rgba(0, 0, 0, 0.05);
+  --inv-font-primary: 'Inter', sans-serif;
+  --inv-font-script: 'Playfair Display', serif; /* Minimal uses playfair for headings */
+}
+
+body.theme-dark-luxury {
+  --inv-bg: #0f172a;
+  --inv-text: #f8fafc;
+  --inv-accent: #d4af37; /* Gold */
+  --inv-accent-light: rgba(212, 175, 55, 0.1);
+  --inv-font-primary: 'Playfair Display', serif;
+  --inv-font-script: 'Great Vibes', cursive;
+}
+
+body.theme-light-floral {
+  --inv-bg: #fdfbf7;
+  --inv-text: #4a4a4a;
+  --inv-accent: #c9956c; /* Rose Gold */
+  --inv-accent-light: rgba(201, 149, 108, 0.1);
+  --inv-font-primary: 'Inter', sans-serif;
+  --inv-font-script: 'Great Vibes', cursive;
+}
+
+/* Base Body Application */
+body.invite-page {
+  background-color: var(--inv-bg);
+  color: var(--inv-text);
+  font-family: var(--inv-font-primary);
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* ─── Shared Components ──────────────────────────────────────── */
+
+.inv-container {
+  width: 100%;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+}
+
+.inv-image-wrapper {
+  background-color: var(--inv-accent-light);
+  display: flex;
   align-items: center;
-  justify-content: flex-start;
-  background-color: var(--bg-primary);
-  overflow-x: hidden;
-}
-
-/* ─── Decorative Particles ──────────────────────────────────── */
-.particles {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
+  justify-content: center;
   overflow: hidden;
-  z-index: 0;
-}
-
-.particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  opacity: 0;
-  animation: particle-float linear infinite;
-}
-
-@keyframes particle-float {
-  0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-  10%  { opacity: 0.6; }
-  90%  { opacity: 0.3; }
-  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
-}
-
-/* ─── Hero ──────────────────────────────────────────────────── */
-.invite-hero {
   position: relative;
-  z-index: 1;
+}
+
+.inv-image {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 10s ease;
+}
+.inv-image:hover {
+  transform: scale(1.05);
+}
+
+/* Fallback when no image is provided */
+.inv-image-placeholder {
+  font-size: 48px;
+  opacity: 0.2;
+}
+
+.inv-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 80px 24px 60px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.10) 0%, transparent 65%);
-  border-bottom: 1px solid var(--border);
+  padding: 40px 24px;
 }
 
-.invite-eyebrow {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
+.inv-eyebrow {
+  font-size: 14px;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-  animation: fadeIn 1s ease both;
+  color: var(--inv-accent);
+  margin-bottom: 24px;
 }
 
-.couple-script {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(52px, 10vw, 88px);
+.inv-names {
+  font-family: var(--inv-font-script);
+  font-size: clamp(48px, 8vw, 80px);
   line-height: 1.1;
-  background: linear-gradient(135deg, var(--gold-light) 0%, var(--rose-light) 50%, var(--gold) 100%);
+  margin: 0 0 32px;
+  color: var(--inv-text);
+}
+
+.theme-dark-luxury .inv-names {
+  background: linear-gradient(135deg, #d4af37, #f3e5ab);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 16px;
-  animation: slideUp 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
-  filter: drop-shadow(0 2px 24px rgba(212, 175, 55, 0.25));
 }
 
-.invite-tag {
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  font-style: italic;
-  color: var(--text-soft);
-  letter-spacing: 0.06em;
-  animation: fadeIn 1s ease 0.3s both;
+.theme-light-floral .inv-names {
+  color: var(--inv-accent);
 }
 
-.invite-ornament {
+.inv-divider {
+  width: 60px;
+  height: 1px;
+  background-color: var(--inv-accent);
+  margin: 0 auto 32px;
+}
+
+.inv-details {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.inv-detail-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  margin: 28px auto;
-  max-width: 300px;
-  color: var(--gold);
-  font-size: 20px;
-  animation: fadeIn 1s ease 0.4s both;
-}
-.invite-ornament::before,
-.invite-ornament::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-/* ─── Content Sections ──────────────────────────────────────── */
-.invite-content {
+.inv-icon {
+  color: var(--inv-accent);
+  font-size: 20px;
+}
+
+.inv-message {
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  color: var(--inv-text);
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+/* ─── Layouts ────────────────────────────────────────────────── */
+
+/* 1. Image Top (Hero) */
+body.layout-image-top .inv-container {
+  flex-direction: column;
+}
+body.layout-image-top .inv-image-wrapper {
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+}
+body.layout-image-top .inv-content-wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+/* 2. Split Screen */
+body.layout-split-screen .inv-container {
+  flex-direction: row;
+}
+body.layout-split-screen .inv-image-wrapper {
+  width: 50%;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+body.layout-split-screen .inv-content-wrapper {
+  width: 50%;
+  min-height: 100vh;
+  padding: 64px 48px;
+}
+
+@media (max-width: 768px) {
+  body.layout-split-screen .inv-container {
+    flex-direction: column;
+  }
+  body.layout-split-screen .inv-image-wrapper {
+    width: 100%;
+    height: 50vh;
+    position: relative;
+  }
+  body.layout-split-screen .inv-content-wrapper {
+    width: 100%;
+    min-height: auto;
+    padding: 48px 24px;
+  }
+}
+
+/* 3. Background Cover */
+body.layout-image-background .inv-container {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+body.layout-image-background .inv-image-wrapper {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+body.layout-image-background .inv-image {
+  opacity: 0.6; /* Dim background image slightly */
+}
+body.layout-image-background .inv-content-wrapper {
   position: relative;
   z-index: 1;
-  width: 100%;
+  background: var(--inv-bg);
+  margin: 40px 24px;
+  padding: 64px 48px;
   max-width: 700px;
-  padding: 48px 24px 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  border-radius: 24px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+  /* Glassmorphism if it's not minimal */
+}
+body.theme-light-floral.layout-image-background .inv-content-wrapper {
+  background: rgba(253, 251, 247, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+body.theme-dark-luxury.layout-image-background .inv-content-wrapper {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-/* ─── Detail Cards ──────────────────────────────────────────── */
-.detail-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+@media (max-width: 480px) {
+  body.layout-image-background .inv-content-wrapper {
+    padding: 48px 24px;
+    margin: 24px 16px;
+  }
+}
+
+/* ─── Countdown ──────────────────────────────────────────────── */
+.inv-countdown {
+  display: flex;
   gap: 16px;
-}
-
-.detail-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  text-align: center;
-  transition: all var(--transition);
-  animation: slideUp 0.8s ease both;
-}
-.detail-card:hover {
-  border-color: rgba(201, 149, 108, 0.40);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-gold);
-}
-
-.detail-card-icon {
-  font-size: 28px;
-  margin-bottom: 10px;
-  display: block;
-  animation: float 3s ease-in-out infinite;
-}
-
-.detail-card-label {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-
-.detail-card-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  color: var(--text);
-  line-height: 1.3;
-}
-
-/* ─── Message Card ──────────────────────────────────────────── */
-.message-card {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(201, 149, 108, 0.05));
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 32px;
-  text-align: center;
-}
-
-.message-card .message-quote {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  font-style: italic;
-  color: var(--text-soft);
-  line-height: 1.7;
-  position: relative;
-}
-
-.message-card .message-quote::before {
-  content: '"';
-  font-size: 64px;
-  color: var(--gold-dim);
-  font-family: 'Playfair Display', serif;
-  line-height: 0;
-  vertical-align: -0.35em;
-  margin-right: 4px;
-}
-
-/* ─── Countdown ─────────────────────────────────────────────── */
-.countdown-section {
-  text-align: center;
-}
-
-.countdown-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 15px;
-  font-style: italic;
-  color: var(--text-muted);
-  margin-bottom: 20px;
-}
-
-.countdown-grid {
-  display: flex;
   justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  margin-top: 48px;
 }
-
-.countdown-unit {
+.cd-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 72px;
+  background: var(--inv-accent-light);
+  border: 1px solid rgba(128,128,128,0.1);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 80px;
 }
-
-.countdown-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 40px;
-  font-weight: 700;
-  color: var(--gold-light);
-  line-height: 1;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  min-width: 72px;
-  text-align: center;
-  transition: all var(--transition);
+.theme-dark-luxury .cd-box {
+  border-color: rgba(212, 175, 55, 0.2);
 }
-
-.countdown-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.10em;
-  color: var(--text-muted);
-  margin-top: 8px;
-}
-
-.countdown-done {
-  font-family: 'Great Vibes', cursive;
-  font-size: 36px;
-  color: var(--gold-light);
-}
-
-/* ─── RSVP Section ──────────────────────────────────────────── */
-.rsvp-section {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 36px;
-}
-
-.rsvp-section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  text-align: center;
-  margin-bottom: 8px;
-}
-
-.rsvp-section-subtitle {
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 14px;
-  margin-bottom: 28px;
-}
-
-.rsvp-attend-options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.cd-val {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--inv-accent);
   margin-bottom: 4px;
 }
-
-.attend-option {
-  position: relative;
+.cd-lbl {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--inv-text);
+  opacity: 0.6;
 }
 
-.attend-option input[type="radio"] {
-  position: absolute;
+/* ─── Animations ─────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.inv-animate {
   opacity: 0;
-  width: 0;
+  animation: fadeInUp 1s ease forwards;
 }
 
-.attend-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 14px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-soft);
-  transition: all var(--transition);
-}
-
-.attend-option input:checked + .attend-label {
-  border-color: var(--gold);
-  background: var(--gold-dim);
-  color: var(--gold-light);
-}
-
-.attend-label:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-  background: rgba(212, 175, 55, 0.06);
-}
-
-.rsvp-success {
-  text-align: center;
-  padding: 20px;
-  animation: slideUp 0.5s ease;
-}
-
-.rsvp-success .success-icon { font-size: 52px; margin-bottom: 16px; }
-.rsvp-success h3 { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 8px; }
-.rsvp-success p  { color: var(--text-soft); }
-
-/* ─── Loading State ─────────────────────────────────────────── */
-#invite-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 80vh;
-  gap: 16px;
-  color: var(--text-muted);
-  font-size: 14px;
-}
-
-/* ─── Error State ───────────────────────────────────────────── */
-#invite-error {
-  display: none;
-  text-align: center;
-  padding: 80px 24px;
-  color: var(--text-muted);
-}
-#invite-error .error-icon { font-size: 56px; margin-bottom: 16px; }
-#invite-error h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 12px; color: var(--text); }
-
-/* ─── Footer ────────────────────────────────────────────────── */
-.invite-footer {
-  position: relative;
-  z-index: 1;
-  border-top: 1px solid var(--border);
-  padding: 20px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-.invite-footer a { color: var(--gold); text-decoration: none; }
-.invite-footer a:hover { text-decoration: underline; }
-
-/* ─── Responsive ────────────────────────────────────────────── */
-@media (max-width: 580px) {
-  .detail-cards { grid-template-columns: 1fr; }
-  .rsvp-attend-options { grid-template-columns: 1fr; }
-  .rsvp-section { padding: 24px 20px; }
-  .invite-hero { padding: 60px 20px 40px; }
-}
+.d-1 { animation-delay: 0.2s; }
+.d-2 { animation-delay: 0.4s; }
+.d-3 { animation-delay: 0.6s; }
+.d-4 { animation-delay: 0.8s; }
+.d-5 { animation-delay: 1.0s; }

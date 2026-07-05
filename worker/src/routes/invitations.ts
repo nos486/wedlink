@@ -51,7 +51,7 @@ invitations.post('/', async (c) => {
     return c.json({ success: false, error: 'Invalid JSON body' }, 400);
   }
 
-  const { bride, groom, date, venue, message } = body;
+  const { bride, groom, date, time, venue, message, image_url, theme, layout } = body;
 
   if (!bride?.trim() || !groom?.trim() || !date?.trim() || !venue?.trim()) {
     return c.json({ success: false, error: 'bride, groom, date, and venue are required' }, 400);
@@ -61,9 +61,21 @@ invitations.post('/', async (c) => {
 
   const result = await c.env.DB
     .prepare(
-      'INSERT INTO invitations (user_id, slug, bride, groom, date, venue, message) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO invitations (user_id, slug, bride, groom, date, time, venue, message, image_url, theme, layout) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     )
-    .bind(userId, slug, bride.trim(), groom.trim(), date.trim(), venue.trim(), message?.trim() ?? null)
+    .bind(
+      userId, 
+      slug, 
+      bride.trim(), 
+      groom.trim(), 
+      date.trim(), 
+      time?.trim() ?? null,
+      venue.trim(), 
+      message?.trim() ?? null,
+      image_url?.trim() ?? null,
+      theme?.trim() ?? 'modern-minimal',
+      layout?.trim() ?? 'image-top'
+    )
     .run();
 
   const created = await c.env.DB

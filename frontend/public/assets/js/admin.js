@@ -99,7 +99,12 @@ function renderCard(inv) {
 
       <div class="invitation-card-body">
         <div class="info-row"><span class="info-icon">📍</span><span>${escHtml(inv.venue)}</span></div>
+        ${inv.time ? `<div class="info-row"><span class="info-icon">⏰</span><span>${escHtml(inv.time)}</span></div>` : ''}
         ${inv.message ? `<div class="info-row"><span class="info-icon">💬</span><span style="font-style:italic;color:var(--text-muted)">${escHtml(inv.message)}</span></div>` : ''}
+        <div class="info-row" style="margin-top: 8px;">
+          <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">🎨 ${formatTheme(inv.theme)}</span>
+          <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">📐 ${formatLayout(inv.layout)}</span>
+        </div>
         <div class="info-row"><span class="info-icon">🗓</span><span style="font-size:12px;color:var(--text-muted)">Created ${timeAgo(inv.created_at)}</span></div>
       </div>
 
@@ -114,55 +119,11 @@ function renderCard(inv) {
         <button class="btn btn-ghost btn-sm" onclick="openInvite('${escAttr(inviteUrl)}')">
           <span>👁</span> Preview
         </button>
-        <button class="btn btn-ghost btn-sm" onclick="toggleRsvps('${escAttr(inv.slug)}')" id="rsvp-btn-${inv.slug}">
-          <span>📝</span> RSVPs
-        </button>
         <button class="btn btn-danger btn-sm" onclick="deleteInvitation('${escAttr(inv.slug)}')">
           <span>🗑</span>
         </button>
       </div>
-
-      <div id="rsvp-panel-${inv.slug}" style="display:none;padding:0 20px 16px">
-        <div class="rsvp-panel">
-          <div class="rsvp-panel-title">Guest Responses</div>
-          <div id="rsvp-list-${inv.slug}" class="rsvp-list">
-            <div style="color:var(--text-muted);font-size:13px">Loading…</div>
-          </div>
-        </div>
-      </div>
     </div>`;
-}
-
-// ─── RSVP Panel ───────────────────────────────────────────────
-async function toggleRsvps(slug) {
-  const panel = document.getElementById(`rsvp-panel-${slug}`);
-  if (panel.style.display === 'none') {
-    panel.style.display = 'block';
-    await loadRsvps(slug);
-  } else {
-    panel.style.display = 'none';
-  }
-}
-
-async function loadRsvps(slug) {
-  const list = document.getElementById(`rsvp-list-${slug}`);
-  try {
-    const { data } = await apiFetch(`/invitations/${slug}/rsvps`);
-    if (!data.length) {
-      list.innerHTML = '<div style="color:var(--text-muted);font-size:13px;font-style:italic">No RSVPs yet.</div>';
-      return;
-    }
-    list.innerHTML = data.map(r => `
-      <div class="rsvp-item">
-        <span class="rsvp-guest">👤 ${escHtml(r.guest_name)}</span>
-        <span class="badge ${r.attending ? 'badge-green' : 'badge-red'}">
-          ${r.attending ? '✓ Attending' : '✗ Declining'}
-        </span>
-        ${r.message ? `<span class="rsvp-msg">"${escHtml(r.message)}"</span>` : ''}
-      </div>`).join('');
-  } catch {
-    list.innerHTML = '<div style="color:#f87171;font-size:13px">Failed to load RSVPs.</div>';
-  }
 }
 
 // ─── Delete ───────────────────────────────────────────────────
@@ -258,11 +219,15 @@ function setupForm() {
 
     const form = e.target;
     const body = {
-      bride:   form.bride.value.trim(),
-      groom:   form.groom.value.trim(),
-      date:    form.date.value,
-      venue:   form.venue.value.trim(),
-      message: form.message.value.trim() || undefined,
+      bride:     form.bride.value.trim(),
+      groom:     form.groom.value.trim(),
+      date:      form.date.value,
+      time:      form.time.value.trim() || undefined,
+      venue:     form.venue.value.trim(),
+      message:   form.message.value.trim() || undefined,
+      image_url: form.image_url.value.trim() || undefined,
+      theme:     form.theme.value,
+      layout:    form.layout.value,
     };
 
     const errors = validateForm(body);
@@ -360,9 +325,26 @@ function timeAgo(dateStr) {
   return 'just now';
 }
 
+function formatTheme(theme) {
+  const map = {
+    'modern-minimal': 'Modern Minimal',
+    'dark-luxury': 'Dark Luxury',
+    'light-floral': 'Light Floral'
+  };
+  return map[theme] || 'Modern Minimal';
+}
+
+function formatLayout(layout) {
+  const map = {
+    'image-top': 'Hero Top',
+    'split-screen': 'Split Screen',
+    'image-background': 'Background'
+  };
+  return map[layout] || 'Hero Top';
+}
+
 // Expose for inline onclick handlers
 window.copyLink          = copyLink;
 window.openInvite        = openInvite;
-window.toggleRsvps       = toggleRsvps;
 window.deleteInvitation  = deleteInvitation;
 window.closeModal        = closeModal;
