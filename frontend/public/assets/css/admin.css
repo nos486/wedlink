@@ -2,253 +2,133 @@
    WedLink — Admin Dashboard Styles
    ============================================================ */
 
-/* ─── Page Layout ───────────────────────────────────────────── */
-.admin-layout {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+.admin-layout { min-height: 100vh; display: flex; flex-direction: column; }
 
+/* ─── Hero Section ──────────────────────────────────────────── */
 .page-hero {
-  padding: 60px 40px 40px;
+  padding: 80px 40px 60px;
   text-align: center;
-  background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
   border-bottom: 1px solid var(--border);
 }
-
-.page-hero .hero-eyebrow {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--gold);
-  margin-bottom: 12px;
+.hero-eyebrow {
+  font-size: 13px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.2em; color: var(--accent); margin-bottom: 16px;
 }
-
 .page-hero h1 {
-  font-size: clamp(28px, 4vw, 44px);
-  margin-bottom: 12px;
-  background: linear-gradient(135deg, var(--text) 40%, var(--rose-light));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: clamp(32px, 5vw, 56px); margin-bottom: 20px;
+  background: linear-gradient(135deg, #ffffff 30%, #94a3b8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-
 .page-hero .subtitle {
-  color: var(--text-soft);
-  font-size: 16px;
-  max-width: 480px;
-  margin: 0 auto 28px;
+  color: var(--text-soft); font-size: 18px; max-width: 540px; margin: 0 auto 32px;
 }
 
 /* ─── Stats Strip ───────────────────────────────────────────── */
 .stats-strip {
-  display: flex;
-  justify-content: center;
-  gap: 48px;
-  padding: 28px 40px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-secondary);
+  display: flex; justify-content: center; gap: 64px;
+  padding: 32px 40px; border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.01);
 }
-
 .stat-item { text-align: center; }
-
 .stat-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 30px;
-  font-weight: 700;
-  color: var(--gold-light);
-  line-height: 1;
+  font-family: 'Playfair Display', serif; font-size: 36px;
+  font-weight: 600; color: var(--text); line-height: 1; margin-bottom: 8px;
 }
-
 .stat-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 4px;
+  font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;
 }
 
 /* ─── Main Content ──────────────────────────────────────────── */
 .main-content {
-  flex: 1;
-  padding: 40px;
-  max-width: 1100px;
-  width: 100%;
-  margin: 0 auto;
+  flex: 1; padding: 60px 40px; max-width: 1200px; width: 100%; margin: 0 auto;
 }
-
 .section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px;
+}
+.section-title { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--text); }
+
+/* Limit warning */
+#limit-warning {
+  display: none; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--border-focus);
+  color: var(--accent-light); border-radius: var(--radius-sm); padding: 12px 20px;
+  font-size: 14px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
 }
 
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  color: var(--text);
-}
-
-/* ─── Invitation Cards Grid ─────────────────────────────────── */
+/* ─── Invitation Cards ──────────────────────────────────────── */
 #invitations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px;
 }
-
 .invitation-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: all var(--transition);
-  position: relative;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  transition: all var(--transition); display: flex; flex-direction: column;
 }
-
 .invitation-card:hover {
-  border-color: rgba(201, 149, 108, 0.4);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-card), var(--shadow-gold);
+  border-color: rgba(255,255,255,0.15); transform: translateY(-4px); box-shadow: var(--shadow-lg);
 }
-
 .invitation-card-header {
-  padding: 20px 20px 14px;
-  border-bottom: 1px solid var(--border);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.04), rgba(201, 149, 108, 0.04));
+  padding: 24px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), transparent);
 }
-
 .couple-names {
-  font-family: 'Great Vibes', cursive;
-  font-size: 28px;
-  color: var(--gold-light);
-  line-height: 1.2;
-  margin-bottom: 4px;
+  font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 500;
+  color: var(--text); margin-bottom: 8px;
 }
-
 .invitation-date {
-  font-size: 13px;
-  color: var(--text-soft);
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  font-size: 14px; color: var(--text-soft); display: flex; align-items: center; gap: 8px;
 }
 
-.invitation-card-body {
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.invitation-card-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.info-row { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--text-soft); }
+.info-icon { color: var(--text-muted); flex-shrink: 0; margin-top: 2px; }
 
-.info-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 13px;
-  color: var(--text-soft);
-}
-
-.info-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
-
-.invitation-card-footer {
-  padding: 14px 20px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+.badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: 20px; font-size: 12px; color: var(--text-soft);
 }
 
 .link-preview {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xs);
-  padding: 8px 12px;
-  font-size: 12px;
-  color: var(--text-muted);
-  overflow: hidden;
-  margin: 0 20px 14px;
+  display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border); border-radius: var(--radius-xs);
+  padding: 10px 14px; font-size: 13px; color: var(--text-muted);
+  margin: 0 24px 16px; overflow: hidden;
 }
+.link-preview span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
 
-.link-preview span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex: 1;
+.invitation-card-footer {
+  padding: 16px 24px; border-top: 1px solid var(--border);
+  display: flex; gap: 12px; flex-wrap: wrap; background: rgba(255,255,255,0.01);
 }
-
-/* ─── RSVP Panel ────────────────────────────────────────────── */
-.rsvp-panel {
-  margin-top: 8px;
-  border-top: 1px solid var(--border);
-  padding-top: 16px;
-}
-
-.rsvp-panel-title {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-}
-
-.rsvp-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.rsvp-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 13px;
-}
-
-.rsvp-guest { color: var(--text); font-weight: 500; }
-.rsvp-msg   { color: var(--text-muted); font-size: 12px; font-style: italic; }
 
 /* ─── Skeleton Cards ────────────────────────────────────────── */
-.skeleton-card {
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
+.skeleton-card { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+.skeleton-header { height: 90px; }
+.skeleton-body { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.skeleton-line { height: 14px; border-radius: 4px; }
 
-.skeleton-header {
-  height: 80px;
-  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
+/* ─── Empty State ───────────────────────────────────────────── */
+.empty-state { text-align: center; padding: 80px 24px; color: var(--text-muted); }
+.empty-icon { color: var(--border-focus); margin-bottom: 20px; display: flex; justify-content: center; }
+.empty-state h3 { font-size: 24px; color: var(--text); margin-bottom: 8px; }
+.empty-state p { font-size: 15px; }
 
-.skeleton-body {
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+/* ─── User Badge ────────────────────────────────────────────── */
+.user-badge {
+  display: flex; align-items: center; gap: 8px; padding: 8px 16px;
+  border: 1px solid var(--border); border-radius: 24px; font-size: 14px;
+  color: var(--text-soft); background: var(--bg-card); transition: all var(--transition);
 }
+.user-badge:hover { background: var(--bg-card-hover); }
+.user-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
 
-.skeleton-line {
-  height: 12px;
-  border-radius: 6px;
-  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* ─── Responsive ────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 768px) {
-  .page-hero { padding: 40px 20px 30px; }
-  .stats-strip { gap: 28px; padding: 20px; }
-  .main-content { padding: 24px 20px; }
+  .page-hero { padding: 60px 24px 40px; }
+  .stats-strip { gap: 32px; padding: 24px; }
+  .main-content { padding: 40px 24px; }
   #invitations-grid { grid-template-columns: 1fr; }
 }

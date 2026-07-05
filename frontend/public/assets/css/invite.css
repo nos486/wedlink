@@ -1,480 +1,179 @@
 /* ============================================================
-   WedLink — Invitation Themes and Layouts
+   WedLink — Invitation Themes & Layouts
+   Completely reimagined for a premium, responsive experience
    ============================================================ */
 
 /* ─── Themes (CSS Variables) ─────────────────────────────────── */
 
-:root {
-  /* Default: Modern Minimal */
-  --inv-bg: #ffffff;
-  --inv-text: #1a1a1a;
-  --inv-accent: #000000;
-  --inv-accent-light: rgba(0, 0, 0, 0.05);
-  --inv-font-primary: 'Inter', sans-serif;
-  --inv-font-script: 'Playfair Display', serif; /* Minimal uses playfair for headings */
+/* 1. Ethereal Pearl (Light, airy, soft white & silver) */
+body.theme-ethereal-pearl {
+  --inv-bg: #f8fafc;
+  --inv-text: #334155;
+  --inv-accent: #94a3b8;
+  --inv-accent-light: rgba(148, 163, 184, 0.15);
+  --inv-border: rgba(148, 163, 184, 0.3);
+  --inv-font-primary: 'Outfit', sans-serif;
+  --inv-font-script: 'Playfair Display', serif;
+  background-image: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+body.theme-ethereal-pearl .inv-names {
+  background: linear-gradient(135deg, #475569, #94a3b8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 
-body.theme-dark-luxury {
-  --inv-bg: #0f172a;
+/* 2. Midnight Velvet (Deep navy/black, gold accents) */
+body.theme-midnight-velvet {
+  --inv-bg: #020617;
   --inv-text: #f8fafc;
-  --inv-accent: #d4af37; /* Gold */
+  --inv-accent: #d4af37;
   --inv-accent-light: rgba(212, 175, 55, 0.1);
-  --inv-font-primary: 'Playfair Display', serif;
-  --inv-font-script: 'Great Vibes', cursive;
-}
-
-body.theme-light-floral {
-  --inv-bg: #fdfbf7;
-  --inv-text: #4a4a4a;
-  --inv-accent: #c9956c; /* Rose Gold */
-  --inv-accent-light: rgba(201, 149, 108, 0.1);
-  --inv-font-primary: 'Inter', sans-serif;
-  --inv-font-script: 'Great Vibes', cursive;
-}
-
-body.theme-royal-elegance {
-  --inv-bg: #2a0a18; /* Deep Velvet Crimson */
-  --inv-text: #fdf5e6;
-  --inv-accent: #e5b365; /* Elegant Gold */
-  --inv-accent-light: rgba(229, 179, 101, 0.15);
-  --inv-font-primary: 'Playfair Display', serif;
-  --inv-font-script: 'Great Vibes', cursive;
-}
-body.theme-royal-elegance .inv-container {
-  box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
-}
-body.theme-royal-elegance .inv-names {
-  background: linear-gradient(135deg, #e5b365, #ffdf99, #e5b365);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 4s linear infinite;
-}
-body.theme-royal-elegance .inv-content-wrapper {
-  animation: slowPulseGlow 8s infinite alternate;
-}
-
-body.theme-starlight-glamour {
-  --inv-bg: #09090b; /* Pitch Black */
-  --inv-text: #e2e8f0;
-  --inv-accent: #e2e8f0; /* Platinum/Silver */
-  --inv-accent-light: rgba(255, 255, 255, 0.05);
+  --inv-border: rgba(212, 175, 55, 0.2);
   --inv-font-primary: 'Inter', sans-serif;
   --inv-font-script: 'Playfair Display', serif;
-  background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  animation: driftBackground 60s linear infinite;
+  background-image: radial-gradient(circle at top right, rgba(212, 175, 55, 0.05), transparent 40%),
+                    radial-gradient(circle at bottom left, rgba(212, 175, 55, 0.05), transparent 40%);
 }
-body.theme-starlight-glamour .inv-names {
-  text-shadow: 0 0 20px rgba(255,255,255,0.3);
+body.theme-midnight-velvet .inv-names {
+  background: linear-gradient(135deg, #f3e5ab, #d4af37);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 
-body.theme-enchanted-forest {
-  --inv-bg: #0f1f15; /* Emerald / Deep Forest */
-  --inv-text: #e8f4ed;
-  --inv-accent: #86c49e; /* Soft Leaf Green */
-  --inv-accent-light: rgba(134, 196, 158, 0.1);
+/* 3. Botanic Romance (Earthy sage greens, elegant serif) */
+body.theme-botanic-romance {
+  --inv-bg: #f0f4f0;
+  --inv-text: #2f3e36;
+  --inv-accent: #6b8e78;
+  --inv-accent-light: rgba(107, 142, 120, 0.15);
+  --inv-border: rgba(107, 142, 120, 0.3);
   --inv-font-primary: 'Playfair Display', serif;
   --inv-font-script: 'Great Vibes', cursive;
-  position: relative;
 }
-body.theme-enchanted-forest::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 20% 30%, rgba(134,196,158,0.15) 0%, transparent 40%),
-              radial-gradient(circle at 80% 70%, rgba(229,179,101,0.1) 0%, transparent 40%);
-  pointer-events: none;
-  animation: lightLeak 15s ease-in-out infinite alternate;
-  z-index: 0;
-}
+body.theme-botanic-romance .inv-names { color: #4a6353; }
 
-/* Base Body Application */
+/* ─── Base Styles ────────────────────────────────────────────── */
 body.invite-page {
-  background-color: var(--inv-bg);
-  color: var(--inv-text);
-  font-family: var(--inv-font-primary);
-  min-height: 100vh;
-  margin: 0;
-  overflow-x: hidden;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: var(--inv-bg); color: var(--inv-text);
+  font-family: var(--inv-font-primary); min-height: 100vh;
+  margin: 0; overflow-x: hidden; transition: background 0.5s, color 0.5s;
 }
 
-/* ─── Shared Components ──────────────────────────────────────── */
+.inv-container { width: 100%; min-height: 100vh; display: flex; }
 
-.inv-container {
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-}
-
+/* Media Half */
 .inv-image-wrapper {
-  background-color: var(--inv-accent-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
+  background-color: var(--inv-accent-light); display: flex;
+  align-items: center; justify-content: center; overflow: hidden; position: relative;
 }
-
 .inv-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 10s ease;
+  width: 100%; height: 100%; object-fit: cover; transition: transform 12s ease-out;
 }
-.inv-image:hover {
-  transform: scale(1.05);
-}
+.inv-image-wrapper:hover .inv-image { transform: scale(1.05); }
 
-/* Fallback when no image is provided */
-.inv-image-placeholder {
-  font-size: 48px;
-  opacity: 0.2;
-}
+.inv-image-placeholder { color: var(--inv-accent); opacity: 0.3; display: flex; align-items: center; justify-content: center; }
 
+/* Content Half */
 .inv-content-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px 24px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; padding: 60px 32px; position: relative;
 }
 
 .inv-eyebrow {
-  font-size: 14px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--inv-accent);
-  margin-bottom: 24px;
+  font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--inv-accent); margin-bottom: 24px; font-weight: 500;
+  font-family: 'Inter', sans-serif;
 }
 
 .inv-names {
-  font-family: var(--inv-font-script);
-  font-size: clamp(32px, 8vw, 80px);
-  line-height: 1.1;
-  margin: 0 0 32px;
-  color: var(--inv-text);
+  font-family: var(--inv-font-script); font-size: clamp(48px, 8vw, 96px);
+  line-height: 1.1; margin: 0 0 32px; color: var(--inv-text); font-weight: 400;
 }
 
-.theme-dark-luxury .inv-names {
-  background: linear-gradient(135deg, #d4af37, #f3e5ab);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.inv-divider {
+  width: 60px; height: 1px; background-color: var(--inv-accent);
+  margin: 0 auto 32px; opacity: 0.5;
 }
 
-.theme-light-floral .inv-names {
-  color: var(--inv-accent);
-}
-
-.inv-divider { display: none; } /* Replaced by ornament-divider if needed */
-
-/* ─── Graphic Ornaments ──────────────────────────────────────── */
-
-.ornament {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  color: var(--inv-accent);
-  opacity: 0.8;
-  pointer-events: none;
-  transition: opacity 1s ease;
-}
-.ornament-top-left { top: 20px; left: 20px; }
-.ornament-bottom-right { bottom: 20px; right: 20px; }
-
-.ornament-divider {
-  width: 200px;
-  height: 20px;
-  color: var(--inv-accent);
-  margin: 0 auto 32px;
-  opacity: 0.8;
-}
-
-/* Hide ornaments on minimalist themes */
-body.theme-modern-minimal .ornament,
-body.theme-modern-minimal .ornament-divider {
-  display: none;
-}
-body.theme-modern-minimal .inv-divider {
-  display: block; /* Bring back the simple line */
-  width: 60px;
-  height: 1px;
-  background-color: var(--inv-accent);
-  margin: 0 auto 32px;
-}
-
-/* ─── Layouts ────────────────────────────────────────────────── */
-
-/* 1. Hero Top */
-body.layout-hero-top .inv-container {
-  flex-direction: column;
-}
-body.layout-hero-top .inv-image-wrapper {
-  width: 100%;
-  height: 60vh;
-  min-height: 400px;
-}
-body.layout-hero-top .inv-content-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding-top: 64px;
-  padding-bottom: 64px;
-}
-
-@media (max-width: 480px) {
-  body.layout-hero-top .inv-image-wrapper {
-    min-height: 250px;
-    height: 50vh;
-  }
-}
-
-/* 2. Split Screen (Left / Right) */
-body.layout-split-left .inv-container {
-  flex-direction: row;
-}
-body.layout-split-right .inv-container {
-  flex-direction: row-reverse;
-}
-body.layout-split-left .inv-image-wrapper,
-body.layout-split-right .inv-image-wrapper {
-  width: 50%;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-}
-body.layout-split-left .inv-content-wrapper,
-body.layout-split-right .inv-content-wrapper {
-  position: relative;
-  width: 50%;
-  min-height: 100vh;
-  padding: 64px 48px;
-}
-
-@media (max-width: 768px) {
-  body.layout-split-left .inv-container,
-  body.layout-split-right .inv-container {
-    flex-direction: column;
-  }
-  body.layout-split-left .inv-image-wrapper,
-  body.layout-split-right .inv-image-wrapper {
-    width: 100%;
-    height: 50vh;
-    position: relative;
-  }
-  body.layout-split-left .inv-content-wrapper,
-  body.layout-split-right .inv-content-wrapper {
-    width: 100%;
-    min-height: auto;
-    padding: 48px 24px;
-  }
-}
-
-@media (max-width: 480px) {
-  .ornament {
-    width: 50px;
-    height: 50px;
-  }
-  .ornament-top-left { top: 10px; left: 10px; }
-  .ornament-bottom-right { bottom: 10px; right: 10px; }
-  .ornament-divider { width: 150px; margin-bottom: 24px; }
-}
-
-/* 3. Full Overlay */
-body.layout-full-overlay .inv-container {
-  position: relative;
-  justify-content: center;
-  align-items: center;
-}
-body.layout-full-overlay .inv-image-wrapper {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-body.layout-full-overlay .inv-image {
-  opacity: 0.6;
-}
-body.layout-full-overlay .inv-content-wrapper {
-  position: relative;
-  z-index: 1;
-  background: var(--inv-bg);
-  margin: 40px 24px;
-  padding: 64px 48px;
-  max-width: 700px;
-  border-radius: 24px;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.2);
-}
-body.theme-light-floral.layout-full-overlay .inv-content-wrapper {
-  background: rgba(253, 251, 247, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.5);
-}
-body.theme-dark-luxury.layout-full-overlay .inv-content-wrapper,
-body.theme-royal-elegance.layout-full-overlay .inv-content-wrapper {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-}
-
-/* 4. Classic Card */
-body.layout-classic-card .inv-container {
-  justify-content: center;
-  align-items: center;
-  padding: 40px 24px;
-}
-body.layout-classic-card .inv-image-wrapper {
-  display: none; /* Text only on the outside card */
-}
-body.layout-classic-card .inv-content-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  background: var(--inv-bg);
-  border: 2px solid var(--inv-accent);
-  padding: 64px 48px;
-  box-shadow: 0 32px 64px rgba(0,0,0,0.1);
-}
-body.theme-royal-elegance.layout-classic-card .inv-content-wrapper {
-  box-shadow: inset 0 0 100px rgba(0,0,0,0.5), 0 32px 64px rgba(0,0,0,0.5);
-}
-
-/* 5. Polaroid Center */
-body.layout-polaroid-center .inv-container {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 24px;
-}
-body.layout-polaroid-center .inv-image-wrapper {
-  width: 100%;
-  max-width: 500px;
-  aspect-ratio: 1 / 1;
-  border: 16px solid var(--inv-bg);
-  border-bottom-width: 64px;
-  box-shadow: 0 16px 32px rgba(0,0,0,0.15);
-  transform: rotate(-2deg);
-  z-index: 2;
-  margin-bottom: -32px;
-}
-body.layout-polaroid-center .inv-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-body.layout-polaroid-center .inv-content-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 800px;
-  padding-top: 64px;
-  z-index: 1;
-}
-
-@media (max-width: 480px) {
-  body.layout-full-overlay .inv-content-wrapper,
-  body.layout-classic-card .inv-content-wrapper {
-    padding: 48px 24px;
-    margin: 24px 16px;
-  }
-}
 .inv-details {
-  font-size: 18px;
-  line-height: 1.8;
-  margin-bottom: 40px;
+  font-size: 16px; line-height: 2; margin-bottom: 40px; font-weight: 400;
 }
-
 .inv-detail-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px;
 }
-
-.inv-icon {
-  color: var(--inv-accent);
-  font-size: 20px;
-}
+.inv-icon { color: var(--inv-accent); width: 20px; height: 20px; flex-shrink: 0; display: flex; }
 
 .inv-message {
-  font-style: italic;
-  max-width: 600px;
-  margin: 0 auto 40px;
-  color: var(--inv-text);
-  opacity: 0.8;
-  line-height: 1.6;
+  font-style: italic; max-width: 600px; margin: 0 auto 48px; color: var(--inv-text);
+  opacity: 0.8; line-height: 1.8; font-size: 16px;
 }
 
 /* ─── Countdown ──────────────────────────────────────────────── */
-.inv-countdown {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  margin-top: 48px;
-}
+.inv-countdown { display: flex; gap: 20px; justify-content: center; margin-top: 48px; flex-wrap: wrap; }
 .cd-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--inv-accent-light);
-  border: 1px solid rgba(128,128,128,0.1);
-  border-radius: 12px;
-  padding: 16px;
-  min-width: 80px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--inv-bg); border: 1px solid var(--inv-border);
+  border-radius: 16px; padding: 20px; min-width: 90px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
 }
-.theme-dark-luxury .cd-box {
-  border-color: rgba(212, 175, 55, 0.2);
+.theme-midnight-velvet .cd-box { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); }
+.cd-val { font-size: 28px; font-weight: 300; color: var(--inv-accent); margin-bottom: 4px; font-family: 'Outfit', sans-serif; }
+.cd-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--inv-text); opacity: 0.6; }
+
+
+/* ─── Layouts ────────────────────────────────────────────────── */
+
+/* 1. Split Elegance (50/50 Desktop) */
+body.layout-split-elegance .inv-container { flex-direction: row; }
+body.layout-split-elegance .inv-image-wrapper { width: 50vw; height: 100vh; position: sticky; top: 0; }
+body.layout-split-elegance .inv-content-wrapper { width: 50vw; min-height: 100vh; padding: 80px 64px; }
+
+@media (max-width: 900px) {
+  body.layout-split-elegance .inv-container { flex-direction: column; }
+  body.layout-split-elegance .inv-image-wrapper { width: 100%; height: 50vh; position: relative; }
+  body.layout-split-elegance .inv-content-wrapper { width: 100%; padding: 64px 24px; min-height: 50vh; }
 }
-.cd-val {
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--inv-accent);
-  margin-bottom: 4px;
+
+/* 2. Floating Card (Full Image Background with Glassmorphism Card) */
+body.layout-floating-card .inv-container { position: relative; justify-content: center; align-items: center; padding: 40px 24px; }
+body.layout-floating-card .inv-image-wrapper { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; }
+body.layout-floating-card .inv-image { opacity: 0.85; }
+body.layout-floating-card .inv-content-wrapper {
+  position: relative; z-index: 1; background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 24px; padding: 80px 64px; max-width: 700px; width: 100%;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.15);
 }
-.cd-lbl {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--inv-text);
-  opacity: 0.6;
+body.theme-midnight-velvet.layout-floating-card .inv-content-wrapper {
+  background: rgba(2, 6, 23, 0.75); border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 32px 64px rgba(0,0,0,0.5);
+}
+@media (max-width: 600px) {
+  body.layout-floating-card .inv-content-wrapper { padding: 48px 24px; border-radius: 16px; }
+  body.layout-floating-card .inv-container { padding: 20px 16px; }
+}
+
+/* 3. Hero Cinematic (Full Top Image, Content Below) */
+body.layout-hero-cinematic .inv-container { flex-direction: column; }
+body.layout-hero-cinematic .inv-image-wrapper { width: 100%; height: 70vh; min-height: 500px; position: relative; }
+/* Add a gradient fade out at the bottom of the hero image */
+body.layout-hero-cinematic .inv-image-wrapper::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 30%;
+  background: linear-gradient(to top, var(--inv-bg), transparent);
+}
+body.layout-hero-cinematic .inv-content-wrapper {
+  width: 100%; max-width: 800px; margin: 0 auto; padding: 40px 24px 80px;
+}
+@media (max-width: 600px) {
+  body.layout-hero-cinematic .inv-image-wrapper { height: 50vh; min-height: 300px; }
 }
 
 /* ─── Animations ─────────────────────────────────────────────── */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-.inv-animate {
-  opacity: 0;
-  animation: fadeInUp 1s ease forwards;
-}
-
+.inv-animate { opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .d-1 { animation-delay: 0.2s; }
 .d-2 { animation-delay: 0.4s; }
 .d-3 { animation-delay: 0.6s; }
 .d-4 { animation-delay: 0.8s; }
 .d-5 { animation-delay: 1.0s; }
-
-/* Theme specific animations */
-@keyframes shimmer {
-  0% { background-position: 200% center; }
-  100% { background-position: -200% center; }
-}
-@keyframes slowPulseGlow {
-  0% { box-shadow: 0 0 20px rgba(229,179,101,0.05); }
-  100% { box-shadow: 0 0 50px rgba(229,179,101,0.2); }
-}
-@keyframes driftBackground {
-  0% { background-position: 0 0; }
-  100% { background-position: 400px 400px; }
-}
-@keyframes lightLeak {
-  0% { transform: scale(1) translate(0, 0); opacity: 0.6; }
-  50% { transform: scale(1.1) translate(2%, 3%); opacity: 0.9; }
-  100% { transform: scale(1) translate(-2%, -1%); opacity: 0.6; }
-}

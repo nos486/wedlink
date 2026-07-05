@@ -6,27 +6,31 @@
   <title>Wedding Invitation</title>
   <meta name="description" content="You are cordially invited." />
   
-  <!-- Fonts: Inter, Playfair Display, Great Vibes -->
+  <!-- Fonts: Inter, Playfair Display, Great Vibes, Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="assets/css/invite.css" />
 </head>
-<body id="invite-body" class="invite-page theme-modern-minimal layout-image-top">
+<body id="invite-body" class="invite-page theme-ethereal-pearl layout-split-elegance">
 
   <!-- Loading state -->
   <div id="invite-loading" style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;color:#888;">
     <div style="text-align:center;">
-      <div style="font-size:32px;animation:spin 1s linear infinite;">💍</div>
-      <p style="margin-top:16px;">Loading invitation...</p>
+      <div style="animation:spin 1s linear infinite; display:inline-block;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+      </div>
+      <p style="margin-top:16px;">Preparing invitation...</p>
     </div>
   </div>
   <style>@keyframes spin { 100% { transform:rotate(360deg); } }</style>
 
   <!-- Error state -->
   <div id="invite-error" style="display:none;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;color:#888;text-align:center;">
-    <div style="font-size:48px;margin-bottom:16px;">💔</div>
+    <div style="margin-bottom:16px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><line x1="12" x2="12" y1="13" y2="21"></line></svg>
+    </div>
     <h1 id="error-title" style="color:#333;margin:0 0 8px;">Invitation Not Found</h1>
     <p id="error-detail" style="margin:0;">The link might be invalid or expired.</p>
   </div>
@@ -37,16 +41,13 @@
     <!-- Image Half -->
     <div class="inv-image-wrapper">
       <img id="invite-image" class="inv-image" src="" alt="Couple" style="display:none;" />
-      <div id="invite-image-placeholder" class="inv-image-placeholder">💍</div>
+      <div id="invite-image-placeholder" class="inv-image-placeholder">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+      </div>
     </div>
 
     <!-- Text Half -->
     <div class="inv-content-wrapper">
-      <!-- Ornaments -->
-      <svg class="ornament ornament-top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0 L50 0 C50 50, 0 50, 0 100 Z" fill="currentColor"/></svg>
-      <svg class="ornament ornament-bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M100 100 L50 100 C50 50, 100 50, 100 0 Z" fill="currentColor"/></svg>
-      <svg class="ornament-divider" viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L80 10 L100 0 L120 10 L200 10" stroke="currentColor" fill="none" stroke-width="1"/></svg>
-
       <div class="inv-eyebrow inv-animate d-1">You are cordially invited to the wedding of</div>
       
       <h1 id="couple-names" class="inv-names inv-animate d-2">Bride & Groom</h1>
@@ -55,15 +56,15 @@
 
       <div class="inv-details inv-animate d-4">
         <div class="inv-detail-item">
-          <span class="inv-icon">📅</span>
+          <span class="inv-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg></span>
           <span id="detail-date">January 1, 2025</span>
         </div>
         <div id="time-container" class="inv-detail-item" style="display:none;">
-          <span class="inv-icon">⏰</span>
+          <span class="inv-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
           <span id="detail-time">5:00 PM</span>
         </div>
         <div class="inv-detail-item">
-          <span class="inv-icon">📍</span>
+          <span class="inv-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
           <span id="detail-venue">The Grand Venue</span>
         </div>
       </div>

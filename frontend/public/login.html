@@ -10,7 +10,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Styles -->
   <link rel="stylesheet" href="assets/css/style.css" />
@@ -29,22 +29,24 @@
 
     <!-- Logo -->
     <div class="login-logo">
-      <div class="login-logo-icon">💍</div>
+      <div class="login-logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path><path d="M16 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path><path d="M4 14a6 6 0 0 1 12 0"></path><path d="M8 14a6 6 0 0 1 12 0"></path></svg>
+      </div>
       <div class="login-logo-text">WedLink</div>
-      <div class="login-logo-sub">Wedding Invitation Manager</div>
+      <div class="login-logo-sub">Premium Invitation Manager</div>
     </div>
 
     <h1 class="login-form-title">Welcome back</h1>
 
     <!-- Error message -->
     <div class="login-error" id="login-error" role="alert">
-      <span>⚠️</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
       <span id="login-error-text">Invalid username or password.</span>
     </div>
 
     <!-- Success flash -->
     <div class="login-success" id="login-success" role="status">
-      <span>✅</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
       <span>Signing you in…</span>
     </div>
 
@@ -54,7 +56,9 @@
       <div class="form-group">
         <label class="form-label" for="username">Username</label>
         <div class="input-wrapper">
-          <span class="input-icon">👤</span>
+          <span class="input-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </span>
           <input
             class="form-input"
             id="username"
@@ -71,7 +75,9 @@
       <div class="form-group">
         <label class="form-label" for="password">Password</label>
         <div class="input-wrapper">
-          <span class="input-icon">🔒</span>
+          <span class="input-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </span>
           <input
             class="form-input"
             id="password"
@@ -108,7 +114,7 @@
     /* ── Spawn floating particles ── */
     (function spawnParticles() {
       const container = document.getElementById('particles');
-      const colors = ['#d4af37', '#c9956c', '#e8cc6a', '#e0b08a'];
+      const colors = ['#d4af37', '#f3e5ab', '#e8cc6a', '#a38a2e'];
       for (let i = 0; i < 18; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
@@ -120,7 +126,7 @@
           animation-duration:${10+Math.random()*12}s;
           animation-delay:${Math.random()*8}s;
         `;
-        container.appendChild(p);
+        if (container) container.appendChild(p);
       }
     })();
 
@@ -155,7 +161,7 @@
       }
 
       btn.disabled = true;
-      btnLbl.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px"></span> Signing in…';
+      btnLbl.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px;margin-right:8px;vertical-align:middle;"></span> Signing in…';
 
       try {
         const apiBase = await getApiBaseUrl();
@@ -181,8 +187,10 @@
       } catch (err) {
         showError('Could not connect to the server. Please try again.');
       } finally {
-        btn.disabled = false;
-        btnLbl.textContent = 'Sign In';
+        if (!okBox.classList.contains('visible')) {
+          btn.disabled = false;
+          btnLbl.textContent = 'Sign In';
+        }
       }
     });
   </script>
