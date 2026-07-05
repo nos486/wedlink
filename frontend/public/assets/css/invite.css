@@ -102,18 +102,12 @@ body.theme-enchanted-forest::before {
 }
 
 /* ─── Base Application ───────────────────────────────────────── */
-html {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
 body.invite-page {
   background-color: var(--inv-bg);
   color: var(--inv-text);
   font-family: var(--inv-font-primary);
   min-height: 100vh;
   margin: 0;
-  max-width: 100%;
   overflow-x: hidden;
   position: relative;
 }
@@ -179,7 +173,6 @@ body.invite-page {
   padding: 60px 48px;
   z-index: 1;
   position: relative;
-  max-width: 100%;
 }
 
 .inv-eyebrow {
@@ -194,13 +187,10 @@ body.invite-page {
 
 .inv-names {
   font-family: var(--inv-font-script);
-  font-size: clamp(32px, 6vw, 76px);
+  font-size: clamp(38px, 6vw, 76px);
   line-height: 1.15;
   margin: 0 0 28px;
   color: var(--inv-text);
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  max-width: 100%;
 }
 
 .inv-divider {
@@ -283,11 +273,9 @@ body.theme-modern-minimal .ornament-divider {
 /* ─── Countdown Timer ────────────────────────────────────────── */
 .inv-countdown {
   display: flex;
-  flex-wrap: wrap;
   gap: 14px;
   justify-content: center;
   margin: 40px auto;
-  max-width: 100%;
 }
 
 .cd-box {
@@ -598,24 +586,9 @@ body.layout-polaroid-center .inv-content-wrapper {
 
 @media (max-width: 768px) {
   /* Enforce beautiful layout adapt on mobile - Full Screen Edge-to-Edge */
-  .inv-container {
-    flex-direction: column !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden;
-    box-sizing: border-box;
-  }
-
-  .inv-image-wrapper {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box;
-  }
-
-  .inv-image {
-    width: 100% !important;
-    max-width: 100% !important;
-    object-fit: cover;
+  body.layout-split-left .inv-container,
+  body.layout-split-right .inv-container {
+    flex-direction: column;
   }
   body.layout-split-left .inv-image-wrapper,
   body.layout-split-right .inv-image-wrapper {
