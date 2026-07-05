@@ -1,32 +1,49 @@
 import { Hono } from 'hono';
-import type { Env, Invitation, CreateInvitationBody } from '../types';
+import type { Env, Invitation, CreateInvitationBody, AppVariables } from '../types';
+import { requireAuth } from '../middleware/auth';
 
-const invitations = new Hono<{ Bindings: Env }>();
+const invitations = new Hono<{ Bindings: Env; Variables: AppVariables }>();
 
-// ─── List all invitations ────────────────────────────────────
+const MAX_INVITATIONS_PER_USER = 10;
+
+// All invitation routes require authentication
+invitations.use('*', requireAuth);
+
+// ─── GET /api/invitations — list user's own invitations ───────
 invitations.get('/', async (c) => {
+  const userId = c.get('userId');
+
   const { results } = await c.env.DB
-    .prepare('SELECT * FROM invitations ORDER BY created_at DESC')
+    .prepare('SELECT * FROM invitations WHERE user_id = ? ORDER BY created_at DESC')
+    .bind(userId)
     .all<Invitation>();
+
   return c.json({ success: true, data: results });
 });
 
-// ─── Get single invitation by slug ──────────────────────────
-invitations.get('/:slug', async (c) => {
-  const slug = c.req.param('slug');
-  const invitation = await c.env.DB
-    .prepare('SELECT * FROM invitations WHERE slug = ?')
-    .bind(slug)
-    .first<Invitation>();
-
-  if (!invitation) {
-    return c.json({ success: false, error: 'Invitation not found' }, 404);
-  }
-  return c.json({ success: true, data: invitation });
-});
-
-// ─── Create invitation ───────────────────────────────────────
+// ─── POST /api/invitations — create (max 10 per user) ─────────
 invitations.post('/', async (c) => {
+  const userId = c.get('userId');
+
+  // Enforce per-user limit
+  const countRow = await c.env.DB
+    .prepare('SELECT COUNT(*) as count FROM invitations WHERE user_id = ?')
+    .bind(userId)
+    .first<{ count: number }>();
+
+  const currentCount = countRow?.count ?? 0;
+  if (currentCount >= MAX_INVITATIONS_PER_USER) {
+    return c.json(
+      {
+        success: false,
+        error: `You have reached the maximum of ${MAX_INVITATIONS_PER_USER} invitations. Please delete one to create a new one.`,
+        limit: MAX_INVITATIONS_PER_USER,
+        current: currentCount,
+      },
+      429,
+    );
+  }
+
   let body: CreateInvitationBody;
   try {
     body = await c.req.json<CreateInvitationBody>();
@@ -43,8 +60,10 @@ invitations.post('/', async (c) => {
   const slug = generateSlug(bride.trim(), groom.trim());
 
   const result = await c.env.DB
-    .prepare('INSERT INTO invitations (slug, bride, groom, date, venue, message) VALUES (?, ?, ?, ?, ?, ?)')
-    .bind(slug, bride.trim(), groom.trim(), date.trim(), venue.trim(), message?.trim() ?? null)
+    .prepare(
+      'INSERT INTO invitations (user_id, slug, bride, groom, date, venue, message) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    )
+    .bind(userId, slug, bride.trim(), groom.trim(), date.trim(), venue.trim(), message?.trim() ?? null)
     .run();
 
   const created = await c.env.DB
@@ -55,12 +74,14 @@ invitations.post('/', async (c) => {
   return c.json({ success: true, data: created }, 201);
 });
 
-// ─── Get RSVPs for an invitation ────────────────────────────
+// ─── GET /api/invitations/:slug/rsvps — user's invitation RSVPs
 invitations.get('/:slug/rsvps', async (c) => {
   const slug = c.req.param('slug');
+  const userId = c.get('userId');
+
   const invitation = await c.env.DB
-    .prepare('SELECT id FROM invitations WHERE slug = ?')
-    .bind(slug)
+    .prepare('SELECT id FROM invitations WHERE slug = ? AND user_id = ?')
+    .bind(slug, userId)
     .first<{ id: number }>();
 
   if (!invitation) {
@@ -75,19 +96,25 @@ invitations.get('/:slug/rsvps', async (c) => {
   return c.json({ success: true, data: results });
 });
 
-// ─── Delete invitation ───────────────────────────────────────
+// ─── DELETE /api/invitations/:slug ────────────────────────────
 invitations.delete('/:slug', async (c) => {
   const slug = c.req.param('slug');
+  const userId = c.get('userId');
+
   const invitation = await c.env.DB
-    .prepare('SELECT id FROM invitations WHERE slug = ?')
-    .bind(slug)
+    .prepare('SELECT id FROM invitations WHERE slug = ? AND user_id = ?')
+    .bind(slug, userId)
     .first<{ id: number }>();
 
   if (!invitation) {
     return c.json({ success: false, error: 'Invitation not found' }, 404);
   }
 
-  await c.env.DB.prepare('DELETE FROM invitations WHERE id = ?').bind(invitation.id).run();
+  await c.env.DB
+    .prepare('DELETE FROM invitations WHERE id = ?')
+    .bind(invitation.id)
+    .run();
+
   return c.json({ success: true, message: 'Invitation deleted' });
 });
 

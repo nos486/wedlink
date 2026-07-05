@@ -1,17 +1,29 @@
-name = "wedlink"
+name = "wedlink-api"
 main = "src/index.ts"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 # ─────────────────────────────────────────────────────────────
 # D1 Database binding
-# After creating your D1 database in the Cloudflare dashboard,
-# replace YOUR_D1_DATABASE_ID with the actual database ID.
+# Replace YOUR_D1_DATABASE_ID with the real ID from Cloudflare dashboard.
 # ─────────────────────────────────────────────────────────────
 [[d1_databases]]
 binding = "DB"
 database_name = "wedlink-db"
-database_id = "87c51e08-27df-4f19-aa54-f66fede70bd0"
+database_id = "YOUR_D1_DATABASE_ID"
 
+# ─────────────────────────────────────────────────────────────
+# Environment variables
+#
+# ADMIN_PASSWORD and ADMIN_PASSWORD should be set as secrets
+# in the Cloudflare dashboard (Worker → Settings → Variables).
+#
+#   wrangler secret put ADMIN_PASSWORD
+#   wrangler secret put ADMIN_USERNAME   (optional, defaults to "admin")
+#
+# Do NOT commit your real password here.
+# ─────────────────────────────────────────────────────────────
 [vars]
-ENVIRONMENT = "production"
+ENVIRONMENT    = "production"
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "change_me_via_cloudflare_dashboard"

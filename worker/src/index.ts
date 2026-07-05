@@ -1,11 +1,12 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
-import type { Env } from './types';
-import invitations from './routes/invitations';
-import rsvp from './routes/rsvp';
+import type { Env, AppVariables } from './types';
+import authRoutes from './routes/auth';
+import invitationRoutes from './routes/invitations';
+import publicRoutes from './routes/public';
 
-const app = new Hono<{ Bindings: Env }>();
+const app = new Hono<{ Bindings: Env; Variables: AppVariables }>();
 
 // ─── Middleware ───────────────────────────────────────────────
 app.use('*', logger());
@@ -24,22 +25,27 @@ app.use(
 app.get('/', (c) =>
   c.json({
     name: 'WedLink API',
-    version: '1.0.0',
+    version: '2.0.0',
     status: 'running',
     docs: 'https://github.com/nos486/wedlink',
   }),
 );
 
 // ─── Routes ──────────────────────────────────────────────────
-app.route('/api/invitations', invitations);
-app.route('/api/invitations', rsvp);
+// Auth: login / logout / me
+app.route('/api/auth', authRoutes);
 
-// ─── 404 fallback ────────────────────────────────────────────
+// Protected: invitation CRUD (requires Bearer token)
+app.route('/api/invitations', invitationRoutes);
+
+// Public: view invitation + submit RSVP (no auth)
+app.route('/api/public', publicRoutes);
+
+// ─── Fallbacks ────────────────────────────────────────────────
 app.notFound((c) =>
   c.json({ success: false, error: 'Route not found' }, 404),
 );
 
-// ─── Error handler ───────────────────────────────────────────
 app.onError((err, c) => {
   console.error('Unhandled error:', err);
   return c.json({ success: false, error: 'Internal server error' }, 500);

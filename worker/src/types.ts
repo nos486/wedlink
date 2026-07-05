@@ -2,11 +2,34 @@
 
 export interface Env {
   DB: D1Database;
+  ADMIN_PASSWORD: string;
+  ADMIN_USERNAME?: string;
+  API_BASE_URL?: string;
   ENVIRONMENT?: string;
+}
+
+// Context variables set by the auth middleware
+export type AppVariables = {
+  userId: number;
+  username: string;
+};
+
+export interface User {
+  id: number;
+  username: string;
+  created_at: string;
+}
+
+export interface Session {
+  token: string;
+  user_id: number;
+  expires_at: string;
+  created_at: string;
 }
 
 export interface Invitation {
   id: number;
+  user_id: number;
   slug: string;
   bride: string;
   groom: string;

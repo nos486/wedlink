@@ -1,29 +1,52 @@
 /* ============================================================
-   WedLink — Admin Dashboard JavaScript
+   WedLink — Admin Dashboard JavaScript (v2, with auth)
+   Requires: auth.js loaded first
    ============================================================ */
 
-// ─── Configuration ────────────────────────────────────────────
-// UPDATE THIS after deploying your Cloudflare Worker!
-const API_BASE_URL = 'https://wedlink-api.YOUR_ACCOUNT.workers.dev';
-
 // ─── State ────────────────────────────────────────────────────
+let API_BASE = '';
 let invitations = [];
-let expandedRsvps = new Set();
 
-// ─── DOM Ready ────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  loadInvitations();
+// ─── Init ─────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  // Redirect to login if not authenticated
+  if (!requireAuthRedirect()) return;
+
+  // Resolve runtime API URL from Cloudflare Pages Function
+  API_BASE = await getApiBaseUrl();
+
+  // Display username in navbar
+  const usernameEl = document.getElementById('nav-username');
+  if (usernameEl) usernameEl.textContent = getUsername() || 'Admin';
+
+  // Logout button
+  document.getElementById('logout-btn')?.addEventListener('click', () => {
+    logoutAndRedirect(API_BASE);
+  });
+
+  // Modal & form wiring
   setupModal();
   setupForm();
+
+  // Load invitations
+  await loadInvitations();
 });
 
-// ─── API Helpers ──────────────────────────────────────────────
+// ─── API helper ───────────────────────────────────────────────
 async function apiFetch(path, opts = {}) {
-  const url = `${API_BASE_URL}/api${path}`;
+  const url = `${API_BASE}/api${path}`;
   const res = await fetch(url, {
-    headers: { 'Content-Type': 'application/json', ...opts.headers },
+    headers: { ...authHeaders(), ...(opts.headers ?? {}) },
     ...opts,
   });
+
+  // Session expired or invalid — force re-login
+  if (res.status === 401) {
+    clearAuth();
+    window.location.replace('/login.html');
+    throw new Error('Session expired');
+  }
+
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
   return data;
@@ -38,11 +61,12 @@ async function loadInvitations() {
     renderInvitations();
     updateStats();
   } catch (err) {
+    if (err.message === 'Session expired') return;
     showToast('Failed to load invitations: ' + err.message, 'error');
     document.getElementById('invitations-grid').innerHTML = `
       <div class="empty-state" style="grid-column:1/-1">
         <div class="empty-icon">⚠️</div>
-        <p>Could not connect to the API.<br>Check <code>API_BASE_URL</code> in <code>admin.js</code>.</p>
+        <p>Could not reach the API.<br>Make sure <code>API_BASE_URL</code> is set in your Pages environment variables.</p>
       </div>`;
   }
 }
@@ -55,11 +79,10 @@ function renderInvitations() {
       <div class="empty-state" style="grid-column:1/-1">
         <div class="empty-icon">💌</div>
         <h3 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--text);margin-bottom:8px">No invitations yet</h3>
-        <p>Click "New Invitation" to create your first wedding link!</p>
+        <p>Click "New Invitation" to craft your first wedding link!</p>
       </div>`;
     return;
   }
-
   grid.innerHTML = invitations.map(inv => renderCard(inv)).join('');
 }
 
@@ -68,7 +91,7 @@ function renderCard(inv) {
   const formattedDate = formatDate(inv.date);
 
   return `
-    <div class="invitation-card" id="card-${inv.slug}" data-slug="${inv.slug}">
+    <div class="invitation-card" id="card-${inv.slug}">
       <div class="invitation-card-header">
         <div class="couple-names">${escHtml(inv.bride)} &amp; ${escHtml(inv.groom)}</div>
         <div class="invitation-date">📅 ${formattedDate}</div>
@@ -81,11 +104,11 @@ function renderCard(inv) {
       </div>
 
       <div class="link-preview">
-        <span id="url-${inv.slug}" title="${inviteUrl}">${inviteUrl}</span>
+        <span id="url-${inv.slug}" title="${escHtml(inviteUrl)}">${escHtml(inviteUrl)}</span>
       </div>
 
       <div class="invitation-card-footer">
-        <button class="btn btn-ghost btn-sm" onclick="copyLink('${escAttr(inv.slug)}', '${escAttr(inviteUrl)}')" id="copy-btn-${inv.slug}">
+        <button class="btn btn-ghost btn-sm" onclick="copyLink('${escAttr(inv.slug)}','${escAttr(inviteUrl)}')" id="copy-btn-${inv.slug}">
           <span>📋</span> Copy Link
         </button>
         <button class="btn btn-ghost btn-sm" onclick="openInvite('${escAttr(inviteUrl)}')">
@@ -110,16 +133,14 @@ function renderCard(inv) {
     </div>`;
 }
 
-// ─── Toggle RSVP Panel ────────────────────────────────────────
+// ─── RSVP Panel ───────────────────────────────────────────────
 async function toggleRsvps(slug) {
   const panel = document.getElementById(`rsvp-panel-${slug}`);
   if (panel.style.display === 'none') {
     panel.style.display = 'block';
-    expandedRsvps.add(slug);
     await loadRsvps(slug);
   } else {
     panel.style.display = 'none';
-    expandedRsvps.delete(slug);
   }
 }
 
@@ -144,7 +165,7 @@ async function loadRsvps(slug) {
   }
 }
 
-// ─── Delete Invitation ────────────────────────────────────────
+// ─── Delete ───────────────────────────────────────────────────
 async function deleteInvitation(slug) {
   if (!confirm('Delete this invitation? All RSVPs will also be removed.')) return;
   try {
@@ -158,7 +179,7 @@ async function deleteInvitation(slug) {
   }
 }
 
-// ─── Copy Link ────────────────────────────────────────────────
+// ─── Copy & Preview ───────────────────────────────────────────
 async function copyLink(slug, url) {
   try {
     await navigator.clipboard.writeText(url);
@@ -175,44 +196,68 @@ async function copyLink(slug, url) {
   }
 }
 
-function openInvite(url) {
-  window.open(url, '_blank', 'noopener');
-}
+function openInvite(url) { window.open(url, '_blank', 'noopener'); }
 
 // ─── Stats ────────────────────────────────────────────────────
 function updateStats() {
-  document.getElementById('stat-invitations').textContent = invitations.length;
-  // total RSVPs count not fetched at list level (would need extra calls)
+  const countEl = document.getElementById('stat-invitations');
+  const limitEl = document.getElementById('stat-limit');
+  if (countEl) countEl.textContent = invitations.length;
+  if (limitEl) limitEl.textContent = `${invitations.length}/10`;
+
+  // Show limit warning when close to limit
+  const warningEl = document.getElementById('limit-warning');
+  if (warningEl) {
+    if (invitations.length >= 10) {
+      warningEl.textContent = '⚠️ You have reached the 10 invitation limit.';
+      warningEl.style.display = 'block';
+      document.getElementById('open-modal-btn')?.setAttribute('disabled', 'true');
+    } else if (invitations.length >= 8) {
+      warningEl.textContent = `⚠️ You have ${10 - invitations.length} invitation slot(s) remaining.`;
+      warningEl.style.display = 'block';
+    } else {
+      warningEl.style.display = 'none';
+    }
+  }
 }
 
 // ─── Modal ────────────────────────────────────────────────────
 function setupModal() {
-  document.getElementById('open-modal-btn').addEventListener('click', () => {
+  document.getElementById('open-modal-btn')?.addEventListener('click', () => {
+    if (invitations.length >= 10) {
+      showToast('You have reached the maximum of 10 invitations.', 'error');
+      return;
+    }
     document.getElementById('create-modal').classList.add('active');
   });
-  document.getElementById('modal-close').addEventListener('click', closeModal);
-  document.getElementById('create-modal').addEventListener('click', (e) => {
+  document.getElementById('open-modal-btn-hero')?.addEventListener('click', () => {
+    if (invitations.length >= 10) {
+      showToast('You have reached the maximum of 10 invitations.', 'error');
+      return;
+    }
+    document.getElementById('create-modal').classList.add('active');
+  });
+  document.getElementById('modal-close')?.addEventListener('click', closeModal);
+  document.getElementById('create-modal')?.addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeModal();
   });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 }
 
 function closeModal() {
   document.getElementById('create-modal').classList.remove('active');
   document.getElementById('create-form').reset();
-  clearErrors();
+  clearFormErrors();
 }
 
 // ─── Create Form ──────────────────────────────────────────────
 function setupForm() {
   document.getElementById('create-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    clearErrors();
+    clearFormErrors();
 
     const form = e.target;
-    const data = {
+    const body = {
       bride:   form.bride.value.trim(),
       groom:   form.groom.value.trim(),
       date:    form.date.value,
@@ -220,11 +265,8 @@ function setupForm() {
       message: form.message.value.trim() || undefined,
     };
 
-    const errors = validateForm(data);
-    if (errors.length) {
-      errors.forEach(({ field, msg }) => setError(field, msg));
-      return;
-    }
+    const errors = validateForm(body);
+    if (errors.length) { errors.forEach(({ field, msg }) => setFieldError(field, msg)); return; }
 
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.disabled = true;
@@ -233,7 +275,7 @@ function setupForm() {
     try {
       const { data: created } = await apiFetch('/invitations', {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
       });
       invitations.unshift(created);
       renderInvitations();
@@ -258,15 +300,13 @@ function validateForm({ bride, groom, date, venue }) {
   return errors;
 }
 
-function setError(field, msg) {
+function setFieldError(field, msg) {
   const el = document.getElementById(`error-${field}`);
   if (el) { el.textContent = msg; el.style.display = 'block'; }
 }
-
-function clearErrors() {
+function clearFormErrors() {
   document.querySelectorAll('.field-error').forEach(el => {
-    el.textContent = '';
-    el.style.display = 'none';
+    el.textContent = ''; el.style.display = 'none';
   });
 }
 
@@ -304,24 +344,16 @@ function escHtml(str) {
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
-
-function escAttr(str) {
-  return String(str ?? '').replace(/'/g, "\\'");
-}
+function escAttr(str) { return String(str ?? '').replace(/'/g, "\\'"); }
 
 function formatDate(dateStr) {
-  try {
-    return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-    });
-  } catch { return dateStr; }
+  try { return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' }); }
+  catch { return dateStr; }
 }
 
 function timeAgo(dateStr) {
   const diff = Date.now() - new Date(dateStr).getTime();
-  const mins  = Math.floor(diff / 60000);
-  const hours = Math.floor(mins / 60);
-  const days  = Math.floor(hours / 24);
+  const mins = Math.floor(diff/60000), hours = Math.floor(mins/60), days = Math.floor(hours/24);
   if (days  > 0) return `${days}d ago`;
   if (hours > 0) return `${hours}h ago`;
   if (mins  > 0) return `${mins}m ago`;
@@ -329,7 +361,8 @@ function timeAgo(dateStr) {
 }
 
 // Expose for inline onclick handlers
-window.copyLink       = copyLink;
-window.openInvite     = openInvite;
-window.toggleRsvps    = toggleRsvps;
-window.deleteInvitation = deleteInvitation;
+window.copyLink          = copyLink;
+window.openInvite        = openInvite;
+window.toggleRsvps       = toggleRsvps;
+window.deleteInvitation  = deleteInvitation;
+window.closeModal        = closeModal;

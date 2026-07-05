@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — WedLink</title>
+  <meta name="description" content="Sign in to WedLink to create and manage your wedding invitation links." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/login.css" />
+</head>
+<body class="login-page">
+
+  <!-- Particles -->
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <!-- Background glow -->
+  <div class="login-bg-glow" aria-hidden="true"></div>
+
+  <!-- ─── Login Card ──────────────────────────────────────────── -->
+  <div class="login-card" role="main">
+
+    <!-- Logo -->
+    <div class="login-logo">
+      <div class="login-logo-icon">💍</div>
+      <div class="login-logo-text">WedLink</div>
+      <div class="login-logo-sub">Wedding Invitation Manager</div>
+    </div>
+
+    <h1 class="login-form-title">Welcome back</h1>
+
+    <!-- Error message -->
+    <div class="login-error" id="login-error" role="alert">
+      <span>⚠️</span>
+      <span id="login-error-text">Invalid username or password.</span>
+    </div>
+
+    <!-- Success flash -->
+    <div class="login-success" id="login-success" role="status">
+      <span>✅</span>
+      <span>Signing you in…</span>
+    </div>
+
+    <!-- Form -->
+    <form id="login-form" class="login-form" novalidate>
+
+      <div class="form-group">
+        <label class="form-label" for="username">Username</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👤</span>
+          <input
+            class="form-input"
+            id="username"
+            name="username"
+            type="text"
+            placeholder="admin"
+            autocomplete="username"
+            autocapitalize="none"
+            spellcheck="false"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          <input
+            class="form-input"
+            id="password"
+            name="password"
+            type="password"
+            placeholder="••••••••••"
+            autocomplete="current-password"
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary login-submit" id="login-btn">
+        <span id="login-btn-label">Sign In</span>
+      </button>
+
+    </form>
+
+    <div class="login-divider">
+      <span>Powered by Cloudflare</span>
+    </div>
+
+    <p class="login-footer-note">
+      WedLink &nbsp;·&nbsp;
+      <a href="https://github.com/nos486/wedlink" target="_blank" rel="noopener">GitHub</a>
+    </p>
+
+  </div><!-- /.login-card -->
+
+  <script src="assets/js/auth.js"></script>
+  <script>
+    /* ── Redirect if already logged in ── */
+    redirectIfAuthenticated();
+
+    /* ── Spawn floating particles ── */
+    (function spawnParticles() {
+      const container = document.getElementById('particles');
+      const colors = ['#d4af37', '#c9956c', '#e8cc6a', '#e0b08a'];
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.cssText = `
+          left:${Math.random()*100}%;
+          width:${2+Math.random()*3}px;
+          height:${2+Math.random()*3}px;
+          background:${colors[Math.floor(Math.random()*colors.length)]};
+          animation-duration:${10+Math.random()*12}s;
+          animation-delay:${Math.random()*8}s;
+        `;
+        container.appendChild(p);
+      }
+    })();
+
+    /* ── Login form ── */
+    const form    = document.getElementById('login-form');
+    const errBox  = document.getElementById('login-error');
+    const errText = document.getElementById('login-error-text');
+    const okBox   = document.getElementById('login-success');
+    const btn     = document.getElementById('login-btn');
+    const btnLbl  = document.getElementById('login-btn-label');
+
+    function showError(msg) {
+      errText.textContent = msg;
+      errBox.classList.add('visible');
+      okBox.classList.remove('visible');
+    }
+    function clearError() {
+      errBox.classList.remove('visible');
+      okBox.classList.remove('visible');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+
+      const username = form.username.value.trim();
+      const password = form.password.value;
+
+      if (!username || !password) {
+        showError('Please enter both username and password.');
+        return;
+      }
+
+      btn.disabled = true;
+      btnLbl.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px"></span> Signing in…';
+
+      try {
+        const apiBase = await getApiBaseUrl();
+        const res = await fetch(`${apiBase}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const { success, data, error } = await res.json();
+
+        if (!success) {
+          showError(error || 'Invalid username or password.');
+          return;
+        }
+
+        setAuth(data.token, data.username);
+        okBox.classList.add('visible');
+
+        // Small delay so the success flash is visible
+        setTimeout(() => { window.location.replace('/'); }, 600);
+
+      } catch (err) {
+        showError('Could not connect to the server. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btnLbl.textContent = 'Sign In';
+      }
+    });
+  </script>
+</body>
+</html>
