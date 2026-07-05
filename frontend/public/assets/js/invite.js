@@ -31,11 +31,10 @@ async function loadInvitation(slug) {
 function renderInvitation() {
   document.getElementById('invite-loading').style.display = 'none';
   const content = document.getElementById('invite-main');
-  content.style.display = 'flex'; // Uses flex for the layouts
+  content.style.display = 'flex';
 
-  // Apply Theme & Layout
-  const body = document.getElementById('invite-body');
-  body.className = `invite-page theme-${invitation.theme || 'modern-minimal'} layout-${invitation.layout || 'image-top'}`;
+  applyLayout();
+  window.addEventListener('resize', applyLayout);
 
   // Image
   const imgEl = document.getElementById('invite-image');
@@ -70,6 +69,18 @@ function renderInvitation() {
   }
 
   startCountdown(invitation.date);
+}
+
+function applyLayout() {
+  if (!invitation) return;
+  const isMobile = window.innerWidth <= 768;
+  const desktopLayout = invitation.desktop_layout || invitation.layout || 'split-left';
+  const mobileLayout = invitation.mobile_layout || invitation.layout || 'hero-top';
+  
+  const layoutToUse = isMobile ? mobileLayout : desktopLayout;
+  const themeToUse = invitation.theme || 'modern-minimal';
+  
+  document.getElementById('invite-body').className = `invite-page theme-${themeToUse} layout-${layoutToUse}`;
 }
 
 // ─── Countdown ────────────────────────────────────────────────

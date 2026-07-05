@@ -39,7 +39,9 @@ export interface Invitation {
   message: string | null;
   image_url: string | null;
   theme: string;
-  layout: string;
+  layout?: string; // Fallback for old data
+  desktop_layout?: string;
+  mobile_layout?: string;
   created_at: string;
 }
 
@@ -62,7 +64,8 @@ export interface CreateInvitationBody {
   message?: string;
   image_url?: string;
   theme?: string;
-  layout?: string;
+  desktop_layout?: string;
+  mobile_layout?: string;
 }
 
 export interface CreateRsvpBody {

@@ -168,13 +168,183 @@ body.invite-page {
   color: var(--inv-accent);
 }
 
-.inv-divider {
+.inv-divider { display: none; } /* Replaced by ornament-divider if needed */
+
+/* ─── Graphic Ornaments ──────────────────────────────────────── */
+
+.ornament {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  color: var(--inv-accent);
+  opacity: 0.8;
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+.ornament-top-left { top: 20px; left: 20px; }
+.ornament-bottom-right { bottom: 20px; right: 20px; }
+
+.ornament-divider {
+  width: 200px;
+  height: 20px;
+  color: var(--inv-accent);
+  margin: 0 auto 32px;
+  opacity: 0.8;
+}
+
+/* Hide ornaments on minimalist themes */
+body.theme-modern-minimal .ornament,
+body.theme-modern-minimal .ornament-divider {
+  display: none;
+}
+body.theme-modern-minimal .inv-divider {
+  display: block; /* Bring back the simple line */
   width: 60px;
   height: 1px;
   background-color: var(--inv-accent);
   margin: 0 auto 32px;
 }
 
+/* ─── Layouts ────────────────────────────────────────────────── */
+
+/* 1. Hero Top */
+body.layout-hero-top .inv-container {
+  flex-direction: column;
+}
+body.layout-hero-top .inv-image-wrapper {
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+}
+body.layout-hero-top .inv-content-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+/* 2. Split Screen (Left / Right) */
+body.layout-split-left .inv-container {
+  flex-direction: row;
+}
+body.layout-split-right .inv-container {
+  flex-direction: row-reverse;
+}
+body.layout-split-left .inv-image-wrapper,
+body.layout-split-right .inv-image-wrapper {
+  width: 50%;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+body.layout-split-left .inv-content-wrapper,
+body.layout-split-right .inv-content-wrapper {
+  position: relative;
+  width: 50%;
+  min-height: 100vh;
+  padding: 64px 48px;
+}
+
+/* 3. Full Overlay */
+body.layout-full-overlay .inv-container {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+body.layout-full-overlay .inv-image-wrapper {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+body.layout-full-overlay .inv-image {
+  opacity: 0.6;
+}
+body.layout-full-overlay .inv-content-wrapper {
+  position: relative;
+  z-index: 1;
+  background: var(--inv-bg);
+  margin: 40px 24px;
+  padding: 64px 48px;
+  max-width: 700px;
+  border-radius: 24px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+}
+body.theme-light-floral.layout-full-overlay .inv-content-wrapper {
+  background: rgba(253, 251, 247, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+body.theme-dark-luxury.layout-full-overlay .inv-content-wrapper,
+body.theme-royal-elegance.layout-full-overlay .inv-content-wrapper {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* 4. Classic Card */
+body.layout-classic-card .inv-container {
+  justify-content: center;
+  align-items: center;
+  padding: 40px 24px;
+}
+body.layout-classic-card .inv-image-wrapper {
+  display: none; /* Text only on the outside card */
+}
+body.layout-classic-card .inv-content-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  background: var(--inv-bg);
+  border: 2px solid var(--inv-accent);
+  padding: 64px 48px;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.1);
+}
+body.theme-royal-elegance.layout-classic-card .inv-content-wrapper {
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.5), 0 32px 64px rgba(0,0,0,0.5);
+}
+
+/* 5. Polaroid Center */
+body.layout-polaroid-center .inv-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 24px;
+}
+body.layout-polaroid-center .inv-image-wrapper {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 1 / 1;
+  border: 16px solid var(--inv-bg);
+  border-bottom-width: 64px;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.15);
+  transform: rotate(-2deg);
+  z-index: 2;
+  margin-bottom: -32px;
+}
+body.layout-polaroid-center .inv-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+body.layout-polaroid-center .inv-content-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  padding-top: 64px;
+  z-index: 1;
+}
+
+@media (max-width: 480px) {
+  body.layout-full-overlay .inv-content-wrapper,
+  body.layout-classic-card .inv-content-wrapper {
+    padding: 48px 24px;
+    margin: 24px 16px;
+  }
+}
 .inv-details {
   font-size: 18px;
   line-height: 1.8;
@@ -201,102 +371,6 @@ body.invite-page {
   color: var(--inv-text);
   opacity: 0.8;
   line-height: 1.6;
-}
-
-/* ─── Layouts ────────────────────────────────────────────────── */
-
-/* 1. Image Top (Hero) */
-body.layout-image-top .inv-container {
-  flex-direction: column;
-}
-body.layout-image-top .inv-image-wrapper {
-  width: 100%;
-  height: 60vh;
-  min-height: 400px;
-}
-body.layout-image-top .inv-content-wrapper {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding-top: 64px;
-  padding-bottom: 64px;
-}
-
-/* 2. Split Screen */
-body.layout-split-screen .inv-container {
-  flex-direction: row;
-}
-body.layout-split-screen .inv-image-wrapper {
-  width: 50%;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-}
-body.layout-split-screen .inv-content-wrapper {
-  width: 50%;
-  min-height: 100vh;
-  padding: 64px 48px;
-}
-
-@media (max-width: 768px) {
-  body.layout-split-screen .inv-container {
-    flex-direction: column;
-  }
-  body.layout-split-screen .inv-image-wrapper {
-    width: 100%;
-    height: 50vh;
-    position: relative;
-  }
-  body.layout-split-screen .inv-content-wrapper {
-    width: 100%;
-    min-height: auto;
-    padding: 48px 24px;
-  }
-}
-
-/* 3. Background Cover */
-body.layout-image-background .inv-container {
-  position: relative;
-  justify-content: center;
-  align-items: center;
-}
-body.layout-image-background .inv-image-wrapper {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-body.layout-image-background .inv-image {
-  opacity: 0.6; /* Dim background image slightly */
-}
-body.layout-image-background .inv-content-wrapper {
-  position: relative;
-  z-index: 1;
-  background: var(--inv-bg);
-  margin: 40px 24px;
-  padding: 64px 48px;
-  max-width: 700px;
-  border-radius: 24px;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.2);
-  /* Glassmorphism if it's not minimal */
-}
-body.theme-light-floral.layout-image-background .inv-content-wrapper {
-  background: rgba(253, 251, 247, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.5);
-}
-body.theme-dark-luxury.layout-image-background .inv-content-wrapper {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-}
-
-@media (max-width: 480px) {
-  body.layout-image-background .inv-content-wrapper {
-    padding: 48px 24px;
-    margin: 24px 16px;
-  }
 }
 
 /* ─── Countdown ──────────────────────────────────────────────── */

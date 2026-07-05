@@ -106,7 +106,8 @@ function renderCard(inv) {
         ${inv.message ? `<div class="info-row"><span class="info-icon">💬</span><span style="font-style:italic;color:var(--text-muted)">${escHtml(inv.message)}</span></div>` : ''}
         <div class="info-row" style="margin-top: 8px;">
           <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">🎨 ${formatTheme(inv.theme)}</span>
-          <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">📐 ${formatLayout(inv.layout)}</span>
+          <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">💻 ${formatLayout(inv.desktop_layout || inv.layout || 'split-left')}</span>
+          <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">📱 ${formatLayout(inv.mobile_layout || inv.layout || 'hero-top')}</span>
         </div>
         <div class="info-row"><span class="info-icon">🗓</span><span style="font-size:12px;color:var(--text-muted)">Created ${timeAgo(inv.created_at)}</span></div>
       </div>
@@ -232,7 +233,8 @@ function openModalForEdit(slug) {
   form.message.value = inv.message || '';
   form.image_url.value = uploadedImageBase64 ? '(Uploaded Photo)' : (inv.image_url || '');
   form.theme.value = inv.theme || 'modern-minimal';
-  form.layout.value = inv.layout || 'image-top';
+  form.desktop_layout.value = inv.desktop_layout || inv.layout || 'split-left';
+  form.mobile_layout.value = inv.mobile_layout || inv.layout || 'hero-top';
 
   clearFormErrors();
   document.getElementById('create-modal').classList.add('active');
@@ -263,7 +265,8 @@ function setupForm() {
       message:   form.message.value.trim() || undefined,
       image_url: uploadedImageBase64 || form.image_url.value.trim() || undefined,
       theme:     form.theme.value,
-      layout:    form.layout.value,
+      desktop_layout: form.desktop_layout.value,
+      mobile_layout:  form.mobile_layout.value,
     };
 
     const errors = validateForm(body);
@@ -466,9 +469,16 @@ function formatTheme(theme) {
 
 function formatLayout(layout) {
   const map = {
+    'split-left': 'Split (L)',
+    'split-right': 'Split (R)',
+    'polaroid-center': 'Polaroid',
+    'classic-card': 'Classic Card',
+    'hero-top': 'Hero Top',
+    'full-overlay': 'Overlay',
+    // fallbacks for old layouts
     'image-top': 'Hero Top',
-    'split-screen': 'Split Screen',
-    'image-background': 'Background'
+    'split-screen': 'Split (L)',
+    'image-background': 'Overlay'
   };
   return map[layout] || 'Hero Top';
 }

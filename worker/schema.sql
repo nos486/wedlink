@@ -23,19 +23,20 @@ CREATE TABLE IF NOT EXISTS sessions (
 );
 
 CREATE TABLE IF NOT EXISTS invitations (
-  id         INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id    INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  slug       TEXT    UNIQUE NOT NULL,
-  bride      TEXT    NOT NULL,
-  groom      TEXT    NOT NULL,
-  date       TEXT    NOT NULL,
-  time       TEXT,
-  venue      TEXT    NOT NULL,
-  message    TEXT,
-  image_url  TEXT,
-  theme      TEXT    DEFAULT 'modern-minimal',
-  layout     TEXT    DEFAULT 'image-top',
-  created_at TEXT    NOT NULL DEFAULT (datetime('now'))
+  id             INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id        INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  slug           TEXT    UNIQUE NOT NULL,
+  bride          TEXT    NOT NULL,
+  groom          TEXT    NOT NULL,
+  date           TEXT    NOT NULL,
+  time           TEXT,
+  venue          TEXT    NOT NULL,
+  message        TEXT,
+  image_url      TEXT,
+  theme          TEXT    DEFAULT 'modern-minimal',
+  desktop_layout TEXT    DEFAULT 'split-left',
+  mobile_layout  TEXT    DEFAULT 'hero-top',
+  created_at     TEXT    NOT NULL DEFAULT (datetime('now'))
 );
 
 CREATE TABLE IF NOT EXISTS rsvps (
