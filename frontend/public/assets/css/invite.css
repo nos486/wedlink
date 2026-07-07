@@ -118,6 +118,156 @@ body.theme-enchanted-forest::before {
   z-index: 0;
 }
 
+
+/* ─── Theme-Specific Custom Layouts and Elements ─────────────── */
+
+/* 1. Modern Minimalist Overrides */
+body.theme-modern-minimal .save-the-date { order: 1; }
+body.theme-modern-minimal .inv-date-front { order: 2; margin-bottom: 24px; }
+body.theme-modern-minimal .card-front-photo-frame {
+  order: 3;
+  border-radius: 0 !important;
+  border: 1px solid var(--inv-accent) !important;
+  box-shadow: none !important;
+  width: 170px !important;
+  height: 220px !important;
+}
+body.theme-modern-minimal .inv-divider-front { display: none; }
+body.theme-modern-minimal .inv-names-front { order: 4; margin-top: 24px; }
+
+/* 2. Dark Luxury Overrides */
+body.theme-dark-luxury .save-the-date { order: 1; }
+body.theme-dark-luxury .card-front-photo-frame {
+  order: 2;
+  border-radius: 90px 90px 0 0 !important;
+  border: 1.5px solid var(--inv-accent) !important;
+  box-shadow: 0 12px 32px rgba(229, 192, 96, 0.15) !important;
+}
+body.theme-dark-luxury .inv-names-front { order: 3; margin-top: 22px; }
+body.theme-dark-luxury .inv-divider-front { order: 4; margin: 14px 0; }
+body.theme-dark-luxury .inv-date-front {
+  order: 5;
+  border: 1px solid rgba(229, 192, 96, 0.35);
+  padding: 6px 20px;
+  border-radius: 30px;
+  background: rgba(229, 192, 96, 0.05);
+}
+body.theme-dark-luxury .cd-box {
+  border-color: rgba(229, 192, 96, 0.35) !important;
+  background: rgba(229, 192, 96, 0.04) !important;
+}
+body.theme-dark-luxury .lang-switcher-btn {
+  border-color: rgba(229, 192, 96, 0.35) !important;
+  background: rgba(229, 192, 96, 0.04) !important;
+  color: #e5c060 !important;
+}
+body.theme-dark-luxury .btn-flip {
+  border-color: rgba(229, 192, 96, 0.35) !important;
+  background: var(--inv-accent) !important;
+  color: #000000 !important;
+}
+
+/* 3. Light Floral Overrides */
+body.theme-light-floral .card-front-photo-frame {
+  order: 1;
+  border-radius: 50% !important;
+  width: 170px !important;
+  height: 170px !important;
+  border: 3px double var(--inv-accent) !important;
+}
+body.theme-light-floral .inv-names-front { order: 2; margin: 16px 0 6px; }
+body.theme-light-floral .save-the-date {
+  order: 3;
+  font-size: 11px;
+  margin: 0;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+}
+body.theme-light-floral .inv-divider-front { display: none; }
+body.theme-light-floral .inv-date-front { order: 4; margin-top: 14px; }
+body.theme-light-floral .cd-box {
+  border-color: rgba(201, 149, 108, 0.25) !important;
+  background: rgba(201, 149, 108, 0.04) !important;
+}
+body.theme-light-floral .lang-switcher-btn {
+  border-color: rgba(201, 149, 108, 0.25) !important;
+  background: rgba(201, 149, 108, 0.04) !important;
+  color: var(--inv-accent) !important;
+}
+
+/* 4. Royal Elegance Overrides */
+body.theme-royal-elegance .card-front-photo-frame {
+  order: 1;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  border-radius: 0 !important;
+  border: none !important;
+  width: 160px !important;
+  height: 160px !important;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.3) !important;
+}
+body.theme-royal-elegance .save-the-date { order: 2; margin-top: 18px; }
+body.theme-royal-elegance .inv-divider-front { order: 3; margin: 10px 0; }
+body.theme-royal-elegance .inv-names-front { order: 4; }
+body.theme-royal-elegance .inv-date-front { order: 5; margin-top: 10px; }
+body.theme-royal-elegance .cd-box {
+  border-color: rgba(229, 179, 101, 0.25) !important;
+  background: rgba(229, 179, 101, 0.04) !important;
+}
+body.theme-royal-elegance .lang-switcher-btn {
+  border-color: rgba(229, 179, 101, 0.25) !important;
+  background: rgba(229, 179, 101, 0.04) !important;
+  color: var(--inv-accent) !important;
+}
+
+/* 5. Starlight Glamour Overrides */
+body.theme-starlight-glamour .inv-date-front { order: 1; margin-bottom: 22px; }
+body.theme-starlight-glamour .card-front-photo-frame {
+  order: 2;
+  transform: rotate(45deg) !important;
+  border-radius: 12px !important;
+  width: 130px !important;
+  height: 130px !important;
+  border: 1.5px solid var(--inv-accent) !important;
+  overflow: hidden !important;
+  box-shadow: 0 0 20px rgba(255,255,255,0.06) !important;
+}
+body.theme-starlight-glamour .card-front-photo {
+  transform: rotate(-45deg) scale(1.4) !important;
+}
+body.theme-starlight-glamour .save-the-date { order: 3; margin-top: 26px; }
+body.theme-starlight-glamour .inv-divider-front { display: none; }
+body.theme-starlight-glamour .inv-names-front { order: 4; margin-top: 14px; }
+body.theme-starlight-glamour .cd-box {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+body.theme-starlight-glamour .lang-switcher-btn {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* 6. Enchanted Forest Overrides */
+body.theme-enchanted-forest .save-the-date { order: 1; }
+body.theme-enchanted-forest .card-front-photo-frame {
+  order: 2;
+  border-radius: 100px 10px 100px 10px !important;
+  border: 2px solid var(--inv-accent) !important;
+  width: 155px !important;
+  height: 195px !important;
+}
+body.theme-enchanted-forest .inv-names-front { order: 3; margin-top: 20px; }
+body.theme-enchanted-forest .inv-divider-front { order: 4; margin: 12px 0; }
+body.theme-enchanted-forest .inv-date-front { order: 5; }
+body.theme-enchanted-forest .cd-box {
+  border-color: rgba(134, 196, 158, 0.25) !important;
+  background: rgba(134, 196, 158, 0.04) !important;
+}
+body.theme-enchanted-forest .lang-switcher-btn {
+  border-color: rgba(134, 196, 158, 0.25) !important;
+  background: rgba(134, 196, 158, 0.04) !important;
+  color: var(--inv-accent) !important;
+}
+
 /* ─── Base Application ───────────────────────────────────────── */
 body.invite-page {
   background-color: var(--inv-bg);
