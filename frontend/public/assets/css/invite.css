@@ -38,12 +38,10 @@ body.theme-dark-luxury {
   --inv-font-script: 'Great Vibes', cursive;
   --inv-border: rgba(212, 175, 55, 0.2);
 }
-body.theme-dark-luxury .inv-names-front,
-body.theme-dark-luxury .inv-names-back {
-  background: linear-gradient(135deg, #e5c060, #f3e5ab, #d4af37);
+body.theme-dark-luxury .inv-names {
+  background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
 body.theme-light-floral {
@@ -70,14 +68,12 @@ body.theme-royal-elegance {
   --inv-font-script: 'Great Vibes', cursive;
   --inv-border: rgba(229, 179, 101, 0.25);
 }
-body.theme-royal-elegance .inv-names-front,
-body.theme-royal-elegance .inv-names-back {
+body.theme-royal-elegance .inv-names {
   background: linear-gradient(135deg, #e5b365, #ffe5be, #e5b365);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 4s linear infinite;
   background-size: 200% auto;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
 body.theme-starlight-glamour {
@@ -92,9 +88,8 @@ body.theme-starlight-glamour {
   background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
-body.theme-starlight-glamour .inv-names-front,
-body.theme-starlight-glamour .inv-names-back {
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
+body.theme-starlight-glamour .inv-names {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
 body.theme-enchanted-forest {
@@ -466,17 +461,13 @@ body.theme-modern-minimal .ornament-divider {
 }
 /* ─── 3D Card Layout ─────────────────────────────────────────── */
 
-body.layout-3d-horizontal,
-body.layout-3d-vertical,
-body.layout-3d-book {
+body.layout-3d-card {
   height: 100vh !important;
   max-height: 100vh !important;
   overflow: hidden !important;
 }
 
-body.layout-3d-horizontal .inv-container,
-body.layout-3d-vertical .inv-container,
-body.layout-3d-book .inv-container {
+body.layout-3d-card .inv-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -513,22 +504,8 @@ body.layout-3d-book .inv-container {
   cursor: pointer;
 }
 
-.card-perspective:hover .card-3d {
-  transition: transform 0.15s ease-out;
-}
-
-.card-perspective:hover .card-3d.flipped {
-  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-body.layout-3d-horizontal .card-3d.flipped {
+.card-3d.flipped {
   transform: rotateY(180deg);
-}
-body.layout-3d-vertical .card-3d.flipped {
-  transform: rotateX(180deg);
-}
-body.layout-3d-book .card-3d.flipped {
-  transform: none;
 }
 
 .card-side {
@@ -541,18 +518,8 @@ body.layout-3d-book .card-3d.flipped {
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
   border: 1px solid var(--inv-border);
   overflow: hidden;
-  background: linear-gradient(135deg, var(--inv-bg) 0%, rgba(var(--inv-bg-rgb), 0.97) 50%, rgba(var(--inv-bg-rgb), 0.94) 100%);
+  background-color: var(--inv-bg);
   box-sizing: border-box;
-}
-
-body.theme-dark-luxury .card-side {
-  border: 1px solid rgba(229, 179, 101, 0.28) !important;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(229, 179, 101, 0.05) !important;
-}
-
-body.theme-royal-elegance .card-side {
-  border: 1px solid rgba(229, 179, 101, 0.35) !important;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), inset 0 0 35px rgba(229, 179, 101, 0.08) !important;
 }
 
 .card-front {
@@ -566,33 +533,13 @@ body.theme-royal-elegance .card-side {
 }
 
 .card-back {
+  transform: rotateY(180deg);
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 40px 30px;
-  transform: rotateY(180deg);
-  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-body.layout-3d-vertical .card-back {
-  transform: rotateX(180deg);
-}
-
-body.layout-3d-book .card-back {
-  transform: rotateY(0deg);
-}
-
-body.layout-3d-book .card-front {
-  transform-origin: left center;
-  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  z-index: 2;
-}
-
-body.layout-3d-book .card-3d.flipped .card-front {
-  transform: rotateY(-135deg);
-  box-shadow: 12px 20px 40px rgba(0,0,0,0.18);
 }
 
 .card-front-decor, .card-back-decor {

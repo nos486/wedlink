@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS invitations (
   message_fa     TEXT,
   image_url      TEXT,
   theme          TEXT    DEFAULT 'modern-minimal',
-  desktop_layout TEXT    DEFAULT '3d-horizontal',
-  mobile_layout  TEXT    DEFAULT '3d-horizontal',
+  desktop_layout TEXT    DEFAULT 'split-left',
+  mobile_layout  TEXT    DEFAULT 'hero-top',
   created_at     TEXT    NOT NULL DEFAULT (datetime('now'))
 );
 

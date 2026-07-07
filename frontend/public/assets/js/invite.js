@@ -132,25 +132,16 @@ function renderInvitation() {
   }
 
   setupCardRotation();
-  setupCardParallax();
   startCountdown(invitation.date);
 }
 
 function applyLayout() {
   if (!invitation) return;
-  const isMobile = window.innerWidth <= 768;
-  const desktopLayout = invitation.desktop_layout || '3d-horizontal';
-  const mobileLayout = invitation.mobile_layout || '3d-horizontal';
-  
-  let layoutToUse = isMobile ? mobileLayout : desktopLayout;
-  if (layoutToUse === '3d-card' || !layoutToUse.startsWith('3d-')) {
-    layoutToUse = '3d-horizontal';
-  }
-  
   const themeToUse = invitation.theme || 'modern-minimal';
+  
   const body = document.getElementById('invite-body');
   const dir = body.getAttribute('dir') || '';
-  body.className = `invite-page theme-${themeToUse} layout-${layoutToUse}`;
+  body.className = `invite-page theme-${themeToUse} layout-3d-card`;
   if (dir) body.setAttribute('dir', dir);
 }
 
@@ -251,33 +242,5 @@ function setupCardRotation() {
 
   card.addEventListener('click', () => {
     card.classList.toggle('flipped');
-  });
-}
-
-function setupCardParallax() {
-  const perspective = document.querySelector('.card-perspective');
-  const card = document.getElementById('invitation-card');
-  if (!perspective || !card) return;
-
-  // Track hover and tilt card
-  perspective.addEventListener('mousemove', (e) => {
-    // Disable hover tilt when card is flipped to maintain details readability
-    if (card.classList.contains('flipped')) return;
-
-    const rect = perspective.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    
-    // Smooth 3D tilt max 8 degrees
-    const tiltX = -(y / (rect.height / 2)) * 8;
-    const tiltY = (x / (rect.width / 2)) * 8;
-    
-    card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-  });
-
-  perspective.addEventListener('mouseleave', () => {
-    // Let stylesheet values take over when not hovered
-    if (card.classList.contains('flipped')) return;
-    card.style.transform = '';
   });
 }
