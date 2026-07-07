@@ -137,11 +137,19 @@ function renderInvitation() {
 
 function applyLayout() {
   if (!invitation) return;
-  const themeToUse = invitation.theme || 'modern-minimal';
+  const isMobile = window.innerWidth <= 768;
+  const desktopLayout = invitation.desktop_layout || '3d-horizontal';
+  const mobileLayout = invitation.mobile_layout || '3d-horizontal';
   
+  let layoutToUse = isMobile ? mobileLayout : desktopLayout;
+  if (layoutToUse === '3d-card' || !layoutToUse.startsWith('3d-')) {
+    layoutToUse = '3d-horizontal';
+  }
+  
+  const themeToUse = invitation.theme || 'modern-minimal';
   const body = document.getElementById('invite-body');
   const dir = body.getAttribute('dir') || '';
-  body.className = `invite-page theme-${themeToUse} layout-3d-card`;
+  body.className = `invite-page theme-${themeToUse} layout-${layoutToUse}`;
   if (dir) body.setAttribute('dir', dir);
 }
 

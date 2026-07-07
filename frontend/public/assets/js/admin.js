@@ -128,11 +128,11 @@ function renderCard(inv) {
           </span>
           <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">
             <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            ${formatLayout(inv.desktop_layout || inv.layout || 'split-left')}
+            ${formatLayout(inv.desktop_layout || inv.layout || '3d-horizontal')}
           </span>
           <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">
             <svg class="svg-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12" y2="18.01"></line></svg>
-            ${formatLayout(inv.mobile_layout || inv.layout || 'hero-top')}
+            ${formatLayout(inv.mobile_layout || inv.layout || '3d-horizontal')}
           </span>
         </div>
         <div class="info-row">
@@ -278,8 +278,8 @@ function openModalForEdit(slug) {
   form.message_fa.value = inv.message_fa || '';
   form.image_url.value = uploadedImageBase64 ? '(Uploaded Photo)' : (inv.image_url || '');
   form.theme.value = inv.theme || 'modern-minimal';
-  form.desktop_layout.value = inv.desktop_layout || inv.layout || 'split-left';
-  form.mobile_layout.value = inv.mobile_layout || inv.layout || 'hero-top';
+  form.desktop_layout.value = inv.desktop_layout || inv.layout || '3d-horizontal';
+  form.mobile_layout.value = inv.mobile_layout || inv.layout || '3d-horizontal';
 
   clearFormErrors();
   document.getElementById('create-modal').classList.add('active');
@@ -574,18 +574,11 @@ function formatTheme(theme) {
 
 function formatLayout(layout) {
   const map = {
-    'split-left': 'Split (L)',
-    'split-right': 'Split (R)',
-    'polaroid-center': 'Polaroid',
-    'classic-card': 'Classic Card',
-    'hero-top': 'Hero Top',
-    'full-overlay': 'Overlay',
-    'image-top': 'Hero Top',
-    'split-screen': 'Split (L)',
-    'image-background': 'Overlay',
-    '3d-card': '3D Card'
+    '3d-horizontal': '3D Flip (H)',
+    '3d-vertical': '3D Flip (V)',
+    '3d-book': '3D Book Fold'
   };
-  return map[layout] || 'Hero Top';
+  return map[layout] || '3D Flip (H)';
 }
 
 // Expose for inline onclick handlers

@@ -461,13 +461,17 @@ body.theme-modern-minimal .ornament-divider {
 }
 /* ─── 3D Card Layout ─────────────────────────────────────────── */
 
-body.layout-3d-card {
+body.layout-3d-horizontal,
+body.layout-3d-vertical,
+body.layout-3d-book {
   height: 100vh !important;
   max-height: 100vh !important;
   overflow: hidden !important;
 }
 
-body.layout-3d-card .inv-container {
+body.layout-3d-horizontal .inv-container,
+body.layout-3d-vertical .inv-container,
+body.layout-3d-book .inv-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -504,8 +508,14 @@ body.layout-3d-card .inv-container {
   cursor: pointer;
 }
 
-.card-3d.flipped {
+body.layout-3d-horizontal .card-3d.flipped {
   transform: rotateY(180deg);
+}
+body.layout-3d-vertical .card-3d.flipped {
+  transform: rotateX(180deg);
+}
+body.layout-3d-book .card-3d.flipped {
+  transform: none;
 }
 
 .card-side {
@@ -533,13 +543,33 @@ body.layout-3d-card .inv-container {
 }
 
 .card-back {
-  transform: rotateY(180deg);
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 40px 30px;
+  transform: rotateY(180deg);
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+body.layout-3d-vertical .card-back {
+  transform: rotateX(180deg);
+}
+
+body.layout-3d-book .card-back {
+  transform: rotateY(0deg);
+}
+
+body.layout-3d-book .card-front {
+  transform-origin: left center;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 2;
+}
+
+body.layout-3d-book .card-3d.flipped .card-front {
+  transform: rotateY(-135deg);
+  box-shadow: 12px 20px 40px rgba(0,0,0,0.18);
 }
 
 .card-front-decor, .card-back-decor {
