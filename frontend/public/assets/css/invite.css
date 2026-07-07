@@ -530,7 +530,6 @@ body.layout-3d-card .inv-container {
   justify-content: center;
   align-items: center;
   padding: 40px;
-  position: relative;
 }
 
 .card-back {
@@ -541,7 +540,6 @@ body.layout-3d-card .inv-container {
   justify-content: center;
   align-items: center;
   padding: 40px 30px;
-  position: relative;
 }
 
 .card-front-decor, .card-back-decor {
