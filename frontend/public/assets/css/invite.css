@@ -29,14 +29,14 @@ html {
 }
 
 body.theme-dark-luxury {
-  --inv-bg: #09090e;
-  --inv-bg-rgb: 9, 9, 14;
-  --inv-text: #f5e9da;
-  --inv-accent: #d4af37; /* Gold */
-  --inv-accent-light: rgba(212, 175, 55, 0.1);
+  --inv-bg: #fffbf4; /* Warm luxury ivory */
+  --inv-bg-rgb: 255, 251, 244;
+  --inv-text: #3a3328;
+  --inv-accent: #bfa15f; /* Rich luxury gold */
+  --inv-accent-light: rgba(191, 161, 95, 0.08);
   --inv-font-primary: 'Inter', sans-serif;
   --inv-font-script: 'Great Vibes', cursive;
-  --inv-border: rgba(212, 175, 55, 0.2);
+  --inv-border: rgba(191, 161, 95, 0.3);
 }
 body.theme-dark-luxury .inv-names-front,
 body.theme-dark-luxury .inv-names-back {
@@ -61,14 +61,14 @@ body.theme-light-floral {
 }
 
 body.theme-royal-elegance {
-  --inv-bg: #1d0309; /* Deep Burgundy */
-  --inv-bg-rgb: 29, 3, 9;
-  --inv-text: #fdf5e6;
-  --inv-accent: #e5b365; /* Royal Gold */
-  --inv-accent-light: rgba(229, 179, 101, 0.12);
+  --inv-bg: #fdf5f6; /* Soft royal rose/blush champagne */
+  --inv-bg-rgb: 253, 245, 246;
+  --inv-text: #4a3538;
+  --inv-accent: #d4af37; /* Royal Gold */
+  --inv-accent-light: rgba(212, 175, 55, 0.08);
   --inv-font-primary: 'Playfair Display', serif;
   --inv-font-script: 'Great Vibes', cursive;
-  --inv-border: rgba(229, 179, 101, 0.25);
+  --inv-border: rgba(212, 175, 55, 0.25);
 }
 body.theme-royal-elegance .inv-names-front,
 body.theme-royal-elegance .inv-names-back {
@@ -81,15 +81,15 @@ body.theme-royal-elegance .inv-names-back {
 }
 
 body.theme-starlight-glamour {
-  --inv-bg: #040407; /* Dark Obsidian */
-  --inv-bg-rgb: 4, 4, 7;
-  --inv-text: #e2e8f0;
-  --inv-accent: #cbd5e1; /* Platinum Silver */
-  --inv-accent-light: rgba(255, 255, 255, 0.05);
+  --inv-bg: #f8fafd; /* Light Platinum Silver */
+  --inv-bg-rgb: 248, 250, 253;
+  --inv-text: #2e353f;
+  --inv-accent: #7c8ba1; /* Platinum Silver */
+  --inv-accent-light: rgba(124, 139, 161, 0.08);
   --inv-font-primary: 'Inter', sans-serif;
   --inv-font-script: 'Playfair Display', serif;
-  --inv-border: rgba(255, 255, 255, 0.1);
-  background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 1px, transparent 1px);
+  --inv-border: rgba(124, 139, 161, 0.25);
+  background-image: radial-gradient(circle at 50% 50%, rgba(124, 139, 161, 0.12) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 body.theme-starlight-glamour .inv-names-front,
@@ -98,174 +98,24 @@ body.theme-starlight-glamour .inv-names-back {
 }
 
 body.theme-enchanted-forest {
-  --inv-bg: #05140b; /* Moss Emerald */
-  --inv-bg-rgb: 5, 20, 11;
-  --inv-text: #e8f5ec;
-  --inv-accent: #86c49e; /* Sage */
-  --inv-accent-light: rgba(134, 196, 158, 0.1);
+  --inv-bg: #f4f8f5; /* Light Sage Green */
+  --inv-bg-rgb: 244, 248, 245;
+  --inv-text: #2f3e35;
+  --inv-accent: #609374; /* Sage */
+  --inv-accent-light: rgba(96, 147, 116, 0.08);
   --inv-font-primary: 'Playfair Display', serif;
   --inv-font-script: 'Great Vibes', cursive;
-  --inv-border: rgba(134, 196, 158, 0.2);
+  --inv-border: rgba(96, 147, 116, 0.25);
 }
 body.theme-enchanted-forest::before {
   content: "";
   position: fixed;
   inset: 0;
   background: 
-    radial-gradient(circle at 20% 30%, rgba(134,196,158,0.1) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(229,179,101,0.05) 0%, transparent 45%);
+    radial-gradient(circle at 20% 30%, rgba(96,147,116,0.06) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(229,179,101,0.04) 0%, transparent 45%);
   pointer-events: none;
   z-index: 0;
-}
-
-
-/* ─── Theme-Specific Custom Layouts and Elements ─────────────── */
-
-/* 1. Modern Minimalist Overrides */
-body.theme-modern-minimal .save-the-date { order: 1; }
-body.theme-modern-minimal .inv-date-front { order: 2; margin-bottom: 24px; }
-body.theme-modern-minimal .card-front-photo-frame {
-  order: 3;
-  border-radius: 0 !important;
-  border: 1px solid var(--inv-accent) !important;
-  box-shadow: none !important;
-  width: 170px !important;
-  height: 220px !important;
-}
-body.theme-modern-minimal .inv-divider-front { display: none; }
-body.theme-modern-minimal .inv-names-front { order: 4; margin-top: 24px; }
-
-/* 2. Dark Luxury Overrides */
-body.theme-dark-luxury .save-the-date { order: 1; }
-body.theme-dark-luxury .card-front-photo-frame {
-  order: 2;
-  border-radius: 90px 90px 0 0 !important;
-  border: 1.5px solid var(--inv-accent) !important;
-  box-shadow: 0 12px 32px rgba(229, 192, 96, 0.15) !important;
-}
-body.theme-dark-luxury .inv-names-front { order: 3; margin-top: 22px; }
-body.theme-dark-luxury .inv-divider-front { order: 4; margin: 14px 0; }
-body.theme-dark-luxury .inv-date-front {
-  order: 5;
-  border: 1px solid rgba(229, 192, 96, 0.35);
-  padding: 6px 20px;
-  border-radius: 30px;
-  background: rgba(229, 192, 96, 0.05);
-}
-body.theme-dark-luxury .cd-box {
-  border-color: rgba(229, 192, 96, 0.35) !important;
-  background: rgba(229, 192, 96, 0.04) !important;
-}
-body.theme-dark-luxury .lang-switcher-btn {
-  border-color: rgba(229, 192, 96, 0.35) !important;
-  background: rgba(229, 192, 96, 0.04) !important;
-  color: #e5c060 !important;
-}
-body.theme-dark-luxury .btn-flip {
-  border-color: rgba(229, 192, 96, 0.35) !important;
-  background: var(--inv-accent) !important;
-  color: #000000 !important;
-}
-
-/* 3. Light Floral Overrides */
-body.theme-light-floral .card-front-photo-frame {
-  order: 1;
-  border-radius: 50% !important;
-  width: 170px !important;
-  height: 170px !important;
-  border: 3px double var(--inv-accent) !important;
-}
-body.theme-light-floral .inv-names-front { order: 2; margin: 16px 0 6px; }
-body.theme-light-floral .save-the-date {
-  order: 3;
-  font-size: 11px;
-  margin: 0;
-  letter-spacing: 0.15em;
-  opacity: 0.7;
-}
-body.theme-light-floral .inv-divider-front { display: none; }
-body.theme-light-floral .inv-date-front { order: 4; margin-top: 14px; }
-body.theme-light-floral .cd-box {
-  border-color: rgba(201, 149, 108, 0.25) !important;
-  background: rgba(201, 149, 108, 0.04) !important;
-}
-body.theme-light-floral .lang-switcher-btn {
-  border-color: rgba(201, 149, 108, 0.25) !important;
-  background: rgba(201, 149, 108, 0.04) !important;
-  color: var(--inv-accent) !important;
-}
-
-/* 4. Royal Elegance Overrides */
-body.theme-royal-elegance .card-front-photo-frame {
-  order: 1;
-  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-  border-radius: 0 !important;
-  border: none !important;
-  width: 160px !important;
-  height: 160px !important;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.3) !important;
-}
-body.theme-royal-elegance .save-the-date { order: 2; margin-top: 18px; }
-body.theme-royal-elegance .inv-divider-front { order: 3; margin: 10px 0; }
-body.theme-royal-elegance .inv-names-front { order: 4; }
-body.theme-royal-elegance .inv-date-front { order: 5; margin-top: 10px; }
-body.theme-royal-elegance .cd-box {
-  border-color: rgba(229, 179, 101, 0.25) !important;
-  background: rgba(229, 179, 101, 0.04) !important;
-}
-body.theme-royal-elegance .lang-switcher-btn {
-  border-color: rgba(229, 179, 101, 0.25) !important;
-  background: rgba(229, 179, 101, 0.04) !important;
-  color: var(--inv-accent) !important;
-}
-
-/* 5. Starlight Glamour Overrides */
-body.theme-starlight-glamour .inv-date-front { order: 1; margin-bottom: 22px; }
-body.theme-starlight-glamour .card-front-photo-frame {
-  order: 2;
-  transform: rotate(45deg) !important;
-  border-radius: 12px !important;
-  width: 130px !important;
-  height: 130px !important;
-  border: 1.5px solid var(--inv-accent) !important;
-  overflow: hidden !important;
-  box-shadow: 0 0 20px rgba(255,255,255,0.06) !important;
-}
-body.theme-starlight-glamour .card-front-photo {
-  transform: rotate(-45deg) scale(1.4) !important;
-}
-body.theme-starlight-glamour .save-the-date { order: 3; margin-top: 26px; }
-body.theme-starlight-glamour .inv-divider-front { display: none; }
-body.theme-starlight-glamour .inv-names-front { order: 4; margin-top: 14px; }
-body.theme-starlight-glamour .cd-box {
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  background: rgba(255, 255, 255, 0.03) !important;
-}
-body.theme-starlight-glamour .lang-switcher-btn {
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  background: rgba(255, 255, 255, 0.03) !important;
-}
-
-/* 6. Enchanted Forest Overrides */
-body.theme-enchanted-forest .save-the-date { order: 1; }
-body.theme-enchanted-forest .card-front-photo-frame {
-  order: 2;
-  border-radius: 100px 10px 100px 10px !important;
-  border: 2px solid var(--inv-accent) !important;
-  width: 155px !important;
-  height: 195px !important;
-}
-body.theme-enchanted-forest .inv-names-front { order: 3; margin-top: 20px; }
-body.theme-enchanted-forest .inv-divider-front { order: 4; margin: 12px 0; }
-body.theme-enchanted-forest .inv-date-front { order: 5; }
-body.theme-enchanted-forest .cd-box {
-  border-color: rgba(134, 196, 158, 0.25) !important;
-  background: rgba(134, 196, 158, 0.04) !important;
-}
-body.theme-enchanted-forest .lang-switcher-btn {
-  border-color: rgba(134, 196, 158, 0.25) !important;
-  background: rgba(134, 196, 158, 0.04) !important;
-  color: var(--inv-accent) !important;
 }
 
 /* ─── Base Application ───────────────────────────────────────── */
@@ -277,6 +127,9 @@ body.invite-page {
   margin: 0;
   overflow-x: hidden;
   position: relative;
+  background-image: 
+    radial-gradient(circle at 10% 10%, rgba(var(--inv-bg-rgb), 0.15) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%233a3328' stroke-width='0.4' opacity='0.02'%3E%3Cpath d='M30 40c0-15 10-25 25-25s25 10 25 25-10 25-25 25-25-10-25-25zm5 0c0 12 8 20 20 20s20-8 20-20-8-20-20-20-20 8-20 20zm50 60c0-10 8-18 18-18s18 8 18 18-8 18-18 18-18-8-18-18zm20-10a15 15 0 0 0-15 15c0 8 7 15 15 15s15-7 15-15a15 15 0 0 0-15-15zm-70 30c0-12 10-22 22-22s22 10 22 22-10 22-22 22-22-10-22-22zm30 10q10-15-10-15'/%3E%3Cpath d='M0 160c40-40 80-20 120-60' stroke-dasharray='3 3'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* SVG Icon Inside Invitations */
@@ -693,6 +546,16 @@ body.layout-3d-book .card-3d.flipped {
   overflow: hidden;
   background: linear-gradient(135deg, var(--inv-bg) 0%, rgba(var(--inv-bg-rgb), 0.97) 50%, rgba(var(--inv-bg-rgb), 0.94) 100%);
   box-sizing: border-box;
+}
+
+.card-side::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 body.theme-dark-luxury .card-side {
