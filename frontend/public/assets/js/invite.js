@@ -47,17 +47,15 @@ function renderInvitation() {
   }
 
   // Configure Language Switcher Button
+  const langText = document.getElementById('lang-text');
+  const langSwitcher = document.getElementById('lang-switcher');
   const otherLang = lang === 'en' ? 'fa' : 'en';
   const otherLangLabel = lang === 'en' ? 'فارسی' : 'English';
   
+  langText.textContent = otherLangLabel;
   const switcherUrl = new URL(window.location.href);
   switcherUrl.searchParams.set('lang', otherLang);
-
-  const langText = document.getElementById('lang-text');
-  const langSwitcher = document.getElementById('lang-switcher');
-  
-  if (langText) langText.textContent = otherLangLabel;
-  if (langSwitcher) langSwitcher.href = switcherUrl.toString();
+  langSwitcher.href = switcherUrl.toString();
 
   // Image
   const imgEl = document.getElementById('invite-image');
@@ -89,8 +87,7 @@ function renderInvitation() {
   document.getElementById('detail-date').textContent = formattedDate;
   
   if (invitation.time) {
-    const timeStr = lang === 'fa' ? toPersianDigits(invitation.time) : invitation.time;
-    document.getElementById('detail-time').textContent = timeStr;
+    document.getElementById('detail-time').textContent = lang === 'fa' ? toPersianDigits(invitation.time) : invitation.time;
     document.getElementById('time-container').style.display = 'flex';
   } else {
     document.getElementById('time-container').style.display = 'none';
@@ -99,12 +96,12 @@ function renderInvitation() {
   document.getElementById('detail-venue').textContent = venueText;
 
   // Eyebrow translation
-  const eyebrowEls = document.querySelectorAll('.inv-eyebrow');
-  eyebrowEls.forEach(el => {
-    el.textContent = lang === 'fa' 
+  const eyebrowEl = document.querySelector('.inv-eyebrow');
+  if (eyebrowEl) {
+    eyebrowEl.textContent = lang === 'fa' 
       ? 'با کمال مسرت شما را به جشن ازدواج خود دعوت می‌نماییم' 
       : 'You are cordially invited to the wedding of';
-  });
+  }
 
   // Flip button text translation
   const flipBtnText = document.getElementById('flip-btn-text');
