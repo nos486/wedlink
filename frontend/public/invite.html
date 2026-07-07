@@ -37,8 +37,14 @@
     </div>
   </div>
 
-  <!-- Main Content -->
-  <main id="invite-main" class="inv-container" style="display:none;">
+  <!-- Envelope Wrapper -->
+  <div id="envelope-container" class="envelope-container" style="display:none;">
+    <div class="envelope-back"></div>
+    <div class="envelope-flap"></div>
+    <div class="envelope-front"></div>
+    
+    <!-- Main Content -->
+    <main id="invite-main" class="inv-container">
     
     <!-- Image Half -->
     <div class="inv-image-wrapper">
@@ -96,7 +102,15 @@
       </a>
     </div>
 
-  </main>
+    </main>
+  </div>
+
+  <div id="flip-actions" style="display:none;" class="flip-actions">
+    <button id="flip-btn" class="flip-btn">
+      <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.92-5.27l-3.26-1.5M2 22v-6h6M2.66 8.43a10 10 0 1 1 .92 5.27l3.26 1.5"/></svg>
+      <span id="flip-btn-text">Rotate Card</span>
+    </button>
+  </div>
 
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/invite.js"></script>

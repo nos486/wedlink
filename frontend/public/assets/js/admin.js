@@ -582,7 +582,8 @@ function formatLayout(layout) {
     'full-overlay': 'Overlay',
     'image-top': 'Hero Top',
     'split-screen': 'Split (L)',
-    'image-background': 'Overlay'
+    'image-background': 'Overlay',
+    '3d-card': '3D Card'
   };
   return map[layout] || 'Hero Top';
 }

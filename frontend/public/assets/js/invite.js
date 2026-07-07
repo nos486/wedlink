@@ -30,8 +30,8 @@ async function loadInvitation(slug) {
 // ─── Render Invitation ────────────────────────────────────────
 function renderInvitation() {
   document.getElementById('invite-loading').style.display = 'none';
-  const content = document.getElementById('invite-main');
-  content.style.display = 'flex';
+  const envelope = document.getElementById('envelope-container');
+  if (envelope) envelope.style.display = 'block';
 
   applyLayout();
   window.addEventListener('resize', applyLayout);
@@ -136,6 +136,39 @@ function applyLayout() {
   const dir = body.getAttribute('dir') || '';
   body.className = `invite-page theme-${themeToUse} layout-${layoutToUse}`;
   if (dir) body.setAttribute('dir', dir);
+
+  // 3D Card specific logic
+  if (layoutToUse === '3d-card') {
+    const card = document.getElementById('invite-main');
+    const flipBtn = document.getElementById('flip-btn');
+    const flipText = document.getElementById('flip-btn-text');
+    const lang = getLang();
+    
+    // Clear animation after it finishes to allow clean CSS transitions for flipping
+    setTimeout(() => {
+      if (card) card.style.animation = 'none';
+    }, 3200);
+
+    if (flipBtn) {
+      flipBtn.onclick = (e) => {
+        e.preventDefault();
+        card.classList.toggle('flipped');
+        const isFlipped = card.classList.contains('flipped');
+        if (lang === 'fa') {
+          flipText.textContent = isFlipped ? 'مشاهده تصویر' : 'مشاهده جزئیات';
+        } else {
+          flipText.textContent = isFlipped ? 'View Front' : 'View Details';
+        }
+      };
+      
+      // Set initial text
+      if (lang === 'fa') {
+        flipText.textContent = 'مشاهده جزئیات';
+      } else {
+        flipText.textContent = 'View Details';
+      }
+    }
+  }
 }
 
 // ─── Countdown ────────────────────────────────────────────────
