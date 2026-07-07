@@ -47,26 +47,35 @@ function renderInvitation() {
   }
 
   // Configure Language Switcher Button
-  const langText = document.getElementById('lang-text');
-  const langSwitcher = document.getElementById('lang-switcher');
   const otherLang = lang === 'en' ? 'fa' : 'en';
   const otherLangLabel = lang === 'en' ? 'فارسی' : 'English';
   
-  langText.textContent = otherLangLabel;
   const switcherUrl = new URL(window.location.href);
   switcherUrl.searchParams.set('lang', otherLang);
-  langSwitcher.href = switcherUrl.toString();
+
+  const langTexts = [document.getElementById('lang-text'), document.getElementById('fs-lang-text')];
+  const langSwitchers = [document.getElementById('lang-switcher'), document.getElementById('fs-lang-switcher')];
+  
+  langTexts.forEach(el => { if (el) el.textContent = otherLangLabel; });
+  langSwitchers.forEach(el => { if (el) el.href = switcherUrl.toString(); });
 
   // Image
   const imgEl = document.getElementById('invite-image');
   const placeholderEl = document.getElementById('invite-image-placeholder');
+  const fsImgEl = document.getElementById('fs-invite-image');
+  
   if (invitation.image_url) {
     imgEl.src = invitation.image_url;
     imgEl.style.display = 'block';
     placeholderEl.style.display = 'none';
+    if (fsImgEl) {
+      fsImgEl.src = invitation.image_url;
+      fsImgEl.style.display = 'block';
+    }
   } else {
     imgEl.style.display = 'none';
     placeholderEl.style.display = 'block';
+    if (fsImgEl) fsImgEl.style.display = 'none';
   }
 
   // Names, Venue, Message (bilingual check)
@@ -81,27 +90,40 @@ function renderInvitation() {
   document.title = `${brideName} & ${groomName} — WedLink`;
   document.getElementById('couple-names-front').textContent = joinedNames;
   document.getElementById('couple-names-back').textContent = joinedNames;
+  const fsCoupleNames = document.getElementById('fs-couple-names');
+  if (fsCoupleNames) fsCoupleNames.textContent = joinedNames;
   
   // Date format based on lang
   document.getElementById('detail-date-front').textContent = formattedDate;
   document.getElementById('detail-date').textContent = formattedDate;
+  const fsDate = document.getElementById('fs-detail-date');
+  if (fsDate) fsDate.textContent = formattedDate;
   
   if (invitation.time) {
-    document.getElementById('detail-time').textContent = lang === 'fa' ? toPersianDigits(invitation.time) : invitation.time;
+    const timeStr = lang === 'fa' ? toPersianDigits(invitation.time) : invitation.time;
+    document.getElementById('detail-time').textContent = timeStr;
     document.getElementById('time-container').style.display = 'flex';
+    const fsTime = document.getElementById('fs-detail-time');
+    const fsTimeCont = document.getElementById('fs-time-container');
+    if (fsTime) fsTime.textContent = timeStr;
+    if (fsTimeCont) fsTimeCont.style.display = 'flex';
   } else {
     document.getElementById('time-container').style.display = 'none';
+    const fsTimeCont = document.getElementById('fs-time-container');
+    if (fsTimeCont) fsTimeCont.style.display = 'none';
   }
 
   document.getElementById('detail-venue').textContent = venueText;
+  const fsVenue = document.getElementById('fs-detail-venue');
+  if (fsVenue) fsVenue.textContent = venueText;
 
   // Eyebrow translation
-  const eyebrowEl = document.querySelector('.inv-eyebrow');
-  if (eyebrowEl) {
-    eyebrowEl.textContent = lang === 'fa' 
+  const eyebrowEls = document.querySelectorAll('.inv-eyebrow');
+  eyebrowEls.forEach(el => {
+    el.textContent = lang === 'fa' 
       ? 'با کمال مسرت شما را به جشن ازدواج خود دعوت می‌نماییم' 
       : 'You are cordially invited to the wedding of';
-  }
+  });
 
   // Flip button text translation
   const flipBtnText = document.getElementById('flip-btn-text');
@@ -110,11 +132,17 @@ function renderInvitation() {
   }
 
   const msgSection = document.getElementById('message-section');
+  const fsMsgSection = document.getElementById('fs-message-section');
   if (messageText) {
     document.getElementById('invite-message').textContent = messageText;
     msgSection.style.display = 'block';
+    
+    const fsMsg = document.getElementById('fs-invite-message');
+    if (fsMsg) fsMsg.textContent = messageText;
+    if (fsMsgSection) fsMsgSection.style.display = 'block';
   } else {
     msgSection.style.display = 'none';
+    if (fsMsgSection) fsMsgSection.style.display = 'none';
   }
 
   // Translate countdown labels
@@ -143,7 +171,7 @@ function applyLayout() {
   const mobileLayout = invitation.mobile_layout || '3d-horizontal';
   
   let layoutToUse = isMobile ? mobileLayout : desktopLayout;
-  if (layoutToUse === '3d-card' || !layoutToUse.startsWith('3d-')) {
+  if (layoutToUse !== 'fullscreen-image' && (layoutToUse === '3d-card' || !layoutToUse.startsWith('3d-'))) {
     layoutToUse = '3d-horizontal';
   }
   
@@ -163,12 +191,15 @@ function startCountdown(dateStr) {
     const diff = target - Date.now();
     if (diff <= 0) {
       const todayMsg = lang === 'fa' ? 'امروز روز موعود است! 🎊' : "Today's the Day!";
-      document.getElementById('countdown-grid').innerHTML =
-        `<div style="grid-column:1/-1;text-align:center;font-size:24px;font-family:var(--inv-font-script);color:var(--inv-accent); display:inline-flex; align-items:center; justify-content:center; gap:8px;">
+      const contentHtml = `<div style="grid-column:1/-1;text-align:center;font-size:24px;font-family:var(--inv-font-script);color:var(--inv-accent); display:inline-flex; align-items:center; justify-content:center; gap:8px;">
            <svg class="svg-icon" style="width:24px;height:24px;" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"></path></svg>
            ${todayMsg}
            <svg class="svg-icon" style="width:24px;height:24px;" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"></path></svg>
          </div>`;
+      document.getElementById('countdown-grid').innerHTML = contentHtml;
+      const fsGrid = document.getElementById('fs-countdown-grid');
+      if (fsGrid) fsGrid.innerHTML = contentHtml;
+      
       clearInterval(countdownTimer);
       return;
     }
@@ -180,6 +211,10 @@ function startCountdown(dateStr) {
     setCount('cd-days', lang === 'fa' ? toPersianDigits(days) : days);
     setCount('cd-hours', lang === 'fa' ? toPersianDigits(hours) : hours);
     setCount('cd-mins', lang === 'fa' ? toPersianDigits(mins) : mins);
+    
+    setCount('fs-cd-days', lang === 'fa' ? toPersianDigits(days) : days);
+    setCount('fs-cd-hours', lang === 'fa' ? toPersianDigits(hours) : hours);
+    setCount('fs-cd-mins', lang === 'fa' ? toPersianDigits(mins) : mins);
   }
   tick();
   countdownTimer = setInterval(tick, 1000);
