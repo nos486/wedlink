@@ -570,6 +570,8 @@ body.layout-3d-card .inv-container {
   align-items: center;
   text-align: center;
   width: 100%;
+  height: 100%;
+  justify-content: space-evenly;
 }
 
 .save-the-date {
@@ -578,7 +580,7 @@ body.layout-3d-card .inv-container {
   text-transform: uppercase;
   color: var(--inv-accent);
   font-weight: 600;
-  margin-bottom: 24px;
+  margin: 0;
   opacity: 0.85;
 }
 
@@ -587,7 +589,7 @@ body.layout-3d-card .inv-container {
   height: 230px;
   border-radius: 90px 90px 16px 16px;
   overflow: hidden;
-  margin-bottom: 28px;
+  margin: 0;
   border: 1.5px solid var(--inv-accent);
   box-shadow: 0 16px 36px rgba(0,0,0,0.06);
   background-color: var(--inv-accent-light);
@@ -631,7 +633,7 @@ body.layout-3d-card .inv-container {
   height: 1px;
   background-color: var(--inv-accent);
   opacity: 0.3;
-  margin: 18px 0;
+  margin: 0;
 }
 
 .inv-date-front {
@@ -662,6 +664,32 @@ body.layout-3d-card .inv-container {
   word-wrap: break-word;
   overflow-wrap: break-word;
   max-width: 90%;
+}
+
+.card-back-content .inv-eyebrow {
+  margin: 0 !important;
+}
+.card-back-content .inv-names-back {
+  margin: 0 !important;
+}
+.card-back-content .ornament-divider {
+  margin: 0 !important;
+  max-width: 140px;
+}
+.card-back-content .inv-details {
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+.card-back-content .inv-message {
+  margin: 0 !important;
+  padding: 0 10px !important;
+  max-height: 70px !important;
+  overflow-y: auto !important;
+}
+.card-back-content .inv-countdown {
+  margin: 0 !important;
 }
 
 .invite-actions {
@@ -816,7 +844,7 @@ body.layout-full-overlay .inv-content-wrapper {
 @media (max-width: 480px) {
   .card-perspective {
     width: 88vw !important;
-    height: calc(88vw * 1.36) !important;
+    height: calc(88vw * 1.48) !important;
   }
   .card-front, .card-back {
     padding: 24px 16px !important;
