@@ -130,10 +130,6 @@ function renderCard(inv) {
             <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
             ${formatLayout(inv.desktop_layout || inv.layout || '3d-horizontal')}
           </span>
-          <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">
-            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12" y2="18.01"></line></svg>
-            ${formatLayout(inv.mobile_layout || inv.layout || '3d-horizontal')}
-          </span>
         </div>
         <div class="info-row">
           <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 15 15"></polyline></svg>
@@ -278,8 +274,7 @@ function openModalForEdit(slug) {
   form.message_fa.value = inv.message_fa || '';
   form.image_url.value = uploadedImageBase64 ? '(Uploaded Photo)' : (inv.image_url || '');
   form.theme.value = inv.theme || 'modern-minimal';
-  form.desktop_layout.value = inv.desktop_layout || inv.layout || '3d-horizontal';
-  form.mobile_layout.value = inv.mobile_layout || inv.layout || '3d-horizontal';
+  form.layout.value = inv.desktop_layout || inv.layout || '3d-horizontal';
 
   clearFormErrors();
   document.getElementById('create-modal').classList.add('active');
@@ -314,8 +309,8 @@ function setupForm() {
       message_fa: form.message_fa.value.trim() || undefined,
       image_url: uploadedImageBase64 || form.image_url.value.trim() || undefined,
       theme:     form.theme.value,
-      desktop_layout: form.desktop_layout.value,
-      mobile_layout:  form.mobile_layout.value,
+      desktop_layout: form.layout.value,
+      mobile_layout:  form.layout.value,
     };
 
     const errors = validateForm(body);
