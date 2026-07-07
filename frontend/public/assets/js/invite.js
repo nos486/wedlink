@@ -31,12 +31,44 @@ async function loadInvitation(slug) {
 function renderInvitation() {
   document.getElementById('invite-loading').style.display = 'none';
   const envelope = document.getElementById('envelope-container');
-  if (envelope) envelope.style.display = 'block';
+  const lang = getLang();
+
+  if (envelope) {
+    envelope.style.display = 'block';
+    
+    const card = document.getElementById('invite-main');
+
+    // Check if envelope has already been opened in this session
+    const envelopeOpened = sessionStorage.getItem('envelope_opened') === 'true';
+    if (envelopeOpened) {
+      envelope.classList.add('open', 'quick');
+      if (card) card.style.animation = 'none';
+    } else {
+      // Set localized seal text
+      const sealText = document.getElementById('seal-btn-text');
+      if (sealText) {
+        sealText.textContent = lang === 'fa' ? 'مشاهده' : 'Open';
+      }
+
+      // Add click handler to open the envelope
+      const seal = document.getElementById('envelope-seal');
+      if (seal) {
+        seal.onclick = (e) => {
+          e.stopPropagation();
+          sessionStorage.setItem('envelope_opened', 'true');
+          envelope.classList.add('open');
+
+          // Clear animation after it finishes to allow clean CSS transitions for flipping
+          setTimeout(() => {
+            if (card) card.style.animation = 'none';
+          }, 2900);
+        };
+      }
+    }
+  }
 
   applyLayout();
   window.addEventListener('resize', applyLayout);
-
-  const lang = getLang();
 
   // Set direction and language
   const body = document.getElementById('invite-body');
@@ -144,10 +176,7 @@ function applyLayout() {
     const flipText = document.getElementById('flip-btn-text');
     const lang = getLang();
     
-    // Clear animation after it finishes to allow clean CSS transitions for flipping
-    setTimeout(() => {
-      if (card) card.style.animation = 'none';
-    }, 3200);
+
 
     if (flipBtn) {
       flipBtn.onclick = (e) => {
