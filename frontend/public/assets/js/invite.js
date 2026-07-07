@@ -30,45 +30,13 @@ async function loadInvitation(slug) {
 // ─── Render Invitation ────────────────────────────────────────
 function renderInvitation() {
   document.getElementById('invite-loading').style.display = 'none';
-  const envelope = document.getElementById('envelope-container');
-  const lang = getLang();
-
-  if (envelope) {
-    envelope.style.display = 'block';
-    
-    const card = document.getElementById('invite-main');
-
-    // Check if envelope has already been opened in this session
-    const envelopeOpened = sessionStorage.getItem('envelope_opened') === 'true';
-    if (envelopeOpened) {
-      envelope.classList.add('open', 'quick');
-      if (card) card.style.animation = 'none';
-    } else {
-      // Set localized seal text
-      const sealText = document.getElementById('seal-btn-text');
-      if (sealText) {
-        sealText.textContent = lang === 'fa' ? 'مشاهده' : 'Open';
-      }
-
-      // Add click handler to open the envelope
-      const seal = document.getElementById('envelope-seal');
-      if (seal) {
-        seal.onclick = (e) => {
-          e.stopPropagation();
-          sessionStorage.setItem('envelope_opened', 'true');
-          envelope.classList.add('open');
-
-          // Clear animation after it finishes to allow clean CSS transitions for flipping
-          setTimeout(() => {
-            if (card) card.style.animation = 'none';
-          }, 2900);
-        };
-      }
-    }
-  }
+  const content = document.getElementById('invite-main');
+  content.style.display = 'flex';
 
   applyLayout();
   window.addEventListener('resize', applyLayout);
+
+  const lang = getLang();
 
   // Set direction and language
   const body = document.getElementById('invite-body');
@@ -107,11 +75,16 @@ function renderInvitation() {
   const venueText = (lang === 'fa' && invitation.venue_fa) ? invitation.venue_fa : invitation.venue;
   const messageText = (lang === 'fa' && invitation.message_fa) ? invitation.message_fa : invitation.message;
 
+  const joinedNames = `${brideName} ${lang === 'fa' ? 'و' : '&'} ${groomName}`;
+  const formattedDate = lang === 'fa' ? formatFaDate(invitation.date) : formatDate(invitation.date);
+
   document.title = `${brideName} & ${groomName} — WedLink`;
-  document.getElementById('couple-names').textContent = `${brideName} ${lang === 'fa' ? 'و' : '&'} ${groomName}`;
+  document.getElementById('couple-names-front').textContent = joinedNames;
+  document.getElementById('couple-names-back').textContent = joinedNames;
   
   // Date format based on lang
-  document.getElementById('detail-date').textContent = lang === 'fa' ? formatFaDate(invitation.date) : formatDate(invitation.date);
+  document.getElementById('detail-date-front').textContent = formattedDate;
+  document.getElementById('detail-date').textContent = formattedDate;
   
   if (invitation.time) {
     document.getElementById('detail-time').textContent = lang === 'fa' ? toPersianDigits(invitation.time) : invitation.time;
@@ -128,6 +101,12 @@ function renderInvitation() {
     eyebrowEl.textContent = lang === 'fa' 
       ? 'با کمال مسرت شما را به جشن ازدواج خود دعوت می‌نماییم' 
       : 'You are cordially invited to the wedding of';
+  }
+
+  // Flip button text translation
+  const flipBtnText = document.getElementById('flip-btn-text');
+  if (flipBtnText) {
+    flipBtnText.textContent = lang === 'fa' ? 'چرخش کارت' : 'Flip Card';
   }
 
   const msgSection = document.getElementById('message-section');
@@ -152,52 +131,18 @@ function renderInvitation() {
     }
   }
 
+  setupCardRotation();
   startCountdown(invitation.date);
 }
 
 function applyLayout() {
   if (!invitation) return;
-  const isMobile = window.innerWidth <= 768;
-  const desktopLayout = invitation.desktop_layout || invitation.layout || 'split-left';
-  const mobileLayout = invitation.mobile_layout || invitation.layout || 'hero-top';
-  
-  const layoutToUse = isMobile ? mobileLayout : desktopLayout;
   const themeToUse = invitation.theme || 'modern-minimal';
   
   const body = document.getElementById('invite-body');
   const dir = body.getAttribute('dir') || '';
-  body.className = `invite-page theme-${themeToUse} layout-${layoutToUse}`;
+  body.className = `invite-page theme-${themeToUse} layout-3d-card`;
   if (dir) body.setAttribute('dir', dir);
-
-  // 3D Card specific logic
-  if (layoutToUse === '3d-card') {
-    const card = document.getElementById('invite-main');
-    const flipBtn = document.getElementById('flip-btn');
-    const flipText = document.getElementById('flip-btn-text');
-    const lang = getLang();
-    
-
-
-    if (flipBtn) {
-      flipBtn.onclick = (e) => {
-        e.preventDefault();
-        card.classList.toggle('flipped');
-        const isFlipped = card.classList.contains('flipped');
-        if (lang === 'fa') {
-          flipText.textContent = isFlipped ? 'مشاهده تصویر' : 'مشاهده جزئیات';
-        } else {
-          flipText.textContent = isFlipped ? 'View Front' : 'View Details';
-        }
-      };
-      
-      // Set initial text
-      if (lang === 'fa') {
-        flipText.textContent = 'مشاهده جزئیات';
-      } else {
-        flipText.textContent = 'View Details';
-      }
-    }
-  }
 }
 
 // ─── Countdown ────────────────────────────────────────────────
@@ -280,4 +225,22 @@ function formatFaDate(dateStr) {
 function toPersianDigits(val) {
   const fa = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
   return String(val).replace(/[0-9]/g, w => fa[+w]);
+}
+
+// ─── 3D Card Rotation ─────────────────────────────────────────
+function setupCardRotation() {
+  const card = document.getElementById('invitation-card');
+  const flipBtn = document.getElementById('flip-btn');
+  if (!card) return;
+
+  if (flipBtn) {
+    flipBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      card.classList.toggle('flipped');
+    });
+  }
+
+  card.addEventListener('click', () => {
+    card.classList.toggle('flipped');
+  });
 }

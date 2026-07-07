@@ -37,86 +37,104 @@
     </div>
   </div>
 
-  <!-- Envelope Wrapper -->
-  <div id="envelope-container" class="envelope-container" style="display:none;">
-    <div class="envelope-back"></div>
-    <div class="envelope-flap"></div>
-    <div class="envelope-front"></div>
-    <div class="envelope-seal" id="envelope-seal">
-      <div class="seal-inner">
-        <svg class="seal-heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <span id="seal-btn-text">Open</span>
-      </div>
-    </div>
+  <!-- Main Content -->
+  <main id="invite-main" class="inv-container" style="display:none;">
     
-    <!-- Main Content -->
-    <main id="invite-main" class="inv-container">
-    
-    <!-- Image Half -->
-    <div class="inv-image-wrapper">
-      <img id="invite-image" class="inv-image" src="" alt="Couple" style="display:none;" />
-      <div id="invite-image-placeholder" class="inv-image-placeholder">
-        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="14" r="5"></circle><circle cx="15" cy="11" r="5"></circle><path d="M7 9a2.5 2.5 0 0 1 4 0"></path><path d="M13 6a2.5 2.5 0 0 1 4 0"></path></svg>
+    <div class="invite-card-wrapper">
+      <div class="card-perspective">
+        <div class="card-3d" id="invitation-card">
+          
+          <!-- Front Side -->
+          <div class="card-side card-front">
+            <div class="card-front-decor">
+              <svg class="wreath-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="42" fill="none" stroke="var(--inv-accent)" stroke-width="1.2" stroke-dasharray="1 1.5"/>
+                <polygon points="50,6 87,27 87,73 50,94 13,73 13,27" fill="none" stroke="var(--inv-accent)" stroke-dasharray="1.5 2.5" stroke-width="0.75" opacity="0.6"/>
+              </svg>
+            </div>
+            
+            <div class="card-front-content">
+              <div class="save-the-date">Save The Date</div>
+              
+              <div class="card-front-photo-frame">
+                <img id="invite-image" class="card-front-photo" src="" alt="Couple" style="display:none;" />
+                <div id="invite-image-placeholder" class="card-front-placeholder">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="9" cy="14" r="5"></circle><circle cx="15" cy="11" r="5"></circle><path d="M7 9a2.5 2.5 0 0 1 4 0"></path><path d="M13 6a2.5 2.5 0 0 1 4 0"></path></svg>
+                </div>
+              </div>
+              
+              <h1 id="couple-names-front" class="inv-names-front">Bride & Groom</h1>
+              
+              <div class="inv-divider-front"></div>
+              
+              <div id="detail-date-front" class="inv-date-front">January 1, 2025</div>
+            </div>
+          </div>
+          
+          <!-- Back Side -->
+          <div class="card-side card-back">
+            <div class="card-back-decor">
+              <svg class="wreath-svg-back" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,6 87,27 87,73 50,94 13,73 13,27" fill="none" stroke="var(--inv-accent)" stroke-width="0.5" opacity="0.35"/>
+              </svg>
+            </div>
+            <div class="card-back-content">
+              <div class="inv-eyebrow">You are cordially invited to the wedding of</div>
+              
+              <h2 id="couple-names-back" class="inv-names-back">Bride & Groom</h2>
+              
+              <svg class="ornament-divider" viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L80 10 L100 0 L120 10 L200 10" stroke="currentColor" fill="none" stroke-width="1.25"/></svg>
+              
+              <div class="inv-details">
+                <div class="inv-detail-item">
+                  <span class="inv-icon">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  </span>
+                  <span id="detail-date">January 1, 2025</span>
+                </div>
+                <div id="time-container" class="inv-detail-item" style="display:none;">
+                  <span class="inv-icon">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  </span>
+                  <span id="detail-time">5:00 PM</span>
+                </div>
+                <div class="inv-detail-item">
+                  <span class="inv-icon">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  </span>
+                  <span id="detail-venue">The Grand Venue</span>
+                </div>
+              </div>
+
+              <div id="message-section" class="inv-message" style="display:none;">
+                <p id="invite-message"></p>
+              </div>
+
+              <div class="inv-countdown" id="countdown-grid">
+                <div class="cd-box"><div class="cd-val" id="cd-days">00</div><div class="cd-lbl">Days</div></div>
+                <div class="cd-box"><div class="cd-val" id="cd-hours">00</div><div class="cd-lbl">Hours</div></div>
+                <div class="cd-box"><div class="cd-val" id="cd-mins">00</div><div class="cd-lbl">Mins</div></div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!-- Action Bar -->
+      <div class="invite-actions">
+        <button id="flip-btn" class="btn-flip">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+          <span id="flip-btn-text">Flip Card</span>
+        </button>
+
+        <a href="#" id="lang-switcher" class="lang-switcher-btn">
+          <span id="lang-text">FA</span>
+        </a>
       </div>
     </div>
 
-    <!-- Text Half -->
-    <div class="inv-content-wrapper">
-      <!-- Ornaments -->
-      <svg class="ornament-divider" viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L80 10 L100 0 L120 10 L200 10" stroke="currentColor" fill="none" stroke-width="1.25"/></svg>
-
-      <div class="inv-eyebrow inv-animate d-1">You are cordially invited to the wedding of</div>
-      
-      <h1 id="couple-names" class="inv-names inv-animate d-2">Bride & Groom</h1>
-      
-      <div class="inv-divider inv-animate d-3"></div>
-
-      <div class="inv-details inv-animate d-4">
-        <div class="inv-detail-item">
-          <span class="inv-icon">
-            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          </span>
-          <span id="detail-date">January 1, 2025</span>
-        </div>
-        <div id="time-container" class="inv-detail-item" style="display:none;">
-          <span class="inv-icon">
-            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          </span>
-          <span id="detail-time">5:00 PM</span>
-        </div>
-        <div class="inv-detail-item">
-          <span class="inv-icon">
-            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          </span>
-          <span id="detail-venue">The Grand Venue</span>
-        </div>
-      </div>
-
-      <div id="message-section" class="inv-message inv-animate d-5" style="display:none;">
-        <p id="invite-message"></p>
-      </div>
-
-      <div class="inv-countdown inv-animate d-5" id="countdown-grid">
-        <div class="cd-box"><div class="cd-val" id="cd-days">00</div><div class="cd-lbl">Days</div></div>
-        <div class="cd-box"><div class="cd-val" id="cd-hours">00</div><div class="cd-lbl">Hours</div></div>
-        <div class="cd-box"><div class="cd-val" id="cd-mins">00</div><div class="cd-lbl">Mins</div></div>
-      </div>
-
-      <!-- Language Switcher -->
-      <a href="#" id="lang-switcher" class="lang-switcher-btn inv-animate d-5">
-        <span id="lang-text">FA</span>
-      </a>
-    </div>
-
-    </main>
-  </div>
-
-  <div id="flip-actions" style="display:none;" class="flip-actions">
-    <button id="flip-btn" class="flip-btn">
-      <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.92-5.27l-3.26-1.5M2 22v-6h6M2.66 8.43a10 10 0 1 1 .92 5.27l3.26 1.5"/></svg>
-      <span id="flip-btn-text">Rotate Card</span>
-    </button>
-  </div>
+  </main>
 
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/invite.js"></script>
