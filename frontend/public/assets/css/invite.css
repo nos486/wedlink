@@ -891,65 +891,58 @@ body.layout-full-overlay .inv-content-wrapper {
   border: 1px solid var(--inv-border);
 }
 
-/* 4. Full Screen Image */
-.fs-layout-wrapper {
-  display: none;
-}
-body.layout-fullscreen-image .invite-card-wrapper {
-  display: none !important;
-}
-body.layout-fullscreen-image .inv-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  min-height: 100vh;
-}
-body.layout-fullscreen-image .fs-layout-wrapper {
-  display: flex;
-  width: 100%;
-  height: 100%;
+/* 4. 3D Full Image Front */
+body.layout-3d-full-image .card-front-photo-frame {
   position: absolute;
   inset: 0;
-  justify-content: center;
-  align-items: center;
-}
-body.layout-fullscreen-image .fs-image-container {
-  position: fixed;
-  inset: 0;
   width: 100%;
   height: 100%;
+  border-radius: 20px;
+  border: none;
+  padding: 0;
+  box-shadow: none;
   z-index: 0;
+  display: block; /* override flex */
 }
-body.layout-fullscreen-image .fs-image {
+body.layout-3d-full-image .card-front-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 20px;
 }
-body.layout-fullscreen-image .fs-overlay {
+body.layout-3d-full-image .card-front-photo-frame::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(var(--inv-bg-rgb), 0.2) 0%, rgba(var(--inv-bg-rgb), 0.9) 100%);
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+  border-radius: 20px;
   pointer-events: none;
 }
-body.layout-fullscreen-image .fs-card-glass {
-  background: rgba(var(--inv-bg-rgb), 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 24px;
-  padding: 60px 40px;
-  border: 1px solid var(--inv-border);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  z-index: 1;
-  max-width: 500px;
-  width: 90%;
-  margin-top: auto;
-  margin-bottom: 40px;
+body.layout-3d-full-image .card-front {
+  justify-content: flex-end;
+  padding-bottom: 50px;
+}
+body.layout-3d-full-image .card-front-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+body.layout-3d-full-image .card-front-content h1,
+body.layout-3d-full-image .card-front-content .save-the-date,
+body.layout-3d-full-image .card-front-content .inv-date-front {
+  color: #fff !important;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+body.layout-3d-full-image .card-front-content h1 {
+  background: none !important;
+  -webkit-text-fill-color: #fff !important;
+}
+body.layout-3d-full-image .card-front-content .inv-divider-front {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #fff !important;
+}
+body.layout-3d-full-image .card-front-decor {
+  display: none !important;
 }
 
 @media (max-width: 768px) {
