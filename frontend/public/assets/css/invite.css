@@ -445,10 +445,13 @@ body.layout-3d-card .inv-container {
   height: 100%;
   backface-visibility: hidden;
   border-radius: 20px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12), inset 0 0 10px rgba(255,255,255,0.2);
   border: 1px solid var(--inv-border);
   overflow: hidden;
   background-color: var(--inv-bg);
+  background-image: linear-gradient(135deg, rgba(255,255,255,0.6) 25%, rgba(240,240,240,0.6) 25%, rgba(240,240,240,0.6) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.6) 75%, rgba(255,255,255,0.6) 100%);
+  background-size: 30px 30px;
+  background-blend-mode: overlay;
   box-sizing: border-box;
 }
 
