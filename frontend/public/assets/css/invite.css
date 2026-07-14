@@ -615,11 +615,8 @@ body.layout-3d-card .inv-container {
 .card-back-content .inv-message {
   margin: 0 !important;
   padding: 0 10px !important;
-  max-height: 70px !important;
+  max-height: 140px !important;
   overflow-y: auto !important;
-}
-.card-back-content .inv-countdown {
-  margin: 0 !important;
 }
 
 .invite-actions {
