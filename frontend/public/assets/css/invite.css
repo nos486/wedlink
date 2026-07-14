@@ -215,6 +215,7 @@ body.theme-modern-minimal .ornament-divider {
   line-height: 1.6;
   font-size: clamp(14px, 1.25vw, 17px);
   padding: 0 16px;
+  white-space: pre-wrap;
 }
 
 /* ─── Countdown Timer ────────────────────────────────────────── */
