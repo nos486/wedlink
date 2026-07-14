@@ -132,6 +132,9 @@ function renderInvitation() {
   }
 
   setupCardRotation();
+  setupRsvpModal();
+  setupBackgroundMusic();
+  setupCardHoverTilt();
   startCountdown(invitation.date);
 }
 
@@ -233,14 +236,249 @@ function setupCardRotation() {
   const flipBtn = document.getElementById('flip-btn');
   if (!card) return;
 
+  const performFlip = (e) => {
+    if (e) e.stopPropagation();
+    // Force transition back to 0.8s for smooth click flips
+    card.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    card.classList.toggle('flipped');
+  };
+
   if (flipBtn) {
-    flipBtn.addEventListener('click', (e) => {
+    flipBtn.addEventListener('click', performFlip);
+  }
+
+  card.addEventListener('click', performFlip);
+}
+
+// ─── RSVP Modal Logic ─────────────────────────────────────────
+let rsvpAttending = true;
+
+function setupRsvpModal() {
+  const modal = document.getElementById('rsvp-modal');
+  const btn = document.getElementById('rsvp-btn');
+  const closeBtn = document.getElementById('rsvp-modal-close');
+  const form = document.getElementById('rsvp-form');
+  const acceptBtn = document.getElementById('btn-accept');
+  const declineBtn = document.getElementById('btn-decline');
+
+  if (!modal) return;
+
+  // Bilingual translation of the form
+  const lang = getLang();
+  if (lang === 'fa') {
+    document.getElementById('rsvp-modal-title').textContent = 'آیا در جشن ما شرکت می‌کنید؟';
+    document.getElementById('rsvp-modal-subtitle').textContent = 'لطفاً با پر کردن فرم زیر ما را مطلع سازید';
+    document.getElementById('label-guest-name').textContent = 'نام و نام خانوادگی شما';
+    document.getElementById('guest_name').placeholder = 'نام خود را وارد کنید...';
+    document.getElementById('label-attending').textContent = 'وضعیت حضور شما';
+    document.getElementById('text-accept').textContent = 'با کمال میل شرکت می‌کنم';
+    document.getElementById('text-decline').textContent = 'متأسفانه امکان حضور ندارم';
+    document.getElementById('label-message').textContent = 'پیام تبریک برای عروس و داماد (اختیاری)';
+    document.getElementById('rsvp_message').placeholder = 'پیام خود را بنویسید...';
+    document.getElementById('text-submit').textContent = 'ارسال پاسخ';
+  }
+
+  // Open/Close
+  if (btn) {
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      card.classList.toggle('flipped');
+      modal.classList.add('active');
+      document.getElementById('rsvp-response').style.display = 'none';
     });
   }
 
-  card.addEventListener('click', () => {
-    card.classList.toggle('flipped');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('active');
   });
+
+  // Toggle buttons
+  if (acceptBtn && declineBtn) {
+    acceptBtn.addEventListener('click', () => {
+      rsvpAttending = true;
+      acceptBtn.classList.add('active');
+      declineBtn.classList.remove('active');
+    });
+
+    declineBtn.addEventListener('click', () => {
+      rsvpAttending = false;
+      declineBtn.classList.add('active');
+      acceptBtn.classList.remove('active');
+    });
+  }
+
+  // Form submit
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const guestNameInput = document.getElementById('guest_name');
+      const errName = document.getElementById('err-guest_name');
+      const messageInput = document.getElementById('rsvp_message');
+      const submitBtn = document.getElementById('rsvp-submit');
+      const responseEl = document.getElementById('rsvp-response');
+
+      // Reset
+      errName.textContent = '';
+      errName.style.display = 'none';
+      responseEl.style.display = 'none';
+
+      // Validate
+      const name = guestNameInput.value.trim();
+      if (!name) {
+        errName.textContent = lang === 'fa' ? 'لطفاً نام خود را وارد کنید' : 'Name is required';
+        errName.style.display = 'block';
+        return;
+      }
+
+      // Submit
+      submitBtn.disabled = true;
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.innerHTML = lang === 'fa' 
+        ? '<span class="spinner"></span> در حال ارسال...' 
+        : '<span class="spinner"></span> Sending...';
+
+      try {
+        const apiBase = await getApiBaseUrl();
+        const res = await fetch(`${apiBase}/api/public/${encodeURIComponent(getSlug())}/rsvp`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            guest_name: name,
+            attending: rsvpAttending,
+            message: messageInput.value.trim() || undefined
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.error || 'Submission failed');
+
+        responseEl.className = 'rsvp-response-message success';
+        responseEl.textContent = data.message;
+        responseEl.style.display = 'block';
+
+        // Reset Form
+        form.reset();
+        rsvpAttending = true;
+        acceptBtn.classList.add('active');
+        declineBtn.classList.remove('active');
+
+        // Close modal after delay
+        setTimeout(() => {
+          modal.classList.remove('active');
+        }, 3000);
+
+      } catch (err) {
+        responseEl.className = 'rsvp-response-message error';
+        responseEl.textContent = lang === 'fa' 
+          ? 'خطا در ارسال پاسخ. لطفاً دوباره تلاش کنید.' 
+          : err.message;
+        responseEl.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+      }
+    });
+  }
+}
+
+// ─── Background Music Logic ────────────────────────────────────
+function setupBackgroundMusic() {
+  const musicBtn = document.getElementById('music-btn');
+  const audio = document.getElementById('bg-music');
+  const btnText = document.getElementById('music-btn-text');
+
+  if (!musicBtn || !audio) return;
+
+  const lang = getLang();
+  
+  // Localize text
+  if (lang === 'fa') {
+    btnText.textContent = 'پخش موسیقی';
+  } else {
+    btnText.textContent = 'PLAY MUSIC';
+  }
+
+  // Show player button
+  musicBtn.style.display = 'flex';
+
+  const toggleMusic = () => {
+    if (audio.paused) {
+      audio.play().then(() => {
+        musicBtn.classList.add('playing');
+        btnText.textContent = lang === 'fa' ? 'قطع موسیقی' : 'PAUSE MUSIC';
+      }).catch(err => console.log('Audio playback blocked:', err));
+    } else {
+      audio.pause();
+      musicBtn.classList.remove('playing');
+      btnText.textContent = lang === 'fa' ? 'پخش موسیقی' : 'PLAY MUSIC';
+    }
+  };
+
+  musicBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMusic();
+  });
+
+  // Try autoplay on first interaction with document
+  const startAutoplay = () => {
+    if (audio.paused && !musicBtn.classList.contains('playing')) {
+      audio.play().then(() => {
+        musicBtn.classList.add('playing');
+        btnText.textContent = lang === 'fa' ? 'قطع موسیقی' : 'PAUSE MUSIC';
+      }).catch(() => {});
+    }
+    // Remove listeners once interaction occurs
+    document.removeEventListener('click', startAutoplay);
+    document.removeEventListener('touchstart', startAutoplay);
+  };
+
+  document.addEventListener('click', startAutoplay);
+  document.addEventListener('touchstart', startAutoplay);
+}
+
+// ─── Desktop 3D Card Hover Tilt ───────────────────────────────
+function setupCardHoverTilt() {
+  // Only apply on devices with mouse/hover capabilities
+  if (window.matchMedia('(hover: hover)').matches) {
+    const wrapper = document.querySelector('.card-perspective');
+    const card = document.getElementById('invitation-card');
+
+    if (!wrapper || !card) return;
+
+    wrapper.addEventListener('mouseenter', () => {
+      // Snappy tracking transition on hover
+      card.style.transition = 'transform 0.15s ease-out';
+    });
+
+    wrapper.addEventListener('mousemove', (e) => {
+      const rect = wrapper.getBoundingClientRect();
+      const x = e.clientX - rect.left; // x position within the element
+      const y = e.clientY - rect.top;  // y position within the element
+
+      // Calculate tilt degrees (-15 to 15 degrees)
+      const rotateX = ((y / rect.height) - 0.5) * -24; // Vertical tilt
+      const rotateY = ((x / rect.width) - 0.5) * 24;   // Horizontal tilt
+
+      // If card is flipped, Y rotation needs to be added to the base 180 degrees
+      if (card.classList.contains('flipped')) {
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${180 - rotateY}deg)`;
+      } else {
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      }
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+      // Reset card tilt with smooth transition
+      card.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      if (card.classList.contains('flipped')) {
+        card.style.transform = 'rotateY(180deg)';
+      } else {
+        card.style.transform = 'rotateY(0deg)';
+      }
+    });
+  }
 }

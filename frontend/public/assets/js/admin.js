@@ -167,6 +167,16 @@ function renderCard(inv) {
           <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
         </button>
       </div>
+
+      <!-- RSVP Collapsible Panel -->
+      <div class="rsvp-card-toggle" onclick="toggleRsvps('${escAttr(inv.slug)}')">
+        <span>RSVP Responses (${inv.rsvp_count ? `${inv.rsvp_count} total, ${inv.attending_count || 0} attending` : '0'})</span>
+        <svg class="svg-icon" id="rsvp-arrow-${inv.slug}" style="width:16px;height:16px;transition:transform 0.3s;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="rsvp-drawer" id="rsvp-drawer-${inv.slug}">
+        <div class="rsvp-drawer-title">Response list</div>
+        <div class="rsvp-list" id="rsvp-list-${inv.slug}"></div>
+      </div>
     </div>`;
 }
 
@@ -207,8 +217,16 @@ function openInvite(url) { window.open(url, '_blank', 'noopener'); }
 function updateStats() {
   const countEl = document.getElementById('stat-invitations');
   const limitEl = document.getElementById('stat-limit');
+  const rsvpsEl = document.getElementById('stat-rsvps');
+
   if (countEl) countEl.textContent = invitations.length;
   if (limitEl) limitEl.textContent = `${invitations.length}/10`;
+
+  if (rsvpsEl) {
+    const totalRsvps = invitations.reduce((sum, inv) => sum + (inv.rsvp_count || 0), 0);
+    const totalAttending = invitations.reduce((sum, inv) => sum + (inv.attending_count || 0), 0);
+    rsvpsEl.textContent = totalRsvps ? `${totalRsvps} (${totalAttending} accepts)` : '0';
+  }
 
   // Show limit warning when close to limit
   const warningEl = document.getElementById('limit-warning');

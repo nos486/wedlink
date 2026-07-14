@@ -449,8 +449,6 @@ body.layout-3d-card .inv-container {
   border: 1px solid var(--inv-border);
   overflow: hidden;
   background-color: var(--inv-bg);
-  background-image: url('../img/small.jpg');
-  background-repeat: repeat;
   box-sizing: border-box;
 }
 
@@ -661,6 +659,111 @@ body.layout-3d-card .inv-container {
   transform: rotate(180deg);
 }
 
+.btn-rsvp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: var(--inv-accent);
+  border: 1.5px solid var(--inv-accent);
+  padding: 11px 28px;
+  border-radius: 30px;
+  font-family: var(--inv-font-primary);
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.05);
+  transition: all var(--transition);
+}
+
+.btn-rsvp:hover {
+  transform: translateY(-2px);
+  background: var(--inv-accent-light);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+}
+
+.btn-rsvp .svg-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ─── RSVP Modal Overlay ────────────────────────────────────── */
+.inv-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(var(--inv-bg-rgb), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+.inv-modal-overlay.active {
+  display: flex;
+}
+
+.inv-modal {
+  background: var(--inv-bg);
+  border: 1px solid var(--inv-border);
+  border-radius: 24px;
+  padding: 36px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.inv-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.inv-modal-close {
+  background: none;
+  border: none;
+  color: var(--inv-text);
+  opacity: 0.6;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  padding: 4px;
+  transition: opacity var(--transition);
+}
+.inv-modal-close:hover {
+  opacity: 1;
+}
+
+.form-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--inv-accent);
+  opacity: 0.8;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+/* RTL overrides for Modal */
+[dir="rtl"] .inv-modal {
+  text-align: right;
+}
+[dir="rtl"] .inv-modal-close {
+  margin-right: auto;
+  margin-left: 0;
+}
+[dir="rtl"] .form-label {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 .invite-actions .lang-switcher-btn {
   margin-top: 0;
 }
@@ -865,3 +968,74 @@ body.layout-3d-card .inv-container {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
+
+/* 🎵 Floating Background Music Player */
+.music-toggle-btn {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(var(--inv-bg-rgb), 0.7);
+  border: 1px solid var(--inv-border);
+  padding: 8px 16px;
+  border-radius: 30px;
+  color: var(--inv-text);
+  font-family: var(--inv-font-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: all var(--transition);
+}
+
+.music-toggle-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--inv-accent);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Sound Wave Bars Animation */
+.music-waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  width: 16px;
+  height: 14px;
+}
+
+.music-waves span {
+  display: block;
+  width: 2px;
+  background-color: var(--inv-accent);
+  border-radius: 1px;
+  height: 4px;
+  transition: height 0.2s ease;
+}
+
+.music-toggle-btn.playing .music-waves span {
+  animation: wave 1.2s ease-in-out infinite alternate;
+}
+
+.music-toggle-btn.playing .music-waves span:nth-child(1) { height: 14px; animation-delay: -1.2s; }
+.music-toggle-btn.playing .music-waves span:nth-child(2) { height: 10px; animation-delay: -0.9s; }
+.music-toggle-btn.playing .music-waves span:nth-child(3) { height: 12px; animation-delay: -0.6s; }
+.music-toggle-btn.playing .music-waves span:nth-child(4) { height: 8px;  animation-delay: -0.3s; }
+
+@keyframes wave {
+  0% { transform: scaleY(0.2); }
+  100% { transform: scaleY(1); }
+}
+
+[dir="rtl"] .music-toggle-btn {
+  right: auto;
+  left: 24px;
+  font-family: 'Vazirmatn', sans-serif !important;
+  letter-spacing: 0;
+}
+

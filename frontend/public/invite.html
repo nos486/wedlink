@@ -37,6 +37,18 @@
     </div>
   </div>
 
+  <!-- Music Player -->
+  <button id="music-btn" class="music-toggle-btn" aria-label="Toggle background music" style="display:none;">
+    <audio id="bg-music" loop src="https://assets.mixkit.co/music/preview/mixkit-wedding-bells-2926.mp3"></audio>
+    <div class="music-waves">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <span class="music-text" id="music-btn-text">PLAY MUSIC</span>
+  </button>
+
   <!-- Main Content -->
   <main id="invite-main" class="inv-container" style="display:none;">
     
@@ -128,6 +140,11 @@
           <span id="flip-btn-text">Flip Card</span>
         </button>
 
+        <button id="rsvp-btn" class="btn-rsvp">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span id="rsvp-btn-text">RSVP</span>
+        </button>
+
         <a href="#" id="lang-switcher" class="lang-switcher-btn">
           <span id="lang-text">FA</span>
         </a>
@@ -135,6 +152,51 @@
     </div>
 
   </main>
+
+  <!-- RSVP Modal Overlay -->
+  <div class="inv-modal-overlay" id="rsvp-modal" role="dialog" aria-modal="true" aria-labelledby="rsvp-modal-title">
+    <div class="inv-modal">
+      <div class="inv-modal-header">
+        <h2 id="rsvp-modal-title" class="rsvp-heading">Will You Be There?</h2>
+        <button class="inv-modal-close" id="rsvp-modal-close" aria-label="Close">&times;</button>
+      </div>
+      
+      <p class="rsvp-subheading" id="rsvp-modal-subtitle">Kindly let us know by filling in the form below</p>
+
+      <form id="rsvp-form" class="rsvp-form" novalidate>
+        <div class="rsvp-form-group">
+          <label class="form-label" for="guest_name" id="label-guest-name">Your Name</label>
+          <input class="rsvp-input" id="guest_name" name="guest_name" type="text" placeholder="Enter your full name" required />
+          <span class="rsvp-error" id="err-guest_name" style="display:none; color:#f87171; font-size:12px; margin-top:2px;"></span>
+        </div>
+
+        <div class="rsvp-form-group">
+          <label class="form-label" id="label-attending">Will you attend?</label>
+          <div class="rsvp-toggle-group">
+            <button type="button" class="rsvp-toggle-btn active" id="btn-accept" data-value="true">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span id="text-accept">Accepts</span>
+            </button>
+            <button type="button" class="rsvp-toggle-btn" id="btn-decline" data-value="false">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              <span id="text-decline">Declines</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="rsvp-form-group">
+          <label class="form-label" for="rsvp_message" id="label-message">Message to the couple (optional)</label>
+          <textarea class="rsvp-textarea" id="rsvp_message" name="message" placeholder="Leave a congratulatory note..."></textarea>
+        </div>
+
+        <button type="submit" class="rsvp-submit-btn" id="rsvp-submit">
+          <span id="text-submit">Send RSVP</span>
+        </button>
+
+        <div id="rsvp-response" class="rsvp-response-message" style="display:none;"></div>
+      </form>
+    </div>
+  </div>
 
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/invite.js"></script>
