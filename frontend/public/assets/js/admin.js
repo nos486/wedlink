@@ -228,6 +228,12 @@ function updateStats() {
 }
 
 // ─── Modal ────────────────────────────────────────────────────
+function adjustTextareaHeight(textarea) {
+  if (!textarea) return;
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+}
+
 function setupModal() {
   document.getElementById('open-modal-btn')?.addEventListener('click', () => openModalForCreate());
   document.getElementById('open-modal-btn-hero')?.addEventListener('click', () => openModalForCreate());
@@ -236,6 +242,11 @@ function setupModal() {
     if (e.target === e.currentTarget) closeModal();
   });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  const textareas = document.querySelectorAll('.form-textarea');
+  textareas.forEach(ta => {
+    ta.addEventListener('input', () => adjustTextareaHeight(ta));
+  });
 }
 
 function openModalForCreate() {
@@ -248,7 +259,13 @@ function openModalForCreate() {
   document.getElementById('modal-title').innerHTML = '<span style="color:var(--gold)">✨</span> New Invitation';
   document.getElementById('submit-btn').innerHTML = '✨ Create Invitation';
   document.getElementById('create-form').reset();
-  document.getElementById('create-modal').classList.add('active');
+  
+  const modal = document.getElementById('create-modal');
+  modal.classList.add('active');
+  
+  setTimeout(() => {
+    document.querySelectorAll('.form-textarea').forEach(ta => adjustTextareaHeight(ta));
+  }, 50);
 }
 
 function openModalForEdit(slug) {
@@ -279,7 +296,13 @@ function openModalForEdit(slug) {
   form.mobile_layout.value = '3d-card';
 
   clearFormErrors();
-  document.getElementById('create-modal').classList.add('active');
+  
+  const modal = document.getElementById('create-modal');
+  modal.classList.add('active');
+  
+  setTimeout(() => {
+    document.querySelectorAll('.form-textarea').forEach(ta => adjustTextareaHeight(ta));
+  }, 50);
 }
 
 function closeModal() {
