@@ -60,13 +60,21 @@ function renderInvitation() {
   // Image
   const imgEl = document.getElementById('invite-image');
   const placeholderEl = document.getElementById('invite-image-placeholder');
+  const bgBlurEl = document.getElementById('invite-bg-blur');
   if (invitation.image_url) {
     imgEl.src = invitation.image_url;
     imgEl.style.display = 'block';
     placeholderEl.style.display = 'none';
+    if (bgBlurEl) {
+      bgBlurEl.style.backgroundImage = `url('${invitation.image_url}')`;
+      bgBlurEl.style.display = 'block';
+    }
   } else {
     imgEl.style.display = 'none';
     placeholderEl.style.display = 'block';
+    if (bgBlurEl) {
+      bgBlurEl.style.display = 'none';
+    }
   }
 
   // Names, Venue, Message (bilingual check)
