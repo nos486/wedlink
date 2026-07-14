@@ -49,14 +49,6 @@ export interface Invitation {
   created_at: string;
 }
 
-export interface Rsvp {
-  id: number;
-  invitation_id: number;
-  guest_name: string;
-  attending: number; // 1 = yes, 0 = no
-  message: string | null;
-  created_at: string;
-}
 
 export interface CreateInvitationBody {
   slug?: string;
@@ -76,8 +68,3 @@ export interface CreateInvitationBody {
   mobile_layout?: string;
 }
 
-export interface CreateRsvpBody {
-  guest_name: string;
-  attending: boolean;
-  message?: string;
-}

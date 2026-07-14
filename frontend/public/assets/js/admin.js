@@ -167,16 +167,6 @@ function renderCard(inv) {
           <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
         </button>
       </div>
-
-      <!-- RSVP Collapsible Panel -->
-      <div class="rsvp-card-toggle" onclick="toggleRsvps('${escAttr(inv.slug)}')">
-        <span>RSVP Responses (${inv.rsvp_count ? `${inv.rsvp_count} total, ${inv.attending_count || 0} attending` : '0'})</span>
-        <svg class="svg-icon" id="rsvp-arrow-${inv.slug}" style="width:16px;height:16px;transition:transform 0.3s;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </div>
-      <div class="rsvp-drawer" id="rsvp-drawer-${inv.slug}">
-        <div class="rsvp-drawer-title">Response list</div>
-        <div class="rsvp-list" id="rsvp-list-${inv.slug}"></div>
-      </div>
     </div>`;
 }
 
@@ -217,16 +207,9 @@ function openInvite(url) { window.open(url, '_blank', 'noopener'); }
 function updateStats() {
   const countEl = document.getElementById('stat-invitations');
   const limitEl = document.getElementById('stat-limit');
-  const rsvpsEl = document.getElementById('stat-rsvps');
 
   if (countEl) countEl.textContent = invitations.length;
   if (limitEl) limitEl.textContent = `${invitations.length}/10`;
-
-  if (rsvpsEl) {
-    const totalRsvps = invitations.reduce((sum, inv) => sum + (inv.rsvp_count || 0), 0);
-    const totalAttending = invitations.reduce((sum, inv) => sum + (inv.attending_count || 0), 0);
-    rsvpsEl.textContent = totalRsvps ? `${totalRsvps} (${totalAttending} accepts)` : '0';
-  }
 
   // Show limit warning when close to limit
   const warningEl = document.getElementById('limit-warning');
@@ -468,57 +451,6 @@ function clearFormErrors() {
   });
 }
 
-// ─── RSVP Dashboard Panel Logic ────────────────────────────────
-async function toggleRsvps(slug) {
-  const drawer = document.getElementById(`rsvp-drawer-${slug}`);
-  const arrow = document.getElementById(`rsvp-arrow-${slug}`);
-  if (!drawer || !arrow) return;
-
-  const isActive = drawer.classList.toggle('active');
-  if (isActive) {
-    arrow.style.transform = 'rotate(180deg)';
-    await loadRsvpsForSlug(slug);
-  } else {
-    arrow.style.transform = 'rotate(0deg)';
-  }
-}
-
-async function loadRsvpsForSlug(slug) {
-  const container = document.getElementById(`rsvp-list-${slug}`);
-  if (!container) return;
-
-  container.innerHTML = '<div style="text-align:center;padding:12px;color:var(--text-muted);"><span class="spinner"></span> Loading...</div>';
-
-  try {
-    const { data } = await apiFetch(`/invitations/${slug}/rsvps`);
-    if (!data || !data.length) {
-      container.innerHTML = '<div class="rsvp-list-empty">No responses yet.</div>';
-      return;
-    }
-
-    container.innerHTML = data.map(r => {
-      const attendingText = r.attending ? 'Attending' : 'Declined';
-      const badgeClass = r.attending ? 'badge-green' : 'badge-red';
-      const statusIcon = r.attending 
-        ? `<svg class="svg-icon" style="width:12px;height:12px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>` 
-        : `<svg class="svg-icon" style="width:12px;height:12px;" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
-
-      return `
-        <div class="rsvp-item">
-          <div class="rsvp-item-header">
-            <span class="rsvp-guest-name">${escHtml(r.guest_name)}</span>
-            <span class="badge ${badgeClass}" style="padding:2px 8px; font-size:11px; display:inline-flex; align-items:center; gap:4px;">
-              ${statusIcon} ${attendingText}
-            </span>
-          </div>
-          ${r.message ? `<div class="rsvp-guest-message">${escHtml(r.message)}</div>` : ''}
-        </div>
-      `;
-    }).join('');
-  } catch (err) {
-    container.innerHTML = `<div class="rsvp-list-empty" style="color:#f87171;">Failed to load: ${escHtml(err.message)}</div>`;
-  }
-}
 
 // ─── Skeleton Loader ──────────────────────────────────────────
 function showSkeletons() {
@@ -594,4 +526,3 @@ window.openInvite        = openInvite;
 window.openModalForEdit  = openModalForEdit;
 window.deleteInvitation  = deleteInvitation;
 window.closeModal        = closeModal;
-window.toggleRsvps       = toggleRsvps;

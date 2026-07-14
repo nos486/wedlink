@@ -9,15 +9,12 @@ const MAX_INVITATIONS_PER_USER = 10;
 // All invitation routes require authentication
 invitations.use('*', requireAuth);
 
-// ─── GET /api/invitations — list user's own invitations ───────
 invitations.get('/', async (c) => {
   const userId = c.get('userId');
 
   const { results } = await c.env.DB
     .prepare(`
-      SELECT *,
-             (SELECT COUNT(*) FROM rsvps WHERE rsvps.invitation_id = invitations.id) as rsvp_count,
-             (SELECT COUNT(*) FROM rsvps WHERE rsvps.invitation_id = invitations.id AND rsvps.attending = 1) as attending_count
+      SELECT *
         FROM invitations
        WHERE user_id = ?
        ORDER BY created_at DESC
@@ -109,27 +106,6 @@ invitations.post('/', async (c) => {
   return c.json({ success: true, data: created }, 201);
 });
 
-// ─── GET /api/invitations/:slug/rsvps — user's invitation RSVPs
-invitations.get('/:slug/rsvps', async (c) => {
-  const slug = c.req.param('slug');
-  const userId = c.get('userId');
-
-  const invitation = await c.env.DB
-    .prepare('SELECT id FROM invitations WHERE slug = ? AND user_id = ?')
-    .bind(slug, userId)
-    .first<{ id: number }>();
-
-  if (!invitation) {
-    return c.json({ success: false, error: 'Invitation not found' }, 404);
-  }
-
-  const { results } = await c.env.DB
-    .prepare('SELECT * FROM rsvps WHERE invitation_id = ? ORDER BY created_at DESC')
-    .bind(invitation.id)
-    .all();
-
-  return c.json({ success: true, data: results });
-});
 
 // ─── PUT /api/invitations/:slug ──────────────────────────────
 invitations.put('/:slug', async (c) => {
