@@ -445,13 +445,17 @@ body.layout-3d-card .inv-container {
   height: 100%;
   backface-visibility: hidden;
   border-radius: 20px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12), inset 0 0 10px rgba(255,255,255,0.2);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.4);
   border: 1px solid var(--inv-border);
   overflow: hidden;
   background-color: var(--inv-bg);
-  background-image: linear-gradient(135deg, rgba(255,255,255,0.6) 25%, rgba(240,240,240,0.6) 25%, rgba(240,240,240,0.6) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.6) 75%, rgba(255,255,255,0.6) 100%);
-  background-size: 30px 30px;
-  background-blend-mode: overlay;
+  /* Elegant textured paper pattern background using SVG data URI */
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 0),
+    radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23000000' fill-opacity='0.015'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm56-76c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm74-26c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 8px 8px, 12px 12px, 100px 100px;
+  background-position: 0 0, 4px 4px, 0 0;
   box-sizing: border-box;
 }
 
@@ -477,14 +481,39 @@ body.layout-3d-card .inv-container {
 
 .card-front-decor, .card-back-decor {
   position: absolute;
-  inset: 12px;
-  border: 1px solid var(--inv-border);
+  inset: 15px;
+  border: 2px solid var(--inv-border);
   border-radius: 12px;
   pointer-events: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.7;
+  opacity: 0.85;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.03);
+}
+
+/* Elegant gold/accent floral corners inside the cards */
+.card-front-decor::before, .card-front-decor::after,
+.card-back-decor::before, .card-back-decor::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--inv-accent);
+  border-style: solid;
+  opacity: 0.65;
+}
+
+.card-front-decor::before, .card-back-decor::before {
+  top: 6px;
+  left: 6px;
+  border-width: 1.5px 0 0 1.5px;
+}
+
+.card-front-decor::after, .card-back-decor::after {
+  bottom: 6px;
+  right: 6px;
+  border-width: 0 1.5px 1.5px 0;
 }
 
 .wreath-svg, .wreath-svg-back {
