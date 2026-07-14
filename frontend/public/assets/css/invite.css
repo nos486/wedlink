@@ -380,9 +380,9 @@ body.layout-3d-card .inv-container {
 }
 
 .card-front-photo-frame {
-  width: 170px;
-  height: 230px;
-  border-radius: 90px 90px 16px 16px;
+  width: 220px;
+  height: 300px;
+  border-radius: 110px 110px 20px 20px;
   overflow: hidden;
   margin: 0;
   border: 1.5px solid var(--inv-accent);
@@ -414,7 +414,8 @@ body.layout-3d-card .inv-container {
 
 .inv-names-front {
   font-family: var(--inv-font-script);
-  font-size: clamp(34px, 6vw, 46px);
+  font-size: clamp(38px, 6.5vw, 54px);
+  font-weight: 300;
   color: var(--inv-text);
   margin: 0;
   line-height: 1.15;
@@ -452,7 +453,8 @@ body.layout-3d-card .inv-container {
 
 .inv-names-back {
   font-family: var(--inv-font-script);
-  font-size: clamp(30px, 5vw, 40px);
+  font-size: clamp(32px, 5.5vw, 44px);
+  font-weight: 300;
   color: var(--inv-text);
   margin: 0;
   line-height: 1.15;
@@ -541,8 +543,9 @@ body.layout-3d-card .inv-container {
     padding: 30px 24px !important;
   }
   .card-front-photo-frame {
-    width: 140px !important;
-    height: 190px !important;
+    width: 190px !important;
+    height: 260px !important;
+    border-radius: 95px 95px 18px 18px !important;
     margin-bottom: 20px !important;
   }
   .card-back-content .inv-message {
@@ -564,10 +567,10 @@ body.layout-3d-card .inv-container {
     inset: 8px !important;
   }
   .card-front-photo-frame {
-    width: 130px !important;
-    height: 176px !important;
+    width: 155px !important;
+    height: 210px !important;
     margin-bottom: 18px !important;
-    border-radius: 70px 70px 12px 12px !important;
+    border-radius: 80px 80px 16px 16px !important;
   }
   .save-the-date {
     font-size: 11px !important;
@@ -575,10 +578,10 @@ body.layout-3d-card .inv-container {
     letter-spacing: 0.2em !important;
   }
   .inv-names-front {
-    font-size: clamp(26px, 5.5vw, 36px) !important;
+    font-size: clamp(28px, 6vw, 40px) !important;
   }
   .inv-names-back {
-    font-size: clamp(24px, 5vw, 32px) !important;
+    font-size: clamp(26px, 5.5vw, 36px) !important;
   }
   .inv-divider-front {
     margin: 10px 0 !important;
