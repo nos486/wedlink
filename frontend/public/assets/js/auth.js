@@ -43,8 +43,12 @@ async function getApiBaseUrl() {
     const { apiBaseUrl } = await res.json();
     _resolvedApiUrl = apiBaseUrl || window.location.origin;
   } catch {
-    // Fallback: assume API is on the same origin (useful for local dev)
-    _resolvedApiUrl = window.location.origin;
+    // Fallback: assume API is on the same origin, or port 8787 if local dev
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      _resolvedApiUrl = 'http://localhost:8787';
+    } else {
+      _resolvedApiUrl = window.location.origin;
+    }
   }
 
   return _resolvedApiUrl;

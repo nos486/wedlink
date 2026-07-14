@@ -96,8 +96,8 @@ invitations.post('/', async (c) => {
       message_fa?.trim() ?? null,
       image_url?.trim() ?? null,
       theme?.trim() ?? 'modern-minimal',
-      desktop_layout?.trim() ?? 'split-left',
-      mobile_layout?.trim() ?? 'hero-top'
+      desktop_layout?.trim() ?? '3d-card',
+      mobile_layout?.trim() ?? '3d-card'
     )
     .run();
 
@@ -188,8 +188,8 @@ invitations.put('/:slug', async (c) => {
       message_fa?.trim() ?? null,
       image_url?.trim() ?? null,
       theme?.trim() ?? 'modern-minimal',
-      desktop_layout?.trim() ?? 'split-left',
-      mobile_layout?.trim() ?? 'hero-top',
+      desktop_layout?.trim() ?? '3d-card',
+      mobile_layout?.trim() ?? '3d-card',
       invitation.id
     )
     .run();

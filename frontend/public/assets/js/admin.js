@@ -128,11 +128,7 @@ function renderCard(inv) {
           </span>
           <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">
             <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            ${formatLayout(inv.desktop_layout || inv.layout || 'split-left')}
-          </span>
-          <span class="badge" style="background:var(--bg-card);border:1px solid var(--border)">
-            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12" y2="18.01"></line></svg>
-            ${formatLayout(inv.mobile_layout || inv.layout || 'hero-top')}
+            3D Card Layout
           </span>
         </div>
         <div class="info-row">
@@ -278,8 +274,8 @@ function openModalForEdit(slug) {
   form.message_fa.value = inv.message_fa || '';
   form.image_url.value = uploadedImageBase64 ? '(Uploaded Photo)' : (inv.image_url || '');
   form.theme.value = inv.theme || 'modern-minimal';
-  form.desktop_layout.value = inv.desktop_layout || inv.layout || 'split-left';
-  form.mobile_layout.value = inv.mobile_layout || inv.layout || 'hero-top';
+  form.desktop_layout.value = '3d-card';
+  form.mobile_layout.value = '3d-card';
 
   clearFormErrors();
   document.getElementById('create-modal').classList.add('active');
@@ -572,21 +568,7 @@ function formatTheme(theme) {
   return map[theme] || 'Modern Minimal';
 }
 
-function formatLayout(layout) {
-  const map = {
-    'split-left': 'Split (L)',
-    'split-right': 'Split (R)',
-    'polaroid-center': 'Polaroid',
-    'classic-card': 'Classic Card',
-    'hero-top': 'Hero Top',
-    'full-overlay': 'Overlay',
-    'image-top': 'Hero Top',
-    'split-screen': 'Split (L)',
-    'image-background': 'Overlay',
-    '3d-card': '3D Card'
-  };
-  return map[layout] || 'Hero Top';
-}
+
 
 // Expose for inline onclick handlers
 window.copyLink          = copyLink;

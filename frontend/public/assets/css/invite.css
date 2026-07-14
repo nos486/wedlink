@@ -38,7 +38,8 @@ body.theme-dark-luxury {
   --inv-font-script: 'Great Vibes', cursive;
   --inv-border: rgba(212, 175, 55, 0.2);
 }
-body.theme-dark-luxury .inv-names {
+body.theme-dark-luxury .inv-names-front,
+body.theme-dark-luxury .inv-names-back {
   background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -68,7 +69,8 @@ body.theme-royal-elegance {
   --inv-font-script: 'Great Vibes', cursive;
   --inv-border: rgba(229, 179, 101, 0.25);
 }
-body.theme-royal-elegance .inv-names {
+body.theme-royal-elegance .inv-names-front,
+body.theme-royal-elegance .inv-names-back {
   background: linear-gradient(135deg, #e5b365, #ffe5be, #e5b365);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -88,7 +90,8 @@ body.theme-starlight-glamour {
   background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
-body.theme-starlight-glamour .inv-names {
+body.theme-starlight-glamour .inv-names-front,
+body.theme-starlight-glamour .inv-names-back {
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
@@ -146,48 +149,7 @@ body.invite-page {
   overflow-x: hidden;
 }
 
-.inv-image-wrapper {
-  background-color: var(--inv-accent-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-.inv-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 12s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.inv-image:hover {
-  transform: scale(1.06);
-}
-
-.inv-image-placeholder {
-  color: var(--inv-accent);
-  opacity: 0.25;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: float 4s ease-in-out infinite;
-}
-.inv-image-placeholder .svg-icon {
-  width: 64px;
-  height: 64px;
-}
-
-.inv-content-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 60px 48px;
-  z-index: 1;
-  position: relative;
-}
+/* Unused image/content wrapper styles removed */
 
 .inv-eyebrow {
   font-size: 15px;
@@ -199,37 +161,6 @@ body.invite-page {
   opacity: 0.9;
 }
 
-.inv-names {
-  font-family: var(--inv-font-script);
-  font-size: clamp(48px, 8vw, 92px);
-  line-height: 1.15;
-  margin: 0 0 28px;
-  color: var(--inv-text);
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  max-width: 100%;
-}
-
-.inv-divider {
-  width: 80px;
-  height: 1px;
-  background: var(--inv-accent);
-  opacity: 0.3;
-  margin: 0 auto 32px;
-}
-
-/* Ornaments */
-.ornament {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  color: var(--inv-accent);
-  opacity: 0.45;
-  pointer-events: none;
-}
-.ornament-top-left { top: 28px; left: 28px; }
-.ornament-bottom-right { bottom: 28px; right: 28px; }
-
 .ornament-divider {
   width: 180px;
   height: 18px;
@@ -238,7 +169,6 @@ body.invite-page {
   opacity: 0.6;
 }
 
-body.theme-modern-minimal .ornament,
 body.theme-modern-minimal .ornament-divider {
   display: none;
 }
@@ -757,74 +687,7 @@ body.layout-3d-card .inv-container {
   color: #ef4444;
 }
 
-/* ─── Layouts ────────────────────────────────────────────────── */
-
-/* 1. Hero Top */
-body.layout-hero-top .inv-container {
-  flex-direction: column;
-}
-body.layout-hero-top .inv-image-wrapper {
-  width: 100%;
-  height: 60vh;
-  min-height: 380px;
-}
-body.layout-hero-top .inv-content-wrapper {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 64px 24px;
-}
-
-/* 2. Split Screen (Left / Right) */
-body.layout-split-left .inv-container {
-  flex-direction: row;
-}
-body.layout-split-right .inv-container {
-  flex-direction: row-reverse;
-}
-body.layout-split-left .inv-image-wrapper,
-body.layout-split-right .inv-image-wrapper {
-  width: 50%;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-}
-body.layout-split-left .inv-content-wrapper,
-body.layout-split-right .inv-content-wrapper {
-  width: 50%;
-  min-height: 100vh;
-  padding: 64px;
-}
-
-/* 3. Full Screen Overlay */
-body.layout-full-overlay .inv-container {
-  position: relative;
-  justify-content: center;
-  align-items: center;
-}
-body.layout-full-overlay .inv-image-wrapper {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-body.layout-full-overlay .inv-image {
-  opacity: 0.55;
-  filter: blur(2px) brightness(0.85);
-}
-body.layout-full-overlay .inv-content-wrapper {
-  position: relative;
-  z-index: 1;
-  background: rgba(var(--inv-bg-rgb), 0.88);
-  margin: 48px 24px;
-  padding: 64px 44px;
-  max-width: 680px;
-  border-radius: var(--radius);
-  box-shadow: 0 24px 64px rgba(0,0,0,0.22);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--inv-border);
-}
+/* All other layouts removed. The application only uses the 3D Envelope & Flip Card layout. */
 
 @media (max-width: 768px) {
   .card-perspective {
