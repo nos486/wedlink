@@ -502,8 +502,8 @@ body.layout-3d-card .inv-container {
 .card-back-content .inv-message {
   margin: 0 !important;
   padding: 0 10px !important;
-  max-height: 140px !important;
-  overflow-y: auto !important;
+  max-height: none !important;
+  overflow-y: visible !important;
   font-size: clamp(14px, 1.2vw, 17px);
   line-height: 1.5;
   width: 100%;
@@ -581,7 +581,8 @@ body.layout-3d-card .inv-container {
   .card-back-content .inv-message {
     font-size: clamp(13px, 3.2vw, 16px) !important;
     line-height: 1.45 !important;
-    max-height: 120px !important;
+    max-height: none !important;
+    overflow-y: visible !important;
     width: 100% !important;
     max-width: 90% !important;
     word-wrap: break-word !important;
