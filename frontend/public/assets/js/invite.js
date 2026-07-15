@@ -77,9 +77,11 @@ function renderInvitation() {
     }
   }
 
-  // Names, Venue, Message (bilingual check)
+  // Names, Family, Venue, Message (bilingual check)
   const brideName = (lang === 'fa' && invitation.bride_fa) ? invitation.bride_fa : invitation.bride;
   const groomName = (lang === 'fa' && invitation.groom_fa) ? invitation.groom_fa : invitation.groom;
+  const brideFamily = (lang === 'fa' && invitation.bride_family_fa) ? invitation.bride_family_fa : invitation.bride_family;
+  const groomFamily = (lang === 'fa' && invitation.groom_family_fa) ? invitation.groom_family_fa : invitation.groom_family;
   const venueText = (lang === 'fa' && invitation.venue_fa) ? invitation.venue_fa : invitation.venue;
   const messageText = (lang === 'fa' && invitation.message_fa) ? invitation.message_fa : invitation.message;
 
@@ -89,6 +91,30 @@ function renderInvitation() {
   document.title = `${brideName} & ${groomName} — WedLink`;
   document.getElementById('couple-names-front').textContent = joinedNames;
   document.getElementById('couple-names-back').textContent = joinedNames;
+
+  const familyEl = document.getElementById('couple-family-back');
+  if (familyEl) {
+    if (brideFamily?.trim() || groomFamily?.trim()) {
+      let familyText = '';
+      if (lang === 'fa') {
+        if (brideFamily?.trim() && groomFamily?.trim()) {
+          familyText = `خانواده‌های محترم ${brideFamily.trim()} و ${groomFamily.trim()}`;
+        } else {
+          familyText = `خانواده محترم ${(brideFamily || groomFamily).trim()}`;
+        }
+      } else {
+        if (brideFamily?.trim() && groomFamily?.trim()) {
+          familyText = `${brideFamily.trim()} & ${groomFamily.trim()} Families`;
+        } else {
+          familyText = `${(brideFamily || groomFamily).trim()} Family`;
+        }
+      }
+      familyEl.textContent = familyText;
+      familyEl.style.display = 'block';
+    } else {
+      familyEl.style.display = 'none';
+    }
+  }
   
   // Date format based on lang
   document.getElementById('detail-date-front').textContent = formattedDate;

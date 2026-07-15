@@ -35,6 +35,10 @@ export interface Invitation {
   groom: string;
   bride_fa: string | null;
   groom_fa: string | null;
+  bride_family: string | null;
+  groom_family: string | null;
+  bride_family_fa: string | null;
+  groom_family_fa: string | null;
   date: string;
   time: string | null;
   venue: string;
@@ -56,6 +60,10 @@ export interface CreateInvitationBody {
   groom: string;
   bride_fa?: string;
   groom_fa?: string;
+  bride_family?: string;
+  groom_family?: string;
+  bride_family_fa?: string;
+  groom_family_fa?: string;
   date: string;
   time?: string;
   venue: string;

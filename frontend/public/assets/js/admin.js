@@ -281,8 +281,12 @@ function openModalForEdit(slug) {
   const form = document.getElementById('create-form');
   form.bride.value = inv.bride;
   form.groom.value = inv.groom;
+  form.bride_family.value = inv.bride_family || '';
+  form.groom_family.value = inv.groom_family || '';
   form.bride_fa.value = inv.bride_fa || '';
   form.groom_fa.value = inv.groom_fa || '';
+  form.bride_family_fa.value = inv.bride_family_fa || '';
+  form.groom_family_fa.value = inv.groom_family_fa || '';
   form.date.value = inv.date;
   form.time.value = inv.time || '';
   form.venue.value = inv.venue;
@@ -323,8 +327,12 @@ function setupForm() {
     const body = {
       bride:     form.bride.value.trim(),
       groom:     form.groom.value.trim(),
+      bride_family: form.bride_family.value.trim() || undefined,
+      groom_family: form.groom_family.value.trim() || undefined,
       bride_fa:  form.bride_fa.value.trim() || undefined,
       groom_fa:  form.groom_fa.value.trim() || undefined,
+      bride_family_fa: form.bride_family_fa.value.trim() || undefined,
+      groom_family_fa: form.groom_family_fa.value.trim() || undefined,
       date:      form.date.value,
       time:      form.time.value.trim() || undefined,
       venue:     form.venue.value.trim(),

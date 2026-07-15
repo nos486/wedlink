@@ -9,7 +9,7 @@ publicRoutes.get('/:slug', async (c) => {
 
   const invitation = await c.env.DB
     .prepare(`
-      SELECT id, slug, bride, groom, bride_fa, groom_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout, created_at
+      SELECT id, slug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout, created_at
         FROM invitations
        WHERE slug = ?
     `)

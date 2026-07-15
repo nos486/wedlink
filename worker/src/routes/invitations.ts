@@ -55,7 +55,7 @@ invitations.post('/', async (c) => {
     return c.json({ success: false, error: 'Invalid JSON body' }, 400);
   }
 
-  const { slug: customSlug, bride, groom, bride_fa, groom_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout } = body;
+  const { slug: customSlug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout } = body;
 
   if (!bride?.trim() || !groom?.trim() || !date?.trim() || !venue?.trim()) {
     return c.json({ success: false, error: 'bride, groom, date, and venue are required' }, 400);
@@ -76,7 +76,7 @@ invitations.post('/', async (c) => {
 
   const result = await c.env.DB
     .prepare(
-      'INSERT INTO invitations (user_id, slug, bride, groom, bride_fa, groom_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO invitations (user_id, slug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     )
     .bind(
       userId, 
@@ -85,6 +85,10 @@ invitations.post('/', async (c) => {
       groom.trim(), 
       bride_fa?.trim() ?? null,
       groom_fa?.trim() ?? null,
+      bride_family?.trim() ?? null,
+      groom_family?.trim() ?? null,
+      bride_family_fa?.trim() ?? null,
+      groom_family_fa?.trim() ?? null,
       date.trim(), 
       time?.trim() ?? null,
       venue.trim(), 
@@ -128,7 +132,7 @@ invitations.put('/:slug', async (c) => {
     return c.json({ success: false, error: 'Invalid JSON body' }, 400);
   }
 
-  const { slug: customSlug, bride, groom, bride_fa, groom_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout } = body;
+  const { slug: customSlug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout } = body;
 
   if (!bride?.trim() || !groom?.trim() || !date?.trim() || !venue?.trim()) {
     return c.json({ success: false, error: 'bride, groom, date, and venue are required' }, 400);
@@ -148,7 +152,7 @@ invitations.put('/:slug', async (c) => {
 
   await c.env.DB
     .prepare(
-      'UPDATE invitations SET slug = ?, bride = ?, groom = ?, bride_fa = ?, groom_fa = ?, date = ?, time = ?, venue = ?, venue_fa = ?, message = ?, message_fa = ?, image_url = ?, theme = ?, desktop_layout = ?, mobile_layout = ? WHERE id = ?'
+      'UPDATE invitations SET slug = ?, bride = ?, groom = ?, bride_fa = ?, groom_fa = ?, bride_family = ?, groom_family = ?, bride_family_fa = ?, groom_family_fa = ?, date = ?, time = ?, venue = ?, venue_fa = ?, message = ?, message_fa = ?, image_url = ?, theme = ?, desktop_layout = ?, mobile_layout = ? WHERE id = ?'
     )
     .bind(
       finalSlug,
@@ -156,6 +160,10 @@ invitations.put('/:slug', async (c) => {
       groom.trim(),
       bride_fa?.trim() ?? null,
       groom_fa?.trim() ?? null,
+      bride_family?.trim() ?? null,
+      groom_family?.trim() ?? null,
+      bride_family_fa?.trim() ?? null,
+      groom_family_fa?.trim() ?? null,
       date.trim(),
       time?.trim() ?? null,
       venue.trim(),
