@@ -96,18 +96,10 @@ function renderInvitation() {
   if (familyEl) {
     if (brideFamily?.trim() || groomFamily?.trim()) {
       let familyText = '';
-      if (lang === 'fa') {
-        if (brideFamily?.trim() && groomFamily?.trim()) {
-          familyText = `خانواده‌های محترم ${brideFamily.trim()} و ${groomFamily.trim()}`;
-        } else {
-          familyText = `خانواده محترم ${(brideFamily || groomFamily).trim()}`;
-        }
+      if (brideFamily?.trim() && groomFamily?.trim()) {
+        familyText = `${brideFamily.trim()} - ${groomFamily.trim()}`;
       } else {
-        if (brideFamily?.trim() && groomFamily?.trim()) {
-          familyText = `${brideFamily.trim()} & ${groomFamily.trim()} Families`;
-        } else {
-          familyText = `${(brideFamily || groomFamily).trim()} Family`;
-        }
+        familyText = (brideFamily || groomFamily).trim();
       }
       familyEl.textContent = familyText;
       familyEl.style.display = 'block';
