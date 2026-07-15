@@ -3,7 +3,7 @@
 @font-face {
   font-family: 'IranNastaliq';
   src: url('../fonts/IranNastaliq-Web.woff2') format('woff2'),
-       url('../fonts/IranNastaliq-Web.woff') format('woff');
+    url('../fonts/IranNastaliq-Web.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -15,7 +15,9 @@ html {
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
@@ -41,12 +43,14 @@ body.theme-dark-luxury {
   --inv-bg: #09090e;
   --inv-bg-rgb: 9, 9, 14;
   --inv-text: #f5e9da;
-  --inv-accent: #d4af37; /* Gold */
+  --inv-accent: #d4af37;
+  /* Gold */
   --inv-accent-light: rgba(212, 175, 55, 0.1);
   --inv-font-primary: 'Inter', sans-serif;
   --inv-font-script: 'Great Vibes', cursive;
   --inv-border: rgba(212, 175, 55, 0.2);
 }
+
 body.theme-dark-luxury .inv-names-front,
 body.theme-dark-luxury .inv-names-back {
   background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
@@ -58,26 +62,30 @@ body.theme-light-floral {
   --inv-bg: #fdfaf6;
   --inv-bg-rgb: 253, 250, 246;
   --inv-text: #504840;
-  --inv-accent: #c9956c; /* Rose Gold */
+  --inv-accent: #c9956c;
+  /* Rose Gold */
   --inv-accent-light: rgba(201, 149, 108, 0.08);
   --inv-font-primary: 'Inter', sans-serif;
   --inv-font-script: 'Great Vibes', cursive;
   --inv-border: rgba(201, 149, 108, 0.25);
-  background-image: 
-    radial-gradient(circle at 10% 10%, rgba(201,149,108,0.03) 0%, transparent 30%),
-    radial-gradient(circle at 90% 90%, rgba(201,149,108,0.03) 0%, transparent 30%);
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(201, 149, 108, 0.03) 0%, transparent 30%),
+    radial-gradient(circle at 90% 90%, rgba(201, 149, 108, 0.03) 0%, transparent 30%);
 }
 
 body.theme-royal-elegance {
-  --inv-bg: #1d0309; /* Deep Burgundy */
+  --inv-bg: #1d0309;
+  /* Deep Burgundy */
   --inv-bg-rgb: 29, 3, 9;
   --inv-text: #fdf5e6;
-  --inv-accent: #e5b365; /* Royal Gold */
+  --inv-accent: #e5b365;
+  /* Royal Gold */
   --inv-accent-light: rgba(229, 179, 101, 0.12);
   --inv-font-primary: 'Playfair Display', serif;
   --inv-font-script: 'Great Vibes', cursive;
   --inv-border: rgba(229, 179, 101, 0.25);
 }
+
 body.theme-royal-elegance .inv-names-front,
 body.theme-royal-elegance .inv-names-back {
   background: linear-gradient(135deg, #e5b365, #ffe5be, #e5b365);
@@ -88,39 +96,45 @@ body.theme-royal-elegance .inv-names-back {
 }
 
 body.theme-starlight-glamour {
-  --inv-bg: #040407; /* Dark Obsidian */
+  --inv-bg: #040407;
+  /* Dark Obsidian */
   --inv-bg-rgb: 4, 4, 7;
   --inv-text: #e2e8f0;
-  --inv-accent: #cbd5e1; /* Platinum Silver */
+  --inv-accent: #cbd5e1;
+  /* Platinum Silver */
   --inv-accent-light: rgba(255, 255, 255, 0.05);
   --inv-font-primary: 'Inter', sans-serif;
   --inv-font-script: 'Playfair Display', serif;
   --inv-border: rgba(255, 255, 255, 0.1);
-  background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
+
 body.theme-starlight-glamour .inv-names-front,
 body.theme-starlight-glamour .inv-names-back {
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
 body.theme-enchanted-forest {
-  --inv-bg: #05140b; /* Moss Emerald */
+  --inv-bg: #05140b;
+  /* Moss Emerald */
   --inv-bg-rgb: 5, 20, 11;
   --inv-text: #e8f5ec;
-  --inv-accent: #86c49e; /* Sage */
+  --inv-accent: #86c49e;
+  /* Sage */
   --inv-accent-light: rgba(134, 196, 158, 0.1);
   --inv-font-primary: 'Playfair Display', serif;
   --inv-font-script: 'Great Vibes', cursive;
   --inv-border: rgba(134, 196, 158, 0.2);
 }
+
 body.theme-enchanted-forest::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(134,196,158,0.1) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(229,179,101,0.05) 0%, transparent 45%);
+  background:
+    radial-gradient(circle at 20% 30%, rgba(134, 196, 158, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(229, 179, 101, 0.05) 0%, transparent 45%);
   pointer-events: none;
   z-index: 0;
 }
@@ -364,7 +378,8 @@ body.layout-3d-card .inv-container {
   z-index: 0;
 }
 
-.card-front-decor, .card-back-decor {
+.card-front-decor,
+.card-back-decor {
   position: absolute;
   inset: 12px;
   border: 1px solid var(--inv-border);
@@ -376,7 +391,8 @@ body.layout-3d-card .inv-container {
   opacity: 0.7;
 }
 
-.wreath-svg, .wreath-svg-back {
+.wreath-svg,
+.wreath-svg-back {
   position: absolute;
   width: 85%;
   height: 85%;
@@ -414,7 +430,7 @@ body.layout-3d-card .inv-container {
   overflow: hidden;
   margin: 0;
   border: 1.5px solid var(--inv-accent);
-  box-shadow: 0 16px 36px rgba(0,0,0,0.06);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
   background-color: var(--inv-accent-light);
   display: flex;
   align-items: center;
@@ -495,19 +511,23 @@ body.layout-3d-card .inv-container {
 .card-back-content .inv-eyebrow {
   margin: 0 !important;
 }
+
 .card-back-content .inv-names-back {
   margin: 0 !important;
 }
+
 .card-back-content .ornament-divider {
   margin: 0 !important;
   max-width: 140px;
 }
+
 .card-back-content .inv-details {
   margin: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
 }
+
 .card-back-content .inv-message {
   margin: 0 !important;
   padding: 0 10px !important;
@@ -541,14 +561,14 @@ body.layout-3d-card .inv-container {
   font-size: 14.5px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
   transition: all var(--transition);
 }
 
 .btn-flip:hover {
   transform: translateY(-2px);
   filter: brightness(1.15);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
 }
 
 .btn-flip .svg-icon {
@@ -572,21 +592,27 @@ body.layout-3d-card .inv-container {
     width: 380px !important;
     height: 520px !important;
   }
-  .card-front, .card-back {
+
+  .card-front,
+  .card-back {
     padding: 30px 24px !important;
   }
+
   .card-front-photo-frame {
     width: 190px !important;
     height: 260px !important;
     border-radius: 95px 95px 18px 18px !important;
     margin-bottom: 20px !important;
   }
+
   .card-front-content {
     gap: 16px !important;
   }
+
   .card-back-content {
     gap: 12px !important;
   }
+
   .card-back-content .inv-message {
     font-size: clamp(13px, 3.2vw, 16px) !important;
     line-height: 1.45 !important;
@@ -604,71 +630,92 @@ body.layout-3d-card .inv-container {
     width: 88vw !important;
     height: calc(88vw * 1.48) !important;
   }
-  .card-front, .card-back {
+
+  .card-front,
+  .card-back {
     padding: 24px 16px !important;
   }
-  .card-front-decor, .card-back-decor {
+
+  .card-front-decor,
+  .card-back-decor {
     inset: 8px !important;
   }
+
   .card-front-photo-frame {
     width: 155px !important;
     height: 210px !important;
     margin-bottom: 18px !important;
     border-radius: 80px 80px 16px 16px !important;
   }
+
   .save-the-date {
     font-size: 11px !important;
     margin-bottom: 16px !important;
     letter-spacing: 0.2em !important;
   }
+
   .inv-names-front {
     font-size: clamp(28px, 6vw, 40px) !important;
   }
+
   .inv-names-back {
     font-size: clamp(26px, 5.5vw, 36px) !important;
   }
+
   .inv-divider-front {
     margin: 10px 0 !important;
   }
+
   .inv-date-front {
     font-size: 13px !important;
   }
+
   .inv-eyebrow {
     font-size: 12px !important;
     margin-bottom: 10px !important;
   }
+
   .inv-details {
     gap: 8px !important;
     margin-bottom: 16px !important;
   }
+
   .inv-detail-item {
     font-size: 14px !important;
   }
+
   .inv-icon .svg-icon {
     width: 16px !important;
     height: 16px !important;
   }
+
   .inv-countdown {
     gap: 8px !important;
   }
+
   .cd-box {
     padding: 8px 10px !important;
     min-width: 56px !important;
     border-radius: 6px !important;
   }
+
   .cd-val {
     font-size: 16px !important;
     margin-bottom: 2px !important;
   }
+
   .cd-lbl {
     font-size: 8px !important;
   }
+
   .card-front-content {
     gap: 12px !important;
   }
+
   .card-back-content {
     gap: 10px !important;
   }
+
   .card-back-content .inv-message {
     font-size: clamp(12px, 3.5vw, 14px) !important;
     line-height: 1.45 !important;
@@ -696,7 +743,7 @@ body.layout-3d-card .inv-container {
   font-weight: 600;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   transition: all var(--transition);
   margin-top: 24px;
   z-index: 10;
@@ -707,7 +754,7 @@ body.layout-3d-card .inv-container {
   transform: translateY(-2px);
   border-color: var(--inv-accent);
   background: var(--inv-accent-light);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .lang-switcher-btn .lang-icon {
@@ -729,7 +776,7 @@ body.layout-3d-card .inv-container {
   font-family: 'IranNastaliq', 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
   font-weight: normal !important;
   letter-spacing: 0 !important;
-  font-size: clamp(38px, 8vw, 56px) !important;
+  font-size: clamp(58px, 14vw, 100px) !important;
   line-height: 1.35 !important;
 }
 
@@ -737,7 +784,7 @@ body.layout-3d-card .inv-container {
   font-family: 'IranNastaliq', 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
   font-weight: normal !important;
   letter-spacing: 0 !important;
-  font-size: clamp(34px, 7vw, 48px) !important;
+  font-size: clamp(40px, 10vw, 70px) !important;
   line-height: 1.35 !important;
 }
 
@@ -762,8 +809,15 @@ body.layout-3d-card .inv-container {
 
 /* ─── Animations ─────────────────────────────────────────────── */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .inv-animate {
@@ -771,20 +825,46 @@ body.layout-3d-card .inv-container {
   animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.d-1 { animation-delay: 0.15s; }
-.d-2 { animation-delay: 0.3s; }
-.d-3 { animation-delay: 0.45s; }
-.d-4 { animation-delay: 0.6s; }
-.d-5 { animation-delay: 0.75s; }
+.d-1 {
+  animation-delay: 0.15s;
+}
+
+.d-2 {
+  animation-delay: 0.3s;
+}
+
+.d-3 {
+  animation-delay: 0.45s;
+}
+
+.d-4 {
+  animation-delay: 0.6s;
+}
+
+.d-5 {
+  animation-delay: 0.75s;
+}
 
 @keyframes shimmer {
-  0% { background-position: 200% center; }
-  100% { background-position: -200% center; }
+  0% {
+    background-position: 200% center;
+  }
+
+  100% {
+    background-position: -200% center;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 /* 🎵 Floating Background Music Player */
@@ -840,14 +920,34 @@ body.layout-3d-card .inv-container {
   animation: wave 1.2s ease-in-out infinite alternate;
 }
 
-.music-toggle-btn.playing .music-waves span:nth-child(1) { height: 14px; animation-delay: -1.2s; }
-.music-toggle-btn.playing .music-waves span:nth-child(2) { height: 10px; animation-delay: -0.9s; }
-.music-toggle-btn.playing .music-waves span:nth-child(3) { height: 12px; animation-delay: -0.6s; }
-.music-toggle-btn.playing .music-waves span:nth-child(4) { height: 8px;  animation-delay: -0.3s; }
+.music-toggle-btn.playing .music-waves span:nth-child(1) {
+  height: 14px;
+  animation-delay: -1.2s;
+}
+
+.music-toggle-btn.playing .music-waves span:nth-child(2) {
+  height: 10px;
+  animation-delay: -0.9s;
+}
+
+.music-toggle-btn.playing .music-waves span:nth-child(3) {
+  height: 12px;
+  animation-delay: -0.6s;
+}
+
+.music-toggle-btn.playing .music-waves span:nth-child(4) {
+  height: 8px;
+  animation-delay: -0.3s;
+}
 
 @keyframes wave {
-  0% { transform: scaleY(0.2); }
-  100% { transform: scaleY(1); }
+  0% {
+    transform: scaleY(0.2);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
 }
 
 [dir="rtl"] .music-toggle-btn {
@@ -856,4 +956,3 @@ body.layout-3d-card .inv-container {
   font-family: 'Vazirmatn', sans-serif !important;
   letter-spacing: 0;
 }
-
