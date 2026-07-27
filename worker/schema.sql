@@ -23,29 +23,39 @@ CREATE TABLE IF NOT EXISTS sessions (
 );
 
 CREATE TABLE IF NOT EXISTS invitations (
-  id             INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id        INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  slug           TEXT    UNIQUE NOT NULL,
-  bride          TEXT    NOT NULL,
-  groom          TEXT    NOT NULL,
-  bride_fa       TEXT,
-  groom_fa       TEXT,
-  bride_family   TEXT,
-  groom_family   TEXT,
-  bride_family_fa TEXT,
-  groom_family_fa TEXT,
-  date           TEXT    NOT NULL,
-  time           TEXT,
-  venue          TEXT    NOT NULL,
-  venue_fa       TEXT,
-  message        TEXT,
-  message_fa     TEXT,
-  image_url      TEXT,
-  theme          TEXT    DEFAULT 'modern-minimal',
-  desktop_layout TEXT    DEFAULT '3d-card',
-  mobile_layout  TEXT    DEFAULT '3d-card',
-  created_at     TEXT    NOT NULL DEFAULT (datetime('now'))
+  id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id             INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  slug                TEXT    UNIQUE NOT NULL,
+  bride               TEXT    NOT NULL,
+  groom               TEXT    NOT NULL,
+  bride_fa            TEXT,
+  groom_fa            TEXT,
+  bride_family        TEXT,
+  groom_family        TEXT,
+  bride_family_fa     TEXT,
+  groom_family_fa     TEXT,
+  date                TEXT    NOT NULL,
+  time                TEXT,
+  venue               TEXT    NOT NULL,
+  venue_fa            TEXT,
+  location_address    TEXT,
+  location_address_fa TEXT,
+  navigation_url      TEXT,
+  map_image_url       TEXT,
+  message             TEXT,
+  message_fa          TEXT,
+  image_url           TEXT,
+  theme               TEXT    DEFAULT 'modern-minimal',
+  desktop_layout      TEXT    DEFAULT '3d-card',
+  mobile_layout       TEXT    DEFAULT '3d-card',
+  created_at          TEXT    NOT NULL DEFAULT (datetime('now'))
 );
+
+-- Migration for existing databases:
+-- ALTER TABLE invitations ADD COLUMN location_address TEXT;
+-- ALTER TABLE invitations ADD COLUMN location_address_fa TEXT;
+-- ALTER TABLE invitations ADD COLUMN navigation_url TEXT;
+-- ALTER TABLE invitations ADD COLUMN map_image_url TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_invitations_slug    ON invitations(slug);
 CREATE INDEX IF NOT EXISTS idx_invitations_user_id ON invitations(user_id);

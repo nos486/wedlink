@@ -55,7 +55,7 @@ invitations.post('/', async (c) => {
     return c.json({ success: false, error: 'Invalid JSON body' }, 400);
   }
 
-  const { slug: customSlug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout } = body;
+  const { slug: customSlug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, location_address, location_address_fa, navigation_url, map_image_url, message, message_fa, image_url, theme, desktop_layout, mobile_layout } = body;
 
   if (!bride?.trim() || !groom?.trim() || !date?.trim() || !venue?.trim()) {
     return c.json({ success: false, error: 'bride, groom, date, and venue are required' }, 400);
@@ -76,7 +76,7 @@ invitations.post('/', async (c) => {
 
   const result = await c.env.DB
     .prepare(
-      'INSERT INTO invitations (user_id, slug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO invitations (user_id, slug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, location_address, location_address_fa, navigation_url, map_image_url, message, message_fa, image_url, theme, desktop_layout, mobile_layout) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     )
     .bind(
       userId, 
@@ -93,6 +93,10 @@ invitations.post('/', async (c) => {
       time?.trim() ?? null,
       venue.trim(), 
       venue_fa?.trim() ?? null,
+      location_address?.trim() ?? null,
+      location_address_fa?.trim() ?? null,
+      navigation_url?.trim() ?? null,
+      map_image_url?.trim() ?? null,
       message?.trim() ?? null,
       message_fa?.trim() ?? null,
       image_url?.trim() ?? null,
@@ -132,7 +136,7 @@ invitations.put('/:slug', async (c) => {
     return c.json({ success: false, error: 'Invalid JSON body' }, 400);
   }
 
-  const { slug: customSlug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, message, message_fa, image_url, theme, desktop_layout, mobile_layout } = body;
+  const { slug: customSlug, bride, groom, bride_fa, groom_fa, bride_family, groom_family, bride_family_fa, groom_family_fa, date, time, venue, venue_fa, location_address, location_address_fa, navigation_url, map_image_url, message, message_fa, image_url, theme, desktop_layout, mobile_layout } = body;
 
   if (!bride?.trim() || !groom?.trim() || !date?.trim() || !venue?.trim()) {
     return c.json({ success: false, error: 'bride, groom, date, and venue are required' }, 400);
@@ -152,7 +156,7 @@ invitations.put('/:slug', async (c) => {
 
   await c.env.DB
     .prepare(
-      'UPDATE invitations SET slug = ?, bride = ?, groom = ?, bride_fa = ?, groom_fa = ?, bride_family = ?, groom_family = ?, bride_family_fa = ?, groom_family_fa = ?, date = ?, time = ?, venue = ?, venue_fa = ?, message = ?, message_fa = ?, image_url = ?, theme = ?, desktop_layout = ?, mobile_layout = ? WHERE id = ?'
+      'UPDATE invitations SET slug = ?, bride = ?, groom = ?, bride_fa = ?, groom_fa = ?, bride_family = ?, groom_family = ?, bride_family_fa = ?, groom_family_fa = ?, date = ?, time = ?, venue = ?, venue_fa = ?, location_address = ?, location_address_fa = ?, navigation_url = ?, map_image_url = ?, message = ?, message_fa = ?, image_url = ?, theme = ?, desktop_layout = ?, mobile_layout = ? WHERE id = ?'
     )
     .bind(
       finalSlug,
@@ -168,6 +172,10 @@ invitations.put('/:slug', async (c) => {
       time?.trim() ?? null,
       venue.trim(),
       venue_fa?.trim() ?? null,
+      location_address?.trim() ?? null,
+      location_address_fa?.trim() ?? null,
+      navigation_url?.trim() ?? null,
+      map_image_url?.trim() ?? null,
       message?.trim() ?? null,
       message_fa?.trim() ?? null,
       image_url?.trim() ?? null,

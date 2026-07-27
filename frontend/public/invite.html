@@ -142,9 +142,41 @@
           <span id="flip-btn-text">Flip Card</span>
         </button>
 
+        <button id="location-btn" class="btn-location">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span id="location-btn-text">Location & Map</span>
+        </button>
+
         <a href="#" id="lang-switcher" class="lang-switcher-btn">
           <span id="lang-text">FA</span>
         </a>
+      </div>
+    </div>
+
+    <!-- Location & Map Modal Popup -->
+    <div id="location-modal" class="inv-modal" style="display:none;" aria-hidden="true">
+      <div class="inv-modal-overlay" id="location-modal-overlay"></div>
+      <div class="inv-modal-card">
+        <button id="close-modal-btn" class="inv-modal-close" aria-label="Close modal">&times;</button>
+        <div class="inv-modal-header">
+          <div class="inv-modal-icon-wrapper">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <h3 id="modal-venue-name" class="inv-modal-title">Venue Location</h3>
+        </div>
+        
+        <p id="modal-location-address" class="inv-modal-address"></p>
+        
+        <div id="modal-map-container" class="inv-modal-map" style="display:none;">
+          <img id="modal-map-img" src="" alt="Location Map" />
+        </div>
+
+        <div class="inv-modal-actions">
+          <a id="modal-nav-link" href="#" target="_blank" rel="noopener noreferrer" class="btn-nav" style="display:none;">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+            <span id="modal-nav-text">Open Navigation</span>
+          </a>
+        </div>
       </div>
     </div>
 

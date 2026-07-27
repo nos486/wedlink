@@ -8,6 +8,7 @@ let API_BASE = '';
 let invitations = [];
 let editingSlug = null;
 let uploadedImageBase64 = null;
+let uploadedMapImageBase64 = null;
 
 // ─── Init ─────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
@@ -256,6 +257,7 @@ function openModalForCreate() {
   }
   editingSlug = null;
   uploadedImageBase64 = null;
+  uploadedMapImageBase64 = null;
   document.getElementById('modal-title').innerHTML = '<span style="color:var(--gold)">✨</span> New Invitation';
   document.getElementById('submit-btn').innerHTML = '✨ Create Invitation';
   document.getElementById('create-form').reset();
@@ -274,6 +276,7 @@ function openModalForEdit(slug) {
 
   editingSlug = slug;
   uploadedImageBase64 = inv.image_url && inv.image_url.startsWith('data:image') ? inv.image_url : null;
+  uploadedMapImageBase64 = inv.map_image_url && inv.map_image_url.startsWith('data:image') ? inv.map_image_url : null;
   
   document.getElementById('modal-title').innerHTML = '<span style="color:var(--gold)">✏️</span> Edit Invitation';
   document.getElementById('submit-btn').innerHTML = '💾 Save Changes';
@@ -291,6 +294,10 @@ function openModalForEdit(slug) {
   form.time.value = inv.time || '';
   form.venue.value = inv.venue;
   form.venue_fa.value = inv.venue_fa || '';
+  form.location_address.value = inv.location_address || '';
+  form.location_address_fa.value = inv.location_address_fa || '';
+  form.navigation_url.value = inv.navigation_url || '';
+  form.map_image_url.value = uploadedMapImageBase64 ? '(Uploaded Map)' : (inv.map_image_url || '');
   form.slug.value = inv.slug;
   form.message.value = inv.message || '';
   form.message_fa.value = inv.message_fa || '';
@@ -314,6 +321,7 @@ function closeModal() {
   document.getElementById('create-form').reset();
   editingSlug = null;
   uploadedImageBase64 = null;
+  uploadedMapImageBase64 = null;
   clearFormErrors();
 }
 
@@ -337,6 +345,10 @@ function setupForm() {
       time:      form.time.value.trim() || undefined,
       venue:     form.venue.value.trim(),
       venue_fa:  form.venue_fa.value.trim() || undefined,
+      location_address: form.location_address.value.trim() || undefined,
+      location_address_fa: form.location_address_fa.value.trim() || undefined,
+      navigation_url: form.navigation_url.value.trim() || undefined,
+      map_image_url: uploadedMapImageBase64 || form.map_image_url.value.trim() || undefined,
       slug:      form.slug.value.trim() || undefined,
       message:   form.message.value.trim() || undefined,
       message_fa: form.message_fa.value.trim() || undefined,
@@ -435,6 +447,45 @@ function setupImageUpload() {
       uploadedImageBase64 = null;
     }
   });
+
+  // Map Image Upload
+  const mapFileInput = document.getElementById('map_image_file');
+  const mapUrlInput = document.getElementById('map_image_url');
+  const mapErrorSpan = document.getElementById('error-map_image_file');
+
+  if (mapFileInput && mapUrlInput) {
+    mapFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (mapErrorSpan) mapErrorSpan.textContent = '';
+      mapUrlInput.value = 'Processing map image...';
+      mapUrlInput.disabled = true;
+
+      try {
+        if (file.size > 15 * 1024 * 1024) throw new Error('File is too large (max 15MB before compression)');
+        const compressedDataUrl = await compressImage(file);
+        const base64Size = Math.round((compressedDataUrl.length * 3) / 4);
+        if (base64Size > 5 * 1024 * 1024) throw new Error('Map image too complex, please use a smaller image');
+
+        uploadedMapImageBase64 = compressedDataUrl;
+        mapUrlInput.value = '(Uploaded Map)';
+        showToast('Map image processed successfully!', 'success');
+      } catch (err) {
+        if (mapErrorSpan) mapErrorSpan.textContent = err.message;
+        mapUrlInput.value = '';
+        uploadedMapImageBase64 = null;
+      } finally {
+        mapUrlInput.disabled = false;
+      }
+    });
+
+    mapUrlInput.addEventListener('input', () => {
+      if (mapUrlInput.value !== '(Uploaded Map)') {
+        uploadedMapImageBase64 = null;
+      }
+    });
+  }
 }
 
 function compressImage(file) {

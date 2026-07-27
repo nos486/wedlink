@@ -135,6 +135,46 @@ function renderInvitation() {
     flipBtnText.textContent = lang === 'fa' ? 'چرخش کارت' : 'Flip Card';
   }
 
+  // Location button text translation
+  const locBtnText = document.getElementById('location-btn-text');
+  if (locBtnText) {
+    locBtnText.textContent = lang === 'fa' ? 'موقعیت و آدرس' : 'Location & Map';
+  }
+
+  // Configure Location Modal
+  const modalVenueName = document.getElementById('modal-venue-name');
+  const modalAddress = document.getElementById('modal-location-address');
+  const modalMapContainer = document.getElementById('modal-map-container');
+  const modalMapImg = document.getElementById('modal-map-img');
+  const modalNavLink = document.getElementById('modal-nav-link');
+  const modalNavText = document.getElementById('modal-nav-text');
+
+  const fullAddress = (lang === 'fa' && invitation.location_address_fa) 
+    ? invitation.location_address_fa 
+    : (invitation.location_address || venueText);
+
+  if (modalVenueName) modalVenueName.textContent = venueText;
+  if (modalAddress) modalAddress.textContent = fullAddress;
+
+  // Map image
+  if (invitation.map_image_url && modalMapImg && modalMapContainer) {
+    modalMapImg.src = invitation.map_image_url;
+    modalMapContainer.style.display = 'block';
+  } else if (modalMapContainer) {
+    modalMapContainer.style.display = 'none';
+  }
+
+  // Navigation link
+  if (invitation.navigation_url && modalNavLink) {
+    modalNavLink.href = invitation.navigation_url;
+    modalNavLink.style.display = 'inline-flex';
+    if (modalNavText) {
+      modalNavText.textContent = lang === 'fa' ? 'مسیریابی با نقشه' : 'Open Navigation';
+    }
+  } else if (modalNavLink) {
+    modalNavLink.style.display = 'none';
+  }
+
   const msgSection = document.getElementById('message-section');
   if (messageText) {
     document.getElementById('invite-message').textContent = messageText;
@@ -158,9 +198,50 @@ function renderInvitation() {
   }
 
   setupCardRotation();
+  setupLocationModal();
   setupBackgroundMusic();
   setupCardHoverTilt();
   startCountdown(invitation.date);
+}
+
+function setupLocationModal() {
+  const locBtn = document.getElementById('location-btn');
+  const modal = document.getElementById('location-modal');
+  const overlay = document.getElementById('location-modal-overlay');
+  const closeBtn = document.getElementById('close-modal-btn');
+
+  if (!locBtn || !modal) return;
+
+  const openModal = () => {
+    modal.style.display = 'flex';
+    modal.offsetHeight; // force reflow
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    setTimeout(() => {
+      if (!modal.classList.contains('active')) {
+        modal.style.display = 'none';
+      }
+    }, 300);
+  };
+
+  locBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openModal();
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (overlay) overlay.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
 }
 
 function applyLayout() {
