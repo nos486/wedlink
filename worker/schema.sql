@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS invitations (
   location_address_fa TEXT,
   navigation_url      TEXT,
   map_image_url       TEXT,
+  map_embed_url       TEXT,
   message             TEXT,
   message_fa          TEXT,
   image_url           TEXT,
@@ -56,6 +57,7 @@ CREATE TABLE IF NOT EXISTS invitations (
 -- ALTER TABLE invitations ADD COLUMN location_address_fa TEXT;
 -- ALTER TABLE invitations ADD COLUMN navigation_url TEXT;
 -- ALTER TABLE invitations ADD COLUMN map_image_url TEXT;
+-- ALTER TABLE invitations ADD COLUMN map_embed_url TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_invitations_slug    ON invitations(slug);
 CREATE INDEX IF NOT EXISTS idx_invitations_user_id ON invitations(user_id);

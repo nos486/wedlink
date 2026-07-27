@@ -252,20 +252,12 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">
-            Location Map Image
-            <span style="color:var(--text-muted);font-weight:400;text-transform:none">(optional picture of venue location/map)</span>
+          <label class="form-label" for="map_embed_url">
+            Google Maps Embed (Iframe code or Embed URL)
+            <span style="color:var(--text-muted);font-weight:400;text-transform:none">(optional - e.g. &lt;iframe src="https://..."&gt;&lt;/iframe&gt;)</span>
           </label>
-          <div style="display:flex;gap:12px;margin-bottom:8px;">
-            <input class="form-input" id="map_image_url" name="map_image_url" type="url"
-                   placeholder="Paste map image URL or upload file..." style="flex:1" />
-            <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0 16px; display:inline-flex; align-items:center; gap:8px;">
-              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
-              Upload Map
-              <input type="file" id="map_image_file" accept="image/*" style="display:none;" />
-            </label>
-          </div>
-          <span class="field-error" id="error-map_image_file"></span>
+          <textarea class="form-textarea" id="map_embed_url" name="map_embed_url" rows="2"
+                    placeholder='Paste iframe tag e.g. <iframe src="https://www.google.com/maps/embed?..." ...></iframe>'></textarea>
         </div>
 
         <div class="form-grid">

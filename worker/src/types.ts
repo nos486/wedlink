@@ -47,6 +47,7 @@ export interface Invitation {
   location_address_fa: string | null;
   navigation_url: string | null;
   map_image_url: string | null;
+  map_embed_url: string | null;
   message: string | null;
   message_fa: string | null;
   image_url: string | null;
@@ -76,6 +77,7 @@ export interface CreateInvitationBody {
   location_address_fa?: string;
   navigation_url?: string;
   map_image_url?: string;
+  map_embed_url?: string;
   message?: string;
   message_fa?: string;
   image_url?: string;

@@ -297,7 +297,7 @@ function openModalForEdit(slug) {
   form.location_address.value = inv.location_address || '';
   form.location_address_fa.value = inv.location_address_fa || '';
   form.navigation_url.value = inv.navigation_url || '';
-  form.map_image_url.value = uploadedMapImageBase64 ? '(Uploaded Map)' : (inv.map_image_url || '');
+  if (form.map_embed_url) form.map_embed_url.value = inv.map_embed_url || inv.map_image_url || '';
   form.slug.value = inv.slug;
   form.message.value = inv.message || '';
   form.message_fa.value = inv.message_fa || '';
@@ -348,7 +348,7 @@ function setupForm() {
       location_address: form.location_address.value.trim() || undefined,
       location_address_fa: form.location_address_fa.value.trim() || undefined,
       navigation_url: form.navigation_url.value.trim() || undefined,
-      map_image_url: uploadedMapImageBase64 || form.map_image_url.value.trim() || undefined,
+      map_embed_url: extractIframeSrc(form.map_embed_url?.value),
       slug:      form.slug.value.trim() || undefined,
       message:   form.message.value.trim() || undefined,
       message_fa: form.message_fa.value.trim() || undefined,
@@ -601,6 +601,13 @@ function formatTheme(theme) {
 }
 
 
+
+function extractIframeSrc(inputStr) {
+  if (!inputStr || !inputStr.trim()) return undefined;
+  const match = inputStr.match(/src=["']([^"']+)["']/i);
+  if (match && match[1]) return match[1].trim();
+  return inputStr.trim();
+}
 
 // Expose for inline onclick handlers
 window.copyLink          = copyLink;

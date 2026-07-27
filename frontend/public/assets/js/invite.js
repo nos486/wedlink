@@ -145,7 +145,7 @@ function renderInvitation() {
   const modalVenueName = document.getElementById('modal-venue-name');
   const modalAddress = document.getElementById('modal-location-address');
   const modalMapContainer = document.getElementById('modal-map-container');
-  const modalMapImg = document.getElementById('modal-map-img');
+  const modalMapIframe = document.getElementById('modal-map-iframe');
   const modalNavLink = document.getElementById('modal-nav-link');
   const modalNavText = document.getElementById('modal-nav-text');
 
@@ -156,9 +156,10 @@ function renderInvitation() {
   if (modalVenueName) modalVenueName.textContent = venueText;
   if (modalAddress) modalAddress.textContent = fullAddress;
 
-  // Map image
-  if (invitation.map_image_url && modalMapImg && modalMapContainer) {
-    modalMapImg.src = invitation.map_image_url;
+  // Map Iframe Embed
+  const embedUrl = invitation.map_embed_url || (invitation.map_image_url && invitation.map_image_url.startsWith('http') ? invitation.map_image_url : null);
+  if (embedUrl && modalMapIframe && modalMapContainer) {
+    modalMapIframe.src = embedUrl;
     modalMapContainer.style.display = 'block';
   } else if (modalMapContainer) {
     modalMapContainer.style.display = 'none';
