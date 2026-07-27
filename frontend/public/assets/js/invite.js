@@ -156,10 +156,11 @@ function renderInvitation() {
   if (modalVenueName) modalVenueName.textContent = venueText;
   if (modalAddress) modalAddress.textContent = fullAddress;
 
-  // Map Iframe Embed
+  // Map Iframe Embed (lazy-loaded on popup click)
   const embedUrl = invitation.map_embed_url || (invitation.map_image_url && invitation.map_image_url.startsWith('http') ? invitation.map_image_url : null);
   if (embedUrl && modalMapIframe && modalMapContainer) {
-    modalMapIframe.src = embedUrl;
+    modalMapIframe.dataset.src = embedUrl;
+    modalMapIframe.src = '';
     modalMapContainer.style.display = 'block';
   } else if (modalMapContainer) {
     modalMapContainer.style.display = 'none';
@@ -214,6 +215,12 @@ function setupLocationModal() {
   if (!locBtn || !modal) return;
 
   const openModal = () => {
+    // Lazy load map iframe src only when user opens the popup
+    const mapIframe = document.getElementById('modal-map-iframe');
+    if (mapIframe && mapIframe.dataset.src && mapIframe.src !== mapIframe.dataset.src) {
+      mapIframe.src = mapIframe.dataset.src;
+    }
+
     modal.style.display = 'flex';
     modal.offsetHeight; // force reflow
     modal.classList.add('active');
