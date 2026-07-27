@@ -329,37 +329,40 @@ function toPersianDigits(val) {
   return String(val).replace(/[0-9]/g, w => fa[+w]);
 }
 
-let autoFlipTimer = null;
+// ─── 3D Card Rotation & 5s Auto-Rotate ────────────────────────
+let autoRotateTimer = null;
 
-// ─── 3D Card Rotation ─────────────────────────────────────────
 function setupCardRotation() {
   const card = document.getElementById('invitation-card');
   const flipBtn = document.getElementById('flip-btn');
   if (!card) return;
 
-  if (autoFlipTimer) clearTimeout(autoFlipTimer);
-
   const performFlip = (e) => {
-    if (e) {
-      e.stopPropagation();
-      if (autoFlipTimer) {
-        clearTimeout(autoFlipTimer);
-        autoFlipTimer = null;
-      }
+    if (e) e.stopPropagation();
+    // Cancel 5-second auto-rotate timer if user manually clicks
+    if (autoRotateTimer) {
+      clearTimeout(autoRotateTimer);
+      autoRotateTimer = null;
     }
+    // Force transition back to 0.8s for smooth click flips
     card.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
     card.classList.toggle('flipped');
   };
 
   if (flipBtn) {
-    flipBtn.removeEventListener('click', performFlip);
     flipBtn.addEventListener('click', performFlip);
   }
 
-  // Auto-flip once after 5 seconds if not clicked manually
-  autoFlipTimer = setTimeout(() => {
-    performFlip();
-    autoFlipTimer = null;
+  card.addEventListener('click', performFlip);
+
+  // Auto rotate card ONCE after 5 seconds if user hasn't clicked
+  if (autoRotateTimer) clearTimeout(autoRotateTimer);
+  autoRotateTimer = setTimeout(() => {
+    if (card && !card.classList.contains('flipped')) {
+      card.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      card.classList.add('flipped');
+    }
+    autoRotateTimer = null;
   }, 5000);
 }
 
