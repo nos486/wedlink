@@ -129,16 +129,16 @@ function renderInvitation() {
       : 'You are cordially invited to the wedding of';
   }
 
-  // Flip button text translation
+  // Flip button text translation (single word: چرخش / Rotate)
   const flipBtnText = document.getElementById('flip-btn-text');
   if (flipBtnText) {
-    flipBtnText.textContent = lang === 'fa' ? 'چرخش کارت' : 'Flip Card';
+    flipBtnText.textContent = lang === 'fa' ? 'چرخش' : 'Rotate';
   }
 
-  // Location button text translation
+  // Location button text translation (single word: آدرس / Address)
   const locBtnText = document.getElementById('location-btn-text');
   if (locBtnText) {
-    locBtnText.textContent = lang === 'fa' ? 'موقعیت و آدرس' : 'Location & Map';
+    locBtnText.textContent = lang === 'fa' ? 'آدرس' : 'Address';
   }
 
   // Configure Location Modal
@@ -165,12 +165,12 @@ function renderInvitation() {
     modalMapContainer.style.display = 'none';
   }
 
-  // Navigation link
+  // Navigation link (single word: مسیریابی / Navigate)
   if (invitation.navigation_url && modalNavLink) {
     modalNavLink.href = invitation.navigation_url;
     modalNavLink.style.display = 'inline-flex';
     if (modalNavText) {
-      modalNavText.textContent = lang === 'fa' ? 'مسیریابی با نقشه' : 'Open Navigation';
+      modalNavText.textContent = lang === 'fa' ? 'مسیریابی' : 'Navigate';
     }
   } else if (modalNavLink) {
     modalNavLink.style.display = 'none';

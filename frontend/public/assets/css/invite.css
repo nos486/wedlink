@@ -563,31 +563,44 @@ body.layout-3d-card .inv-container {
 .invite-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+  gap: 12px;
   z-index: 10;
+  flex-wrap: wrap;
+}
+
+.btn-flip,
+.btn-location,
+.invite-actions .lang-switcher-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 22px;
+  min-width: 100px;
+  border-radius: 30px;
+  font-family: var(--inv-font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transition: all var(--transition, 0.3s ease);
+  margin-top: 0 !important;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
 .btn-flip {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
   background: var(--inv-accent);
   color: var(--inv-bg);
   border: 1px solid var(--inv-accent);
-  padding: 12px 28px;
-  border-radius: 30px;
-  font-family: var(--inv-font-primary);
-  font-size: 14.5px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
-  transition: all var(--transition);
 }
 
 .btn-flip:hover {
   transform: translateY(-2px);
   filter: brightness(1.15);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
 }
 
 .btn-flip .svg-icon {
@@ -600,37 +613,25 @@ body.layout-3d-card .inv-container {
   transform: rotate(180deg);
 }
 
+.btn-location,
 .invite-actions .lang-switcher-btn {
-  margin-top: 0;
-}
-
-.btn-location {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   background: rgba(var(--inv-bg-rgb), 0.85);
   color: var(--inv-text);
   border: 1px solid var(--inv-border);
-  padding: 12px 24px;
-  border-radius: 30px;
-  font-family: var(--inv-font-primary);
-  font-size: 14.5px;
-  font-weight: 600;
-  cursor: pointer;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-  transition: all var(--transition, 0.3s ease);
 }
 
-.btn-location:hover {
+.btn-location:hover,
+.invite-actions .lang-switcher-btn:hover {
   transform: translateY(-2px);
   border-color: var(--inv-accent);
   background: var(--inv-accent-light);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
-.btn-location .svg-icon {
+.btn-location .svg-icon,
+.invite-actions .lang-switcher-btn .svg-icon {
   width: 16px;
   height: 16px;
   color: var(--inv-accent);
@@ -787,14 +788,17 @@ body.layout-3d-card .inv-container {
 .btn-nav {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 24px;
+  min-width: 110px;
   background: var(--inv-accent);
   color: var(--inv-bg);
   text-decoration: none;
-  padding: 12px 28px;
   border-radius: 30px;
   font-weight: 600;
-  font-size: 14.5px;
+  font-size: 14px;
   transition: all var(--transition, 0.3s ease);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
