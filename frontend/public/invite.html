@@ -154,8 +154,8 @@
       </div>
     </div>
 
-    <!-- Location & Map Modal Popup -->
-    <div id="location-modal" class="inv-modal" style="display:none;" aria-hidden="true">
+    <!-- Location & Map Modal Popup (Preloaded in Background) -->
+    <div id="location-modal" class="inv-modal" aria-hidden="true">
       <div class="inv-modal-overlay" id="location-modal-overlay"></div>
       <div class="inv-modal-card">
         <button id="close-modal-btn" class="inv-modal-close" aria-label="Close modal">&times;</button>
@@ -168,8 +168,8 @@
         
         <p id="modal-location-address" class="inv-modal-address"></p>
         
-        <div id="modal-map-container" class="inv-modal-map" style="display:none;">
-          <iframe id="modal-map-iframe" src="" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div id="modal-map-container" class="inv-modal-map">
+          <iframe id="modal-map-iframe" src="" width="100%" height="250" style="border:0;" allowfullscreen="" loading="eager" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
         <div class="inv-modal-actions">

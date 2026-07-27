@@ -637,7 +637,7 @@ body.layout-3d-card .inv-container {
   color: var(--inv-accent);
 }
 
-/* 📍 Location & Map Modal Styles */
+/* 📍 Location & Map Modal Styles (Preloaded in Background) */
 .inv-modal {
   position: fixed;
   inset: 0;
@@ -647,12 +647,14 @@ body.layout-3d-card .inv-container {
   justify-content: center;
   padding: 20px;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .inv-modal.active {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 

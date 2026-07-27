@@ -156,11 +156,10 @@ function renderInvitation() {
   if (modalVenueName) modalVenueName.textContent = venueText;
   if (modalAddress) modalAddress.textContent = fullAddress;
 
-  // Map Iframe Embed (lazy-loaded on popup click)
+  // Map Iframe Embed
   const embedUrl = invitation.map_embed_url || (invitation.map_image_url && invitation.map_image_url.startsWith('http') ? invitation.map_image_url : null);
   if (embedUrl && modalMapIframe && modalMapContainer) {
-    modalMapIframe.dataset.src = embedUrl;
-    modalMapIframe.src = '';
+    modalMapIframe.src = embedUrl;
     modalMapContainer.style.display = 'block';
   } else if (modalMapContainer) {
     modalMapContainer.style.display = 'none';
@@ -215,14 +214,6 @@ function setupLocationModal() {
   if (!locBtn || !modal) return;
 
   const openModal = () => {
-    // Lazy load map iframe src only when user opens the popup
-    const mapIframe = document.getElementById('modal-map-iframe');
-    if (mapIframe && mapIframe.dataset.src && mapIframe.src !== mapIframe.dataset.src) {
-      mapIframe.src = mapIframe.dataset.src;
-    }
-
-    modal.style.display = 'flex';
-    modal.offsetHeight; // force reflow
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
   };
@@ -230,11 +221,6 @@ function setupLocationModal() {
   const closeModal = () => {
     modal.classList.remove('active');
     modal.setAttribute('aria-hidden', 'true');
-    setTimeout(() => {
-      if (!modal.classList.contains('active')) {
-        modal.style.display = 'none';
-      }
-    }, 300);
   };
 
   locBtn.addEventListener('click', (e) => {
