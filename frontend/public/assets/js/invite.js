@@ -201,7 +201,6 @@ function renderInvitation() {
   setupCardRotation();
   setupLocationModal();
   setupBackgroundMusic();
-  setupCardHoverTilt();
   startCountdown(invitation.date);
 }
 
@@ -330,34 +329,37 @@ function toPersianDigits(val) {
   return String(val).replace(/[0-9]/g, w => fa[+w]);
 }
 
-// ─── 3D Card Rotation ─────────────────────────────────────────
-let autoRotateTimer = null;
+let autoFlipTimer = null;
 
+// ─── 3D Card Rotation ─────────────────────────────────────────
 function setupCardRotation() {
   const card = document.getElementById('invitation-card');
   const flipBtn = document.getElementById('flip-btn');
   if (!card) return;
 
+  if (autoFlipTimer) clearTimeout(autoFlipTimer);
+
   const performFlip = (e) => {
-    if (e) e.stopPropagation();
-    // Force transition back to 0.8s for smooth click flips
+    if (e) {
+      e.stopPropagation();
+      if (autoFlipTimer) {
+        clearTimeout(autoFlipTimer);
+        autoFlipTimer = null;
+      }
+    }
     card.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
     card.classList.toggle('flipped');
   };
 
-  // Only flip card when clicking the Rotate button
   if (flipBtn) {
+    flipBtn.removeEventListener('click', performFlip);
     flipBtn.addEventListener('click', performFlip);
   }
 
-  // Clear any existing timer
-  if (autoRotateTimer) clearTimeout(autoRotateTimer);
-
-  // Auto rotate one time after 5 seconds
-  autoRotateTimer = setTimeout(() => {
-    if (card && !card.classList.contains('flipped')) {
-      performFlip();
-    }
+  // Auto-flip once after 5 seconds if not clicked manually
+  autoFlipTimer = setTimeout(() => {
+    performFlip();
+    autoFlipTimer = null;
   }, 5000);
 }
 
@@ -417,45 +419,4 @@ function setupBackgroundMusic() {
   document.addEventListener('touchstart', startAutoplay);
 }
 
-// ─── Desktop 3D Card Hover Tilt ───────────────────────────────
-function setupCardHoverTilt() {
-  // Only apply on devices with mouse/hover capabilities
-  if (window.matchMedia('(hover: hover)').matches) {
-    const wrapper = document.querySelector('.card-perspective');
-    const card = document.getElementById('invitation-card');
 
-    if (!wrapper || !card) return;
-
-    wrapper.addEventListener('mouseenter', () => {
-      // Snappy tracking transition on hover
-      card.style.transition = 'transform 0.15s ease-out';
-    });
-
-    wrapper.addEventListener('mousemove', (e) => {
-      const rect = wrapper.getBoundingClientRect();
-      const x = e.clientX - rect.left; // x position within the element
-      const y = e.clientY - rect.top;  // y position within the element
-
-      // Calculate tilt degrees (-15 to 15 degrees)
-      const rotateX = ((y / rect.height) - 0.5) * -24; // Vertical tilt
-      const rotateY = ((x / rect.width) - 0.5) * 24;   // Horizontal tilt
-
-      // If card is flipped, Y rotation needs to be added to the base 180 degrees
-      if (card.classList.contains('flipped')) {
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${180 - rotateY}deg)`;
-      } else {
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      }
-    });
-
-    wrapper.addEventListener('mouseleave', () => {
-      // Reset card tilt with smooth transition
-      card.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-      if (card.classList.contains('flipped')) {
-        card.style.transform = 'rotateY(180deg)';
-      } else {
-        card.style.transform = 'rotateY(0deg)';
-      }
-    });
-  }
-}
