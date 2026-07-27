@@ -331,6 +331,8 @@ function toPersianDigits(val) {
 }
 
 // ─── 3D Card Rotation ─────────────────────────────────────────
+let autoRotateTimer = null;
+
 function setupCardRotation() {
   const card = document.getElementById('invitation-card');
   const flipBtn = document.getElementById('flip-btn');
@@ -343,11 +345,20 @@ function setupCardRotation() {
     card.classList.toggle('flipped');
   };
 
+  // Only flip card when clicking the Rotate button
   if (flipBtn) {
     flipBtn.addEventListener('click', performFlip);
   }
 
-  card.addEventListener('click', performFlip);
+  // Clear any existing timer
+  if (autoRotateTimer) clearTimeout(autoRotateTimer);
+
+  // Auto rotate one time after 5 seconds
+  autoRotateTimer = setTimeout(() => {
+    if (card && !card.classList.contains('flipped')) {
+      performFlip();
+    }
+  }, 5000);
 }
 
 
