@@ -310,6 +310,7 @@ body.layout-3d-card .inv-container {
 .card-perspective {
   perspective: 1600px;
   width: 440px;
+  max-width: 95vw;
   height: 580px;
   position: relative;
 }
@@ -604,144 +605,11 @@ body.layout-3d-card .inv-container {
 
 /* All other layouts removed. The application only uses the 3D Envelope & Flip Card layout. */
 
-@media (max-width: 768px) {
-  .card-perspective {
-    width: 380px !important;
-    height: 520px !important;
-  }
-
-  .card-front,
-  .card-back {
-    padding: 30px 24px !important;
-  }
-
-  .card-front-photo-frame {
-    width: 190px !important;
-    height: 260px !important;
-    border-radius: 95px 95px 18px 18px !important;
-    margin-bottom: 20px !important;
-  }
-
-  .card-front-content {
-    gap: 16px !important;
-  }
-
-  .card-back-content {
-    gap: 12px !important;
-  }
-
-  .card-back-content .inv-message {
-    font-size: clamp(13px, 3.2vw, 16px) !important;
-    line-height: 1.45 !important;
-    max-height: none !important;
-    overflow-y: visible !important;
-    width: 100% !important;
-    max-width: 90% !important;
-    word-wrap: break-word !important;
-    overflow-wrap: break-word !important;
-  }
-}
-
 @media (max-width: 480px) {
   .card-perspective {
-    width: 88vw !important;
-    height: calc(88vw * 1.48) !important;
-  }
-
-  .card-front,
-  .card-back {
-    padding: 24px 16px !important;
-  }
-
-  .card-front-decor,
-  .card-back-decor {
-    inset: 8px !important;
-  }
-
-  .card-front-photo-frame {
-    width: 155px !important;
-    height: 210px !important;
-    margin-bottom: 18px !important;
-    border-radius: 80px 80px 16px 16px !important;
-  }
-
-  .save-the-date {
-    font-size: 11px !important;
-    margin-bottom: 16px !important;
-    letter-spacing: 0.2em !important;
-  }
-
-  .inv-names-front {
-    font-size: clamp(28px, 6vw, 40px) !important;
-  }
-
-  .inv-names-back {
-    font-size: clamp(22px, 4.5vw, 30px) !important;
-  }
-
-  .inv-divider-front {
-    margin: 10px 0 !important;
-  }
-
-  .inv-date-front {
-    font-size: 13px !important;
-  }
-
-  .inv-eyebrow {
-    font-size: 12px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .inv-details {
-    gap: 8px !important;
-    margin-bottom: 16px !important;
-  }
-
-  .inv-detail-item {
-    font-size: 14px !important;
-  }
-
-  .inv-icon .svg-icon {
-    width: 16px !important;
-    height: 16px !important;
-  }
-
-  .inv-countdown {
-    gap: 8px !important;
-  }
-
-  .cd-box {
-    padding: 8px 10px !important;
-    min-width: 56px !important;
-    border-radius: 6px !important;
-  }
-
-  .cd-val {
-    font-size: 16px !important;
-    margin-bottom: 2px !important;
-  }
-
-  .cd-lbl {
-    font-size: 8px !important;
-  }
-
-  .card-front-content {
-    gap: 12px !important;
-  }
-
-  .card-back-content {
-    gap: 10px !important;
-  }
-
-  .card-back-content .inv-message {
-    font-size: clamp(12px, 3.5vw, 14px) !important;
-    line-height: 1.45 !important;
-    max-height: none !important;
-    overflow-y: visible !important;
-    width: 100% !important;
-    max-width: 90% !important;
-    word-wrap: break-word !important;
-    overflow-wrap: break-word !important;
+    width: 92vw !important;
+    height: calc(92vw * 1.32) !important;
+    max-height: 580px !important;
   }
 }
 
