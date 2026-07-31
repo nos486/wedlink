@@ -121,14 +121,6 @@ function renderInvitation() {
 
   document.getElementById('detail-venue').textContent = venueText;
 
-  // Eyebrow translation
-  const eyebrowEl = document.querySelector('.inv-eyebrow');
-  if (eyebrowEl) {
-    eyebrowEl.textContent = lang === 'fa' 
-      ? 'با کمال مسرت شما را به جشن ازدواج خود دعوت می‌نماییم' 
-      : 'You are cordially invited to the wedding of';
-  }
-
   // Flip button text translation (single word: چرخش / Rotate)
   const flipBtnText = document.getElementById('flip-btn-text');
   if (flipBtnText) {
