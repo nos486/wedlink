@@ -1553,7 +1553,7 @@ body.theme-starlight-glamour .card-front-photo-frame {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 999;
   overflow: hidden;
 }
 
@@ -1562,41 +1562,72 @@ body.theme-starlight-glamour .card-front-photo-frame {
   width: 9px;
   height: 15px;
   border-radius: 50% 0 50% 0;
-  background: var(--inv-accent);
+  background: var(--inv-accent, #b09070);
+  top: -20px;
   left: var(--left, 50%);
-  top: -30px;
   opacity: 0;
-  animation: petalFall var(--dur, 10s) ease-in var(--delay, 0s) infinite;
 }
 
-@keyframes petalFall {
-  0%   { opacity: 0;    transform: rotate(var(--r0, 15deg)) translateX(0)               translateY(0); }
-  6%   { opacity: 0.28; }
-  90%  { opacity: 0.1;  }
-  100% { opacity: 0;    transform: rotate(var(--r1, 400deg)) translateX(var(--sw, 45px)) translateY(108vh); }
+/* 6 concrete keyframes — no CSS vars inside (cross-browser safe) */
+@keyframes petalA {
+  0%   { opacity: 0;    transform: translate(0, 0)    rotate(0deg); }
+  5%   { opacity: 0.3; }
+  90%  { opacity: 0.12; }
+  100% { opacity: 0;    transform: translate(50px,  110vh) rotate(540deg); }
+}
+@keyframes petalB {
+  0%   { opacity: 0;    transform: translate(0, 0)    rotate(20deg); }
+  5%   { opacity: 0.28; }
+  90%  { opacity: 0.1; }
+  100% { opacity: 0;    transform: translate(-60px, 110vh) rotate(-480deg); }
+}
+@keyframes petalC {
+  0%   { opacity: 0;    transform: translate(0, 0)    rotate(-15deg); }
+  6%   { opacity: 0.32; }
+  90%  { opacity: 0.12; }
+  100% { opacity: 0;    transform: translate(35px,  110vh) rotate(420deg); }
+}
+@keyframes petalD {
+  0%   { opacity: 0;    transform: translate(0, 0)    rotate(30deg); }
+  6%   { opacity: 0.26; }
+  90%  { opacity: 0.1; }
+  100% { opacity: 0;    transform: translate(-45px, 110vh) rotate(-380deg); }
+}
+@keyframes petalE {
+  0%   { opacity: 0;    transform: translate(0, 0)    rotate(-25deg); }
+  5%   { opacity: 0.3; }
+  91%  { opacity: 0.12; }
+  100% { opacity: 0;    transform: translate(65px,  110vh) rotate(600deg); }
+}
+@keyframes petalF {
+  0%   { opacity: 0;    transform: translate(0, 0)    rotate(10deg); }
+  6%   { opacity: 0.25; }
+  89%  { opacity: 0.09; }
+  100% { opacity: 0;    transform: translate(-30px, 110vh) rotate(-440deg); }
 }
 
-.pet:nth-child(1)  { --left:5%;   --dur:9s;    --delay:0s;    --sw:40px;   --r0:15deg;  --r1:360deg;  }
-.pet:nth-child(2)  { --left:12%;  --dur:12s;   --delay:1.8s;  --sw:-55px;  --r0:-20deg; --r1:-420deg; }
-.pet:nth-child(3)  { --left:20%;  --dur:8.5s;  --delay:0.5s;  --sw:62px;   --r0:30deg;  --r1:480deg;  }
-.pet:nth-child(4)  { --left:30%;  --dur:11s;   --delay:3.2s;  --sw:-42px;  --r0:-12deg; --r1:-360deg; }
-.pet:nth-child(5)  { --left:39%;  --dur:9.5s;  --delay:1.4s;  --sw:36px;   --r0:22deg;  --r1:400deg;  }
-.pet:nth-child(6)  { --left:50%;  --dur:13s;   --delay:4.2s;  --sw:-50px;  --r0:-28deg; --r1:-500deg; }
-.pet:nth-child(7)  { --left:58%;  --dur:8s;    --delay:0.9s;  --sw:48px;   --r0:18deg;  --r1:440deg;  }
-.pet:nth-child(8)  { --left:67%;  --dur:10.5s; --delay:2.6s;  --sw:-36px;  --r0:-22deg; --r1:-380deg; }
-.pet:nth-child(9)  { --left:76%;  --dur:9s;    --delay:1.6s;  --sw:55px;   --r0:26deg;  --r1:460deg;  }
-.pet:nth-child(10) { --left:83%;  --dur:11.5s; --delay:3.8s;  --sw:-45px;  --r0:-16deg; --r1:-440deg; }
-.pet:nth-child(11) { --left:91%;  --dur:8.5s;  --delay:0.3s;  --sw:42px;   --r0:20deg;  --r1:380deg;  }
-.pet:nth-child(12) { --left:17%;  --dur:14s;   --delay:6s;    --sw:-60px;  --r0:-25deg; --r1:-520deg; width:7px; height:12px; }
-.pet:nth-child(13) { --left:44%;  --dur:10s;   --delay:5s;    --sw:50px;   --r0:32deg;  --r1:440deg;  width:7px; height:12px; }
-.pet:nth-child(14) { --left:73%;  --dur:12.5s; --delay:4.6s;  --sw:-40px;  --r0:-18deg; --r1:-400deg; width:7px; height:12px; }
+/* Assign each petal a unique position, timing and motion type */
+.pet:nth-child(1)  { left:5%;   animation: petalA  9s   ease-in  0s    infinite; }
+.pet:nth-child(2)  { left:12%;  animation: petalB  12s  ease-in  1.8s  infinite; }
+.pet:nth-child(3)  { left:20%;  animation: petalC  8.5s ease-in  0.5s  infinite; }
+.pet:nth-child(4)  { left:30%;  animation: petalD  11s  ease-in  3.2s  infinite; }
+.pet:nth-child(5)  { left:39%;  animation: petalE  9.5s ease-in  1.4s  infinite; }
+.pet:nth-child(6)  { left:50%;  animation: petalF  13s  ease-in  4.2s  infinite; }
+.pet:nth-child(7)  { left:58%;  animation: petalA  8s   ease-in  0.9s  infinite; }
+.pet:nth-child(8)  { left:67%;  animation: petalB  10.5s ease-in 2.6s  infinite; }
+.pet:nth-child(9)  { left:76%;  animation: petalC  9s   ease-in  1.6s  infinite; }
+.pet:nth-child(10) { left:83%;  animation: petalD  11.5s ease-in 3.8s  infinite; }
+.pet:nth-child(11) { left:91%;  animation: petalE  8.5s ease-in  0.3s  infinite; }
+.pet:nth-child(12) { left:17%;  animation: petalF  14s  ease-in  6s    infinite; width:7px; height:12px; }
+.pet:nth-child(13) { left:44%;  animation: petalC  10s  ease-in  5s    infinite; width:7px; height:12px; }
+.pet:nth-child(14) { left:73%;  animation: petalD  12.5s ease-in 4.6s  infinite; width:7px; height:12px; }
 
 /* Per-theme petal colors */
-body.theme-dark-luxury      .pet { background: rgba(212, 175,  55, 0.92); }
-body.theme-royal-elegance   .pet { background: rgba(229, 179, 101, 0.92); }
-body.theme-starlight-glamour .pet { background: rgba(203, 213, 225, 0.92); }
-body.theme-enchanted-forest .pet { background: rgba(134, 196, 158, 0.92); }
-body.theme-light-floral     .pet { background: rgba(201, 149, 108, 0.92); }
+body.theme-dark-luxury      .pet { background: rgba(212, 175,  55, 0.95); }
+body.theme-royal-elegance   .pet { background: rgba(229, 179, 101, 0.95); }
+body.theme-starlight-glamour .pet { background: rgba(203, 213, 225, 0.95); }
+body.theme-enchanted-forest .pet { background: rgba(134, 196, 158, 0.95); }
+body.theme-light-floral     .pet { background: rgba(201, 149, 108, 0.95); }
 
 /* ── Wedding Filigree Corner Ornaments ──────────────────────── */
 .card-flora-corner {
