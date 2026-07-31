@@ -1598,20 +1598,20 @@ body.theme-starlight-glamour .pet { background: rgba(203, 213, 225, 0.92); }
 body.theme-enchanted-forest .pet { background: rgba(134, 196, 158, 0.92); }
 body.theme-light-floral     .pet { background: rgba(201, 149, 108, 0.92); }
 
-/* ── Corner Botanical Sprigs ─────────────────────────────────── */
+/* ── Wedding Filigree Corner Ornaments ──────────────────────── */
 .card-flora-corner {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 }
 
 .card-sprig {
   position: absolute;
-  width: 42px;
-  height: 70px;
+  width: 68px;
+  height: 68px;
   color: var(--inv-accent);
-  opacity: 0.2;
+  opacity: 0.22;
 }
 
 .sprig-tl { top: 16px;    left: 16px; }
@@ -1619,8 +1619,8 @@ body.theme-light-floral     .pet { background: rgba(201, 149, 108, 0.92); }
 .sprig-bl { bottom: 16px; left: 16px;   transform: scaleY(-1); }
 .sprig-br { bottom: 16px; right: 16px;  transform: scale(-1); }
 
-/* Back card has no photo — sprigs can be a bit more visible */
-.card-back .card-sprig { opacity: 0.26; }
+/* Back card has no photo — ornaments slightly more visible */
+.card-back .card-sprig { opacity: 0.3; }
 
 /* ── Botanical Ornament Divider — override height ────────────── */
 .card-back-content .ornament-divider {
