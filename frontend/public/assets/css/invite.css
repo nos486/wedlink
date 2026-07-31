@@ -1119,3 +1119,105 @@ body.layout-3d-card .inv-container {
   font-family: 'Vazirmatn', sans-serif !important;
   letter-spacing: normal;
 }
+
+/* 🎵 Music Prompt Modal Styling */
+.music-prompt-card {
+  max-width: 380px !important;
+  text-align: center;
+  padding: 32px 24px 28px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.music-prompt-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--inv-accent-light);
+  color: var(--inv-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.music-prompt-icon .svg-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.music-prompt-title {
+  font-family: var(--inv-font-primary);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--inv-text);
+  margin: 0 0 10px 0;
+}
+
+.music-prompt-desc {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--inv-text);
+  opacity: 0.85;
+  margin: 0 0 24px 0;
+}
+
+.music-prompt-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.btn-prompt-yes,
+.btn-prompt-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 20px;
+  border-radius: 30px;
+  font-family: var(--inv-font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition, 0.3s ease);
+  flex: 1;
+}
+
+.btn-prompt-yes {
+  background: var(--inv-accent);
+  color: var(--inv-bg);
+  border: 1px solid var(--inv-accent);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.btn-prompt-yes:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+}
+
+.btn-prompt-no {
+  background: transparent;
+  color: var(--inv-text);
+  border: 1px solid var(--inv-border);
+  opacity: 0.8;
+}
+
+.btn-prompt-no:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+  border-color: var(--inv-accent);
+  background: var(--inv-accent-light);
+}
+
+[dir="rtl"] .music-prompt-title,
+[dir="rtl"] .music-prompt-desc,
+[dir="rtl"] .btn-prompt-yes,
+[dir="rtl"] .btn-prompt-no {
+  font-family: 'Vazirmatn', sans-serif !important;
+}

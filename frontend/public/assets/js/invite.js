@@ -367,11 +367,21 @@ function setupCardRotation() {
 }
 
 
-// ─── Background Music Logic ────────────────────────────────────
+// ─── Background Music Logic & Prompt Popup ─────────────────────
 function setupBackgroundMusic() {
   const musicBtn = document.getElementById('music-btn');
   const audio = document.getElementById('bg-music');
   const btnText = document.getElementById('music-btn-text');
+
+  // Prompt Modal Elements
+  const promptModal = document.getElementById('music-prompt-modal');
+  const promptOverlay = document.getElementById('music-prompt-overlay');
+  const promptTitle = document.getElementById('music-prompt-title');
+  const promptDesc = document.getElementById('music-prompt-desc');
+  const promptYes = document.getElementById('music-prompt-yes');
+  const promptYesText = document.getElementById('music-prompt-yes-text');
+  const promptNo = document.getElementById('music-prompt-no');
+  const promptNoText = document.getElementById('music-prompt-no-text');
 
   if (!musicBtn || !audio) return;
 
@@ -396,19 +406,17 @@ function setupBackgroundMusic() {
   // Show player button
   musicBtn.style.display = 'flex';
 
-  const tryPlayAudio = () => {
-    if (audio.paused) {
-      audio.play().then(() => {
-        updateUIPlaying();
-      }).catch(err => {
-        updateUIPaused();
-      });
-    }
+  const playAudio = () => {
+    audio.play().then(() => {
+      updateUIPlaying();
+    }).catch(err => {
+      updateUIPaused();
+    });
   };
 
   const toggleMusic = () => {
     if (audio.paused) {
-      tryPlayAudio();
+      playAudio();
     } else {
       audio.pause();
       updateUIPaused();
@@ -420,22 +428,60 @@ function setupBackgroundMusic() {
     toggleMusic();
   });
 
-  // Attempt instant autoplay by default
-  tryPlayAudio();
-
-  // Fallback trigger for browser autoplay policy (plays on first user interaction)
-  const startAutoplayOnInteraction = () => {
-    if (audio.paused) {
-      tryPlayAudio();
+  // Configure and show Music Prompt Modal
+  if (promptModal) {
+    if (lang === 'fa') {
+      if (promptTitle) promptTitle.textContent = 'موسیقی زمینه';
+      if (promptDesc) promptDesc.textContent = 'آیا مایل به پخش موسیقی در هنگام مشاهده کارت دعوت هستید؟';
+      if (promptYesText) promptYesText.textContent = 'پخش موسیقی';
+      if (promptNoText) promptNoText.textContent = 'بدون موسیقی';
+    } else {
+      if (promptTitle) promptTitle.textContent = 'Background Music';
+      if (promptDesc) promptDesc.textContent = 'Would you like to enjoy background music with this invitation?';
+      if (promptYesText) promptYesText.textContent = 'Play Music';
+      if (promptNoText) promptNoText.textContent = 'No Thanks';
     }
-    document.removeEventListener('click', startAutoplayOnInteraction);
-    document.removeEventListener('touchstart', startAutoplayOnInteraction);
-    document.removeEventListener('pointerdown', startAutoplayOnInteraction);
-  };
 
-  document.addEventListener('click', startAutoplayOnInteraction);
-  document.addEventListener('touchstart', startAutoplayOnInteraction);
-  document.addEventListener('pointerdown', startAutoplayOnInteraction);
+    const openPromptModal = () => {
+      promptModal.style.display = 'flex';
+      promptModal.offsetHeight; // force reflow
+      promptModal.classList.add('active');
+      promptModal.setAttribute('aria-hidden', 'false');
+    };
+
+    const closePromptModal = () => {
+      promptModal.classList.remove('active');
+      promptModal.setAttribute('aria-hidden', 'true');
+      setTimeout(() => {
+        if (!promptModal.classList.contains('active')) {
+          promptModal.style.display = 'none';
+        }
+      }, 300);
+    };
+
+    if (promptYes) {
+      promptYes.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playAudio();
+        closePromptModal();
+      });
+    }
+
+    if (promptNo) {
+      promptNo.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateUIPaused();
+        closePromptModal();
+      });
+    }
+
+    if (promptOverlay) {
+      promptOverlay.addEventListener('click', closePromptModal);
+    }
+
+    // Show popup after short delay (600ms) for smooth entrance
+    setTimeout(openPromptModal, 600);
+  }
 }
 
 

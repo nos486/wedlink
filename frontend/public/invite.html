@@ -179,6 +179,27 @@
       </div>
     </div>
 
+    <!-- Music Prompt Modal -->
+    <div id="music-prompt-modal" class="inv-modal" style="display:none;" aria-hidden="true">
+      <div class="inv-modal-overlay" id="music-prompt-overlay"></div>
+      <div class="inv-modal-card music-prompt-card">
+        <div class="music-prompt-icon">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+        </div>
+        <h3 id="music-prompt-title" class="music-prompt-title">Play Background Music?</h3>
+        <p id="music-prompt-desc" class="music-prompt-desc">Would you like to enjoy background music with this invitation?</p>
+        <div class="music-prompt-actions">
+          <button id="music-prompt-yes" class="btn-prompt-yes">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span id="music-prompt-yes-text">Play Music</span>
+          </button>
+          <button id="music-prompt-no" class="btn-prompt-no">
+            <span id="music-prompt-no-text">No Thanks</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <script src="assets/js/auth.js"></script>
