@@ -104,10 +104,10 @@ function renderInvitation() {
   if (familyEl) {
     if (brideFamily?.trim() || groomFamily?.trim()) {
       let familyText = '';
-      if (groomFamily?.trim() && brideFamily?.trim()) {
+      if (brideFamily?.trim() && groomFamily?.trim()) {
         familyText = `${groomFamily.trim()} - ${brideFamily.trim()}`;
       } else {
-        familyText = (groomFamily || brideFamily).trim();
+        familyText = (brideFamily || groomFamily).trim();
       }
       familyEl.textContent = familyText;
       familyEl.style.display = 'block';
@@ -186,9 +186,9 @@ function renderInvitation() {
     msgSection.style.display = 'none';
   }
 
-  // Translate countdown labels (Days, Hours, Mins)
+  // Translate countdown labels (Days, Hours, Mins, Secs)
   const labels = document.querySelectorAll('.cd-lbl');
-  if (labels.length >= 3) {
+  if (labels.length === 3) {
     if (lang === 'fa') {
       labels[0].textContent = 'روز';
       labels[1].textContent = 'ساعت';
@@ -276,9 +276,6 @@ function startCountdown(dateStr) {
     setCount('cd-hours', hours, lang);
     setCount('cd-mins', mins, lang);
   }
-  tick();
-  countdownTimer = setInterval(tick, 1000);
-}
   tick();
   countdownTimer = setInterval(tick, 1000);
 }
