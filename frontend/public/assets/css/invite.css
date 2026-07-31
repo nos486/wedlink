@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Vazirmatn:wght@400;500;700&display=swap');
 
 @font-face {
   font-family: 'IranNastaliq';
   src: url('../fonts/IranNastaliq-Web.woff2') format('woff2'),
     url('../fonts/IranNastaliq-Web.woff') format('woff');
-  font-weight: normal;
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -897,28 +897,28 @@ body.layout-3d-card .inv-container {
   font-weight: 500 !important;
 }
 
-[dir="rtl"] .inv-names-front {
-  font-family: 'IranNastaliq', 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
-  font-weight: normal !important;
+[dir="rtl"] .inv-names-front,
+[dir="rtl"] .inv-names-back {
+  font-family: 'IranNastaliq', 'Noto Nastaliq Urdu', 'Vazirmatn', sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
   letter-spacing: normal !important;
-  -webkit-font-feature-settings: "liga" 1, "calt" 1, "init" 1, "medi" 1, "fina" 1, "isol" 1 !important;
-  font-feature-settings: "liga" 1, "calt" 1, "init" 1, "medi" 1, "fina" 1, "isol" 1 !important;
+  word-spacing: normal !important;
+  font-variant-ligatures: normal contextual !important;
+  -webkit-font-feature-settings: "liga" 1, "calt" 1, "init" 1, "medi" 1, "fina" 1, "rlig" 1 !important;
+  font-feature-settings: "liga" 1, "calt" 1, "init" 1, "medi" 1, "fina" 1, "rlig" 1 !important;
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
-  font-size: clamp(50px, 12vw, 70px) !important;
-  line-height: 1.35 !important;
+}
+
+[dir="rtl"] .inv-names-front {
+  font-size: clamp(48px, 11vw, 68px) !important;
+  line-height: 1.4 !important;
 }
 
 [dir="rtl"] .inv-names-back {
-  font-family: 'IranNastaliq', 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
-  font-weight: normal !important;
-  letter-spacing: normal !important;
-  -webkit-font-feature-settings: "liga" 1, "calt" 1, "init" 1, "medi" 1, "fina" 1, "isol" 1 !important;
-  font-feature-settings: "liga" 1, "calt" 1, "init" 1, "medi" 1, "fina" 1, "isol" 1 !important;
-  text-rendering: optimizeLegibility !important;
-  -webkit-font-smoothing: antialiased !important;
   font-size: clamp(30px, 6.5vw, 44px) !important;
-  line-height: 1.25 !important;
+  line-height: 1.3 !important;
   margin: 0 !important;
 }
 
