@@ -186,7 +186,7 @@ body.invite-page {
 
 .ornament-divider {
   width: 180px;
-  height: 18px;
+  height: 30px;
   color: var(--inv-accent);
   margin: 0 auto 32px;
   opacity: 0.6;
@@ -1542,4 +1542,88 @@ body.theme-starlight-glamour .card-front-photo-frame {
 @keyframes dividerPulse {
   0%, 100% { width: 44px; opacity: 0.28; }
   50%       { width: 64px; opacity: 0.5; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🌸 FLORAL PATTERNS — Petals · Botanical Sprigs · Dividers
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Falling Cherry Blossom Petals ───────────────────────────── */
+.wedding-petals-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.pet {
+  position: absolute;
+  width: 9px;
+  height: 15px;
+  border-radius: 50% 0 50% 0;
+  background: var(--inv-accent);
+  left: var(--left, 50%);
+  top: -30px;
+  opacity: 0;
+  animation: petalFall var(--dur, 10s) ease-in var(--delay, 0s) infinite;
+}
+
+@keyframes petalFall {
+  0%   { opacity: 0;    transform: rotate(var(--r0, 15deg)) translateX(0)               translateY(0); }
+  6%   { opacity: 0.28; }
+  90%  { opacity: 0.1;  }
+  100% { opacity: 0;    transform: rotate(var(--r1, 400deg)) translateX(var(--sw, 45px)) translateY(108vh); }
+}
+
+.pet:nth-child(1)  { --left:5%;   --dur:9s;    --delay:0s;    --sw:40px;   --r0:15deg;  --r1:360deg;  }
+.pet:nth-child(2)  { --left:12%;  --dur:12s;   --delay:1.8s;  --sw:-55px;  --r0:-20deg; --r1:-420deg; }
+.pet:nth-child(3)  { --left:20%;  --dur:8.5s;  --delay:0.5s;  --sw:62px;   --r0:30deg;  --r1:480deg;  }
+.pet:nth-child(4)  { --left:30%;  --dur:11s;   --delay:3.2s;  --sw:-42px;  --r0:-12deg; --r1:-360deg; }
+.pet:nth-child(5)  { --left:39%;  --dur:9.5s;  --delay:1.4s;  --sw:36px;   --r0:22deg;  --r1:400deg;  }
+.pet:nth-child(6)  { --left:50%;  --dur:13s;   --delay:4.2s;  --sw:-50px;  --r0:-28deg; --r1:-500deg; }
+.pet:nth-child(7)  { --left:58%;  --dur:8s;    --delay:0.9s;  --sw:48px;   --r0:18deg;  --r1:440deg;  }
+.pet:nth-child(8)  { --left:67%;  --dur:10.5s; --delay:2.6s;  --sw:-36px;  --r0:-22deg; --r1:-380deg; }
+.pet:nth-child(9)  { --left:76%;  --dur:9s;    --delay:1.6s;  --sw:55px;   --r0:26deg;  --r1:460deg;  }
+.pet:nth-child(10) { --left:83%;  --dur:11.5s; --delay:3.8s;  --sw:-45px;  --r0:-16deg; --r1:-440deg; }
+.pet:nth-child(11) { --left:91%;  --dur:8.5s;  --delay:0.3s;  --sw:42px;   --r0:20deg;  --r1:380deg;  }
+.pet:nth-child(12) { --left:17%;  --dur:14s;   --delay:6s;    --sw:-60px;  --r0:-25deg; --r1:-520deg; width:7px; height:12px; }
+.pet:nth-child(13) { --left:44%;  --dur:10s;   --delay:5s;    --sw:50px;   --r0:32deg;  --r1:440deg;  width:7px; height:12px; }
+.pet:nth-child(14) { --left:73%;  --dur:12.5s; --delay:4.6s;  --sw:-40px;  --r0:-18deg; --r1:-400deg; width:7px; height:12px; }
+
+/* Per-theme petal colors */
+body.theme-dark-luxury      .pet { background: rgba(212, 175,  55, 0.92); }
+body.theme-royal-elegance   .pet { background: rgba(229, 179, 101, 0.92); }
+body.theme-starlight-glamour .pet { background: rgba(203, 213, 225, 0.92); }
+body.theme-enchanted-forest .pet { background: rgba(134, 196, 158, 0.92); }
+body.theme-light-floral     .pet { background: rgba(201, 149, 108, 0.92); }
+
+/* ── Corner Botanical Sprigs ─────────────────────────────────── */
+.card-flora-corner {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-sprig {
+  position: absolute;
+  width: 42px;
+  height: 70px;
+  color: var(--inv-accent);
+  opacity: 0.2;
+}
+
+.sprig-tl { top: 16px;    left: 16px; }
+.sprig-tr { top: 16px;    right: 16px;  transform: scaleX(-1); }
+.sprig-bl { bottom: 16px; left: 16px;   transform: scaleY(-1); }
+.sprig-br { bottom: 16px; right: 16px;  transform: scale(-1); }
+
+/* Back card has no photo — sprigs can be a bit more visible */
+.card-back .card-sprig { opacity: 0.26; }
+
+/* ── Botanical Ornament Divider — override height ────────────── */
+.card-back-content .ornament-divider {
+  height: 30px;
+  max-width: 160px;
 }
