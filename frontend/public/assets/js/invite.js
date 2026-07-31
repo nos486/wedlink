@@ -177,8 +177,8 @@ function renderInvitation() {
   }
 
   const msgSection = document.getElementById('message-section');
-  if (messageText) {
-    document.getElementById('invite-message').textContent = messageText;
+  if (messageText && messageText.trim()) {
+    document.getElementById('invite-message').textContent = messageText.trim();
     msgSection.style.display = 'block';
   } else {
     msgSection.style.display = 'none';
