@@ -315,7 +315,7 @@ body.layout-3d-card .inv-container {
   perspective: 1600px;
   width: 440px;
   max-width: 95vw;
-  height: 580px;
+  height: clamp(560px, 80vh, 620px);
   position: relative;
 }
 
@@ -497,8 +497,9 @@ body.layout-3d-card .inv-container {
   text-align: center;
   width: 100%;
   height: 100%;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 4px 0;
 }
 
 .inv-names-back {
@@ -526,7 +527,7 @@ body.layout-3d-card .inv-container {
 }
 
 .card-back-content .inv-family-back {
-  margin: -4px 0 0 0 !important;
+  margin: -2px 0 0 0 !important;
 }
 
 .card-back-content .inv-eyebrow {
@@ -543,45 +544,47 @@ body.layout-3d-card .inv-container {
 }
 
 .card-back-content .inv-details {
-  margin: 2px 0 0 0 !important;
+  margin: 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 6px !important;
+  gap: 4px !important;
 }
 
 .card-back-content .inv-message {
-  margin: 2px 0 !important;
-  padding: 0 10px !important;
+  margin: auto 0 !important;
+  padding: 0 8px !important;
   max-height: none !important;
   overflow-y: visible !important;
-  font-size: clamp(15px, 1.35vw, 18px);
-  line-height: 1.55;
+  font-size: clamp(14px, 1.2vw, 17px);
+  line-height: 1.5;
   width: 100%;
-  max-width: 92%;
+  max-width: 94%;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
 .card-back-content .inv-countdown {
-  margin: 4px auto 0 auto !important;
-  max-width: 95%;
+  margin: 0 auto !important;
+  width: 100%;
+  max-width: 360px;
   gap: 6px;
 }
 
 .card-back-content .cd-box {
-  padding: 6px 6px;
-  min-width: 48px;
+  padding: 5px 4px;
+  min-width: 46px;
   border-radius: 10px;
 }
 
 .card-back-content .cd-val {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   margin-bottom: 1px;
 }
 
 .card-back-content .cd-lbl {
-  font-size: 9.5px;
+  font-size: 9px;
+  opacity: 0.75;
 }
 
 .invite-actions {
@@ -844,12 +847,12 @@ body.layout-3d-card .inv-container {
 
   .card-perspective {
     width: min(440px, 92vw) !important;
-    height: clamp(500px, 138vw, 560px) !important;
+    height: clamp(540px, 142vw, 600px) !important;
   }
 
   .card-front,
   .card-back {
-    padding: 24px 18px !important;
+    padding: 20px 16px !important;
   }
 
   .card-front-photo-frame {
