@@ -377,32 +377,41 @@ function setupBackgroundMusic() {
 
   if (invitation && invitation.music_url) {
     audio.src = invitation.music_url;
-  } else {
+  } else if (!audio.src || !audio.src.includes('Bikalam')) {
     audio.src = 'assets/audio/Bikalam%20Arosi.mp3';
   }
 
   const lang = getLang();
-  
-  // Localize text
-  if (lang === 'fa') {
-    btnText.textContent = 'پخش موسیقی';
-  } else {
-    btnText.textContent = 'PLAY MUSIC';
-  }
+
+  const updateUIPlaying = () => {
+    musicBtn.classList.add('playing');
+    btnText.textContent = lang === 'fa' ? 'قطع موسیقی' : 'PAUSE MUSIC';
+  };
+
+  const updateUIPaused = () => {
+    musicBtn.classList.remove('playing');
+    btnText.textContent = lang === 'fa' ? 'پخش موسیقی' : 'PLAY MUSIC';
+  };
 
   // Show player button
   musicBtn.style.display = 'flex';
 
-  const toggleMusic = () => {
+  const tryPlayAudio = () => {
     if (audio.paused) {
       audio.play().then(() => {
-        musicBtn.classList.add('playing');
-        btnText.textContent = lang === 'fa' ? 'قطع موسیقی' : 'PAUSE MUSIC';
-      }).catch(err => console.log('Audio playback blocked:', err));
+        updateUIPlaying();
+      }).catch(err => {
+        updateUIPaused();
+      });
+    }
+  };
+
+  const toggleMusic = () => {
+    if (audio.paused) {
+      tryPlayAudio();
     } else {
       audio.pause();
-      musicBtn.classList.remove('playing');
-      btnText.textContent = lang === 'fa' ? 'پخش موسیقی' : 'PLAY MUSIC';
+      updateUIPaused();
     }
   };
 
@@ -411,21 +420,22 @@ function setupBackgroundMusic() {
     toggleMusic();
   });
 
-  // Try autoplay on first interaction with document
-  const startAutoplay = () => {
-    if (audio.paused && !musicBtn.classList.contains('playing')) {
-      audio.play().then(() => {
-        musicBtn.classList.add('playing');
-        btnText.textContent = lang === 'fa' ? 'قطع موسیقی' : 'PAUSE MUSIC';
-      }).catch(() => {});
+  // Attempt instant autoplay by default
+  tryPlayAudio();
+
+  // Fallback trigger for browser autoplay policy (plays on first user interaction)
+  const startAutoplayOnInteraction = () => {
+    if (audio.paused) {
+      tryPlayAudio();
     }
-    // Remove listeners once interaction occurs
-    document.removeEventListener('click', startAutoplay);
-    document.removeEventListener('touchstart', startAutoplay);
+    document.removeEventListener('click', startAutoplayOnInteraction);
+    document.removeEventListener('touchstart', startAutoplayOnInteraction);
+    document.removeEventListener('pointerdown', startAutoplayOnInteraction);
   };
 
-  document.addEventListener('click', startAutoplay);
-  document.addEventListener('touchstart', startAutoplay);
+  document.addEventListener('click', startAutoplayOnInteraction);
+  document.addEventListener('touchstart', startAutoplayOnInteraction);
+  document.addEventListener('pointerdown', startAutoplayOnInteraction);
 }
 
 
