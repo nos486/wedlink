@@ -93,10 +93,10 @@ function renderInvitation() {
   const venueText = (lang === 'fa' && invitation.venue_fa) ? invitation.venue_fa : invitation.venue;
   const messageText = (lang === 'fa' && invitation.message_fa) ? invitation.message_fa : invitation.message;
 
-  const joinedNames = `${brideName} ${lang === 'fa' ? 'و' : '&'} ${groomName}`;
+  const joinedNames = `${groomName} ${lang === 'fa' ? 'و' : '&'} ${brideName}`;
   const formattedDate = lang === 'fa' ? formatFaDate(invitation.date) : formatDate(invitation.date);
 
-  document.title = `${brideName} & ${groomName} — WedLink`;
+  document.title = `${groomName} & ${brideName} — WedLink`;
   document.getElementById('couple-names-front').textContent = joinedNames;
   document.getElementById('couple-names-back').textContent = joinedNames;
 
@@ -104,10 +104,10 @@ function renderInvitation() {
   if (familyEl) {
     if (brideFamily?.trim() || groomFamily?.trim()) {
       let familyText = '';
-      if (brideFamily?.trim() && groomFamily?.trim()) {
-        familyText = `${brideFamily.trim()} - ${groomFamily.trim()}`;
+      if (groomFamily?.trim() && brideFamily?.trim()) {
+        familyText = `${groomFamily.trim()} - ${brideFamily.trim()}`;
       } else {
-        familyText = (brideFamily || groomFamily).trim();
+        familyText = (groomFamily || brideFamily).trim();
       }
       familyEl.textContent = familyText;
       familyEl.style.display = 'block';
@@ -186,19 +186,17 @@ function renderInvitation() {
     msgSection.style.display = 'none';
   }
 
-  // Translate countdown labels (Days, Hours, Mins, Secs)
+  // Translate countdown labels (Days, Hours, Mins)
   const labels = document.querySelectorAll('.cd-lbl');
-  if (labels.length === 4) {
+  if (labels.length >= 3) {
     if (lang === 'fa') {
       labels[0].textContent = 'روز';
       labels[1].textContent = 'ساعت';
       labels[2].textContent = 'دقیقه';
-      labels[3].textContent = 'ثانیه';
     } else {
       labels[0].textContent = 'Days';
       labels[1].textContent = 'Hours';
       labels[2].textContent = 'Mins';
-      labels[3].textContent = 'Secs';
     }
   }
 
@@ -272,14 +270,15 @@ function startCountdown(dateStr) {
     const days  = Math.floor(diff / 86400000);
     const hours = Math.floor((diff % 86400000) / 3600000);
     const mins  = Math.floor((diff % 3600000)  / 60000);
-    const secs  = Math.floor((diff % 60000) / 1000);
     
     // Format numerals to Persian if lang=fa
     setCount('cd-days', days, lang);
     setCount('cd-hours', hours, lang);
     setCount('cd-mins', mins, lang);
-    setCount('cd-secs', secs, lang);
   }
+  tick();
+  countdownTimer = setInterval(tick, 1000);
+}
   tick();
   countdownTimer = setInterval(tick, 1000);
 }
