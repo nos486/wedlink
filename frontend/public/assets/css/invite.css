@@ -919,6 +919,25 @@ body.layout-3d-card .inv-container {
   margin: 0 !important;
 }
 
+/* Safari (Mac & iOS): Use clean Vazirmatn font for couple names */
+.is-safari [dir="rtl"] .inv-names-front,
+.is-safari [dir="rtl"] .inv-names-back {
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+}
+
+.is-safari [dir="rtl"] .inv-names-front {
+  font-size: clamp(32px, 8vw, 48px) !important;
+  line-height: 1.3 !important;
+}
+
+.is-safari [dir="rtl"] .inv-names-back {
+  font-size: clamp(24px, 5.5vw, 36px) !important;
+  line-height: 1.25 !important;
+  margin: 0 !important;
+}
+
 [dir="rtl"] .inv-family-back {
   font-family: 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
   font-weight: 500 !important;

@@ -8,6 +8,14 @@ let invitation = null;
 let countdownTimer = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // Detect Safari / iOS to apply Vazirmatn fallback font
+  try {
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isSafari) {
+      document.documentElement.classList.add('is-safari');
+    }
+  } catch (e) {}
+
   const slug = getSlug();
   if (!slug) { showError('No invitation ID in the URL.', 'Missing Link'); return; }
   await loadInvitation(slug);
