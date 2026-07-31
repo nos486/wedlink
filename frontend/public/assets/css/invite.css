@@ -523,12 +523,11 @@ body.layout-3d-card .inv-container {
 }
 
 .card-back-content .inv-family-back {
-  margin: -6px 0 0 0 !important;
+  margin: -4px 0 0 0 !important;
 }
 
 .card-back-content .inv-eyebrow {
-  margin-top: 4px !important;
-  margin-bottom: 0 !important;
+  margin: 0 !important;
 }
 
 .card-back-content .inv-names-back {
@@ -813,11 +812,43 @@ body.layout-3d-card .inv-container {
 
 /* All other layouts removed. The application only uses the 3D Envelope & Flip Card layout. */
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+  body.layout-3d-card .inv-container {
+    padding: 10px 8px !important;
+  }
+
   .card-perspective {
-    width: 92vw !important;
-    height: calc(92vw * 1.32) !important;
-    max-height: 580px !important;
+    width: min(440px, 92vw) !important;
+    height: clamp(500px, 138vw, 560px) !important;
+  }
+
+  .card-front,
+  .card-back {
+    padding: 24px 18px !important;
+  }
+
+  .card-front-photo-frame {
+    width: 175px !important;
+    height: 235px !important;
+    border-radius: 90px 90px 16px 16px !important;
+  }
+
+  .card-back-content {
+    gap: 6px !important;
+  }
+
+  .music-toggle-btn {
+    top: 10px !important;
+    right: 10px !important;
+    padding: 6px 12px !important;
+    font-size: 10px !important;
+    gap: 6px !important;
+    border-radius: 20px !important;
+  }
+
+  [dir="rtl"] .music-toggle-btn {
+    right: auto !important;
+    left: 10px !important;
   }
 }
 
@@ -877,9 +908,9 @@ body.layout-3d-card .inv-container {
   font-family: 'IranNastaliq', 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
   font-weight: normal !important;
   letter-spacing: 0 !important;
-  font-size: clamp(34px, 7vw, 48px) !important;
+  font-size: clamp(30px, 6.5vw, 44px) !important;
   line-height: 1.25 !important;
-  margin-top: -2px !important;
+  margin: 0 !important;
 }
 
 [dir="rtl"] .inv-family-back {
@@ -888,7 +919,7 @@ body.layout-3d-card .inv-container {
   letter-spacing: 0 !important;
   text-transform: none !important;
   font-size: clamp(12px, 2.5vw, 14.5px) !important;
-  margin: -6px 0 0 0 !important;
+  margin: -4px 0 0 0 !important;
 }
 
 [dir="rtl"] .inv-detail-item {
@@ -908,8 +939,8 @@ body.layout-3d-card .inv-container {
 [dir="rtl"] .inv-message {
   font-family: 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
   font-style: normal !important;
-  font-size: clamp(15.5px, 1.4vw, 18.5px) !important;
-  line-height: 1.65 !important;
+  font-size: clamp(14.5px, 3.4vw, 17.5px) !important;
+  line-height: 1.6 !important;
   font-weight: 450 !important;
   margin: 2px 0 !important;
 }
