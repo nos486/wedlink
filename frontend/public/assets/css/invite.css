@@ -497,9 +497,18 @@ body.layout-3d-card .inv-container {
   text-align: center;
   width: 100%;
   height: 100%;
-  justify-content: space-between;
+  justify-content: space-evenly;
   box-sizing: border-box;
   padding: 4px 0;
+}
+
+.inv-back-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin: 0 !important;
 }
 
 .inv-names-back {
@@ -539,7 +548,7 @@ body.layout-3d-card .inv-container {
 }
 
 .card-back-content .ornament-divider {
-  margin: 0 !important;
+  margin: 2px 0 0 0 !important;
   max-width: 140px;
 }
 
@@ -551,7 +560,7 @@ body.layout-3d-card .inv-container {
 }
 
 .card-back-content .inv-message {
-  margin: auto 0 !important;
+  margin: 0 !important;
   padding: 0 8px !important;
   max-height: none !important;
   overflow-y: visible !important;
