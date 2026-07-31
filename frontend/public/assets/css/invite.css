@@ -362,9 +362,11 @@ body.layout-3d-card .inv-container {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 40px 30px;
+  padding: 24px 20px !important;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .card-front-bg-blur {
@@ -497,11 +499,11 @@ body.layout-3d-card .inv-container {
   text-align: center;
   width: 100%;
   height: 100%;
-  justify-content: center;
-  gap: clamp(8px, 1.5vh, 14px);
+  justify-content: space-between;
   box-sizing: border-box;
-  padding: 22px 0 !important;
+  padding: 0 !important;
   margin: 0 !important;
+  overflow: hidden;
 }
 
 .inv-names-back {
@@ -515,6 +517,7 @@ body.layout-3d-card .inv-container {
   word-wrap: break-word;
   overflow-wrap: break-word;
   max-width: 90%;
+  flex-shrink: 0;
 }
 
 .inv-family-back {
@@ -528,27 +531,32 @@ body.layout-3d-card .inv-container {
   padding: 0 !important;
   line-height: 1.2;
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 .card-back-content .inv-family-back {
   margin: -2px 0 0 0 !important;
   padding: 0 !important;
+  flex-shrink: 0;
 }
 
 .card-back-content .inv-eyebrow {
   margin: 0 !important;
   padding: 0 !important;
+  flex-shrink: 0;
 }
 
 .card-back-content .inv-names-back {
   margin: 0 !important;
   padding: 0 !important;
+  flex-shrink: 0;
 }
 
 .card-back-content .ornament-divider {
   margin: 0 !important;
   padding: 0 !important;
   max-width: 140px;
+  flex-shrink: 0;
 }
 
 .card-back-content .inv-details {
@@ -558,27 +566,34 @@ body.layout-3d-card .inv-container {
   flex-direction: column !important;
   align-items: center !important;
   gap: clamp(4px, 1vh, 8px) !important;
+  flex-shrink: 0;
 }
 
 .card-back-content .inv-message {
   margin: 0 !important;
-  padding: 0 10px !important;
-  max-height: none !important;
-  overflow-y: visible !important;
-  font-size: clamp(13.5px, 1.15vw, 16px);
+  padding: 2px 8px !important;
+  font-size: clamp(12.5px, 1.1vw, 15px);
   line-height: 1.45;
   width: 100%;
-  max-width: 94%;
+  max-width: 96%;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card-back-content .inv-countdown {
-  margin: 4px auto 0 auto !important;
+  margin: 0 auto !important;
   padding: 0 !important;
   width: 100%;
   max-width: 360px;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .card-back-content .cd-box {
@@ -1004,11 +1019,15 @@ body.layout-3d-card .inv-container {
 [dir="rtl"] .inv-message {
   font-family: 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
   font-style: normal !important;
-  font-size: clamp(12.5px, 2.6vw, 14.5px) !important;
+  font-size: clamp(12px, 2.5vw, 14px) !important;
   line-height: 1.4 !important;
   font-weight: 450 !important;
   margin: 0 !important;
-  padding: 0 8px !important;
+  padding: 2px 8px !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  overflow-y: auto !important;
 }
 
 /* ─── Animations ─────────────────────────────────────────────── */
