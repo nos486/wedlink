@@ -408,8 +408,9 @@ function setupBackgroundMusic() {
     btnText.textContent = lang === 'fa' ? 'پخش موسیقی' : 'PLAY MUSIC';
   };
 
-  // Show player button
+  // Show player button in initial paused state
   musicBtn.style.display = 'flex';
+  updateUIPaused();
 
   const playAudio = () => {
     audio.play().then(() => {
