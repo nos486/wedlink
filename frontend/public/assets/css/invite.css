@@ -213,6 +213,15 @@ body.theme-modern-minimal .ornament-divider {
   gap: 12px;
   font-weight: 500;
   font-size: 17.5px;
+  transition: transform 0.2s ease;
+}
+
+.inv-detail-item:hover {
+  transform: translateX(3px);
+}
+
+[dir="rtl"] .inv-detail-item:hover {
+  transform: translateX(-3px);
 }
 
 .inv-icon {
@@ -262,6 +271,27 @@ body.theme-modern-minimal .ornament-divider {
   min-width: 58px;
   flex: 1;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cd-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+.cd-box:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .cd-val {
@@ -300,6 +330,7 @@ body.layout-3d-card .inv-container {
   padding: 20px;
   background-color: var(--inv-bg);
   overflow: hidden;
+  position: relative;
 }
 
 .invite-card-wrapper {
@@ -309,6 +340,8 @@ body.layout-3d-card .inv-container {
   gap: 10px;
   width: 100%;
   max-width: 440px;
+  position: relative;
+  z-index: 1;
 }
 
 .card-perspective {
@@ -317,6 +350,7 @@ body.layout-3d-card .inv-container {
   max-width: 95vw;
   height: clamp(560px, 80vh, 620px);
   position: relative;
+  animation: cardFloat 7s ease-in-out infinite;
 }
 
 .card-3d {
@@ -339,11 +373,49 @@ body.layout-3d-card .inv-container {
   height: 100%;
   backface-visibility: hidden;
   border-radius: 20px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 16px 40px rgba(0, 0, 0, 0.14),
+    0 32px 80px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06);
   border: 1px solid var(--inv-border);
   overflow: hidden;
   background-color: var(--inv-bg);
   box-sizing: border-box;
+}
+
+/* Grain texture overlay */
+.card-side::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  border-radius: 20px;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* Light sheen sweep */
+.card-side::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+  border-radius: 20px;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.06) 44%,
+    rgba(255, 255, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.06) 56%,
+    transparent 80%
+  );
+  animation: cardSheen 9s ease-in-out infinite;
+  animation-delay: 1.5s;
 }
 
 .card-front {
@@ -396,6 +468,11 @@ body.layout-3d-card .inv-container {
   justify-content: center;
   align-items: center;
   opacity: 0.7;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(255, 255, 255, 0.04) 0%,
+    transparent 65%
+  );
 }
 
 .wreath-svg,
@@ -442,6 +519,7 @@ body.layout-3d-card .inv-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: framePulse 4s ease-in-out infinite;
 }
 
 .card-front-photo {
@@ -1274,4 +1352,194 @@ body.layout-3d-card .inv-container {
 [dir="rtl"] .btn-prompt-yes,
 [dir="rtl"] .btn-prompt-no {
   font-family: 'Vazirmatn', sans-serif !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ✨ PREMIUM — Texture · Ambient Light · Motion
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Animated Background Orbs ────────────────────────────────── */
+body.layout-3d-card .inv-container::before,
+body.layout-3d-card .inv-container::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(90px);
+}
+
+body.layout-3d-card .inv-container::before {
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, var(--inv-orb1, rgba(140, 120, 90, 0.13)) 0%, transparent 70%);
+  top: -20%;
+  left: -20%;
+  animation: orbFloat1 14s ease-in-out infinite;
+}
+
+body.layout-3d-card .inv-container::after {
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, var(--inv-orb2, rgba(140, 120, 90, 0.08)) 0%, transparent 70%);
+  bottom: -15%;
+  right: -15%;
+  animation: orbFloat2 19s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(40px, -28px) scale(1.1); }
+  66%       { transform: translate(-20px, 35px) scale(0.93); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-30px, 20px) scale(1.07); }
+  72%       { transform: translate(26px, -38px) scale(0.9); }
+}
+
+/* Per-theme orb colors */
+body.theme-dark-luxury     { --inv-orb1: rgba(212,175,55,0.18); --inv-orb2: rgba(212,175,55,0.09); }
+body.theme-royal-elegance  { --inv-orb1: rgba(229,179,101,0.2); --inv-orb2: rgba(160,40,70,0.12); }
+body.theme-starlight-glamour { --inv-orb1: rgba(203,213,225,0.14); --inv-orb2: rgba(148,163,184,0.08); }
+body.theme-enchanted-forest { --inv-orb1: rgba(134,196,158,0.18); --inv-orb2: rgba(86,160,110,0.1); }
+body.theme-light-floral    { --inv-orb1: rgba(201,149,108,0.15); --inv-orb2: rgba(230,180,140,0.1); }
+
+/* ── Card Float Idle ─────────────────────────────────────────── */
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+
+/* ── Card Light Sheen Sweep ──────────────────────────────────── */
+@keyframes cardSheen {
+  0%    { transform: translateX(-160%) skewX(-12deg); opacity: 0; }
+  4%    { opacity: 1; }
+  28%   { transform: translateX(160%) skewX(-12deg); opacity: 0; }
+  100%  { transform: translateX(160%) skewX(-12deg); opacity: 0; }
+}
+
+/* ── Theme-specific Card Glow Shadows ────────────────────────── */
+body.theme-dark-luxury .card-side {
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.42),
+    0 0 70px rgba(212, 175, 55, 0.2),
+    0 0 0 1px rgba(212, 175, 55, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.theme-royal-elegance .card-side {
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.48),
+    0 0 80px rgba(229, 179, 101, 0.22),
+    0 0 0 1px rgba(229, 179, 101, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+body.theme-starlight-glamour .card-side {
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.52),
+    0 0 80px rgba(203, 213, 225, 0.13),
+    0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+body.theme-enchanted-forest .card-side {
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.44),
+    0 0 75px rgba(134, 196, 158, 0.18),
+    0 0 0 1px rgba(134, 196, 158, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+body.theme-light-floral .card-side {
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.1),
+    0 0 55px rgba(201, 149, 108, 0.15),
+    0 0 0 1px rgba(201, 149, 108, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+/* ── Photo Frame Pulse Glow ──────────────────────────────────── */
+@keyframes framePulse {
+  0%, 100% { box-shadow: 0 16px 36px rgba(0, 0, 0, 0.07); }
+  50%       { box-shadow: 0 22px 52px rgba(0, 0, 0, 0.13); }
+}
+
+body.theme-dark-luxury .card-front-photo-frame {
+  animation: framePulseLux 4s ease-in-out infinite;
+}
+@keyframes framePulseLux {
+  0%, 100% { box-shadow: 0 14px 30px rgba(0,0,0,0.12), 0 0 0 1.5px rgba(212,175,55,0.5); }
+  50%       { box-shadow: 0 24px 56px rgba(0,0,0,0.28), 0 0 30px rgba(212,175,55,0.28), 0 0 0 1.5px rgba(212,175,55,0.85); }
+}
+
+body.theme-royal-elegance .card-front-photo-frame {
+  animation: framePulseRoyal 4s ease-in-out infinite;
+}
+@keyframes framePulseRoyal {
+  0%, 100% { box-shadow: 0 14px 30px rgba(0,0,0,0.15), 0 0 0 1.5px rgba(229,179,101,0.5); }
+  50%       { box-shadow: 0 24px 56px rgba(0,0,0,0.32), 0 0 32px rgba(229,179,101,0.3), 0 0 0 1.5px rgba(229,179,101,0.88); }
+}
+
+body.theme-enchanted-forest .card-front-photo-frame {
+  animation: framePulseForest 4s ease-in-out infinite;
+}
+@keyframes framePulseForest {
+  0%, 100% { box-shadow: 0 14px 30px rgba(0,0,0,0.12), 0 0 0 1.5px rgba(134,196,158,0.45); }
+  50%       { box-shadow: 0 24px 52px rgba(0,0,0,0.22), 0 0 26px rgba(134,196,158,0.25), 0 0 0 1.5px rgba(134,196,158,0.78); }
+}
+
+body.theme-starlight-glamour .card-front-photo-frame {
+  animation: framePulseStarlight 4.5s ease-in-out infinite;
+}
+@keyframes framePulseStarlight {
+  0%, 100% { box-shadow: 0 14px 30px rgba(0,0,0,0.18), 0 0 0 1.5px rgba(203,213,225,0.4); }
+  50%       { box-shadow: 0 24px 56px rgba(0,0,0,0.35), 0 0 28px rgba(203,213,225,0.2), 0 0 0 1.5px rgba(203,213,225,0.7); }
+}
+
+/* ── Ornament Divider — Breathing Pulse ─────────────────────── */
+.card-back-content .ornament-divider {
+  animation: ornamentBreathe 3.8s ease-in-out infinite;
+}
+
+@keyframes ornamentBreathe {
+  0%, 100% { opacity: 0.42; transform: scaleX(0.97); }
+  50%       { opacity: 0.85; transform: scaleX(1.03); }
+}
+
+/* ── Save The Date — Subtle Breathe ─────────────────────────── */
+.save-the-date {
+  animation: stdBreathe 5.5s ease-in-out infinite;
+}
+
+@keyframes stdBreathe {
+  0%, 100% { letter-spacing: 0.25em; opacity: 0.85; }
+  50%       { letter-spacing: 0.3em; opacity: 1; }
+}
+
+/* ── Wreath / Decor SVG — Slow Drift ────────────────────────── */
+.wreath-svg {
+  animation: wreathDrift 90s linear infinite;
+}
+.wreath-svg-back {
+  animation: wreathDrift 120s linear infinite reverse;
+}
+
+@keyframes wreathDrift {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Divider Front — Subtle Width Pulse ─────────────────────── */
+.inv-divider-front {
+  animation: dividerPulse 4s ease-in-out infinite;
+}
+
+@keyframes dividerPulse {
+  0%, 100% { width: 44px; opacity: 0.28; }
+  50%       { width: 64px; opacity: 0.5; }
 }
