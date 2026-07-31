@@ -375,6 +375,12 @@ function setupBackgroundMusic() {
 
   if (!musicBtn || !audio) return;
 
+  if (invitation && invitation.music_url) {
+    audio.src = invitation.music_url;
+  } else {
+    audio.src = 'assets/audio/Bikalam%20Arosi.mp3';
+  }
+
   const lang = getLang();
   
   // Localize text
