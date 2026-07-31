@@ -281,11 +281,9 @@ body.theme-modern-minimal .ornament-divider {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    transparent 55%
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 55%);
   pointer-events: none;
 }
 
@@ -337,7 +335,7 @@ body.layout-3d-card .inv-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   width: 100%;
   max-width: 440px;
   position: relative;
@@ -406,14 +404,12 @@ body.layout-3d-card .inv-container {
   z-index: 11;
   pointer-events: none;
   border-radius: 20px;
-  background: linear-gradient(
-    115deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.06) 44%,
-    rgba(255, 255, 255, 0.13) 50%,
-    rgba(255, 255, 255, 0.06) 56%,
-    transparent 80%
-  );
+  background: linear-gradient(115deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.06) 44%,
+      rgba(255, 255, 255, 0.13) 50%,
+      rgba(255, 255, 255, 0.06) 56%,
+      transparent 80%);
   animation: cardSheen 9s ease-in-out infinite;
   animation-delay: 1.5s;
 }
@@ -468,11 +464,9 @@ body.layout-3d-card .inv-container {
   justify-content: center;
   align-items: center;
   opacity: 0.7;
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    rgba(255, 255, 255, 0.04) 0%,
-    transparent 65%
-  );
+  background: radial-gradient(ellipse at 50% 0%,
+      rgba(255, 255, 255, 0.04) 0%,
+      transparent 65%);
 }
 
 .wreath-svg,
@@ -1388,36 +1382,96 @@ body.layout-3d-card .inv-container::after {
 }
 
 @keyframes orbFloat1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%       { transform: translate(40px, -28px) scale(1.1); }
-  66%       { transform: translate(-20px, 35px) scale(0.93); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(40px, -28px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 35px) scale(0.93);
+  }
 }
 
 @keyframes orbFloat2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  40%       { transform: translate(-30px, 20px) scale(1.07); }
-  72%       { transform: translate(26px, -38px) scale(0.9); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  40% {
+    transform: translate(-30px, 20px) scale(1.07);
+  }
+
+  72% {
+    transform: translate(26px, -38px) scale(0.9);
+  }
 }
 
 /* Per-theme orb colors */
-body.theme-dark-luxury     { --inv-orb1: rgba(212,175,55,0.18); --inv-orb2: rgba(212,175,55,0.09); }
-body.theme-royal-elegance  { --inv-orb1: rgba(229,179,101,0.2); --inv-orb2: rgba(160,40,70,0.12); }
-body.theme-starlight-glamour { --inv-orb1: rgba(203,213,225,0.14); --inv-orb2: rgba(148,163,184,0.08); }
-body.theme-enchanted-forest { --inv-orb1: rgba(134,196,158,0.18); --inv-orb2: rgba(86,160,110,0.1); }
-body.theme-light-floral    { --inv-orb1: rgba(201,149,108,0.15); --inv-orb2: rgba(230,180,140,0.1); }
+body.theme-dark-luxury {
+  --inv-orb1: rgba(212, 175, 55, 0.18);
+  --inv-orb2: rgba(212, 175, 55, 0.09);
+}
+
+body.theme-royal-elegance {
+  --inv-orb1: rgba(229, 179, 101, 0.2);
+  --inv-orb2: rgba(160, 40, 70, 0.12);
+}
+
+body.theme-starlight-glamour {
+  --inv-orb1: rgba(203, 213, 225, 0.14);
+  --inv-orb2: rgba(148, 163, 184, 0.08);
+}
+
+body.theme-enchanted-forest {
+  --inv-orb1: rgba(134, 196, 158, 0.18);
+  --inv-orb2: rgba(86, 160, 110, 0.1);
+}
+
+body.theme-light-floral {
+  --inv-orb1: rgba(201, 149, 108, 0.15);
+  --inv-orb2: rgba(230, 180, 140, 0.1);
+}
 
 /* ── Card Float Idle ─────────────────────────────────────────── */
 @keyframes cardFloat {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-5px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 /* ── Card Light Sheen Sweep ──────────────────────────────────── */
 @keyframes cardSheen {
-  0%    { transform: translateX(-160%) skewX(-12deg); opacity: 0; }
-  4%    { opacity: 1; }
-  28%   { transform: translateX(160%) skewX(-12deg); opacity: 0; }
-  100%  { transform: translateX(160%) skewX(-12deg); opacity: 0; }
+  0% {
+    transform: translateX(-160%) skewX(-12deg);
+    opacity: 0;
+  }
+
+  4% {
+    opacity: 1;
+  }
+
+  28% {
+    transform: translateX(160%) skewX(-12deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(160%) skewX(-12deg);
+    opacity: 0;
+  }
 }
 
 /* ── Theme-specific Card Glow Shadows ────────────────────────── */
@@ -1465,40 +1519,79 @@ body.theme-light-floral .card-side {
 
 /* ── Photo Frame Pulse Glow ──────────────────────────────────── */
 @keyframes framePulse {
-  0%, 100% { box-shadow: 0 16px 36px rgba(0, 0, 0, 0.07); }
-  50%       { box-shadow: 0 22px 52px rgba(0, 0, 0, 0.13); }
+
+  0%,
+  100% {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.07);
+  }
+
+  50% {
+    box-shadow: 0 22px 52px rgba(0, 0, 0, 0.13);
+  }
 }
 
 body.theme-dark-luxury .card-front-photo-frame {
   animation: framePulseLux 4s ease-in-out infinite;
 }
+
 @keyframes framePulseLux {
-  0%, 100% { box-shadow: 0 14px 30px rgba(0,0,0,0.12), 0 0 0 1.5px rgba(212,175,55,0.5); }
-  50%       { box-shadow: 0 24px 56px rgba(0,0,0,0.28), 0 0 30px rgba(212,175,55,0.28), 0 0 0 1.5px rgba(212,175,55,0.85); }
+
+  0%,
+  100% {
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12), 0 0 0 1.5px rgba(212, 175, 55, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.28), 0 0 30px rgba(212, 175, 55, 0.28), 0 0 0 1.5px rgba(212, 175, 55, 0.85);
+  }
 }
 
 body.theme-royal-elegance .card-front-photo-frame {
   animation: framePulseRoyal 4s ease-in-out infinite;
 }
+
 @keyframes framePulseRoyal {
-  0%, 100% { box-shadow: 0 14px 30px rgba(0,0,0,0.15), 0 0 0 1.5px rgba(229,179,101,0.5); }
-  50%       { box-shadow: 0 24px 56px rgba(0,0,0,0.32), 0 0 32px rgba(229,179,101,0.3), 0 0 0 1.5px rgba(229,179,101,0.88); }
+
+  0%,
+  100% {
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15), 0 0 0 1.5px rgba(229, 179, 101, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32), 0 0 32px rgba(229, 179, 101, 0.3), 0 0 0 1.5px rgba(229, 179, 101, 0.88);
+  }
 }
 
 body.theme-enchanted-forest .card-front-photo-frame {
   animation: framePulseForest 4s ease-in-out infinite;
 }
+
 @keyframes framePulseForest {
-  0%, 100% { box-shadow: 0 14px 30px rgba(0,0,0,0.12), 0 0 0 1.5px rgba(134,196,158,0.45); }
-  50%       { box-shadow: 0 24px 52px rgba(0,0,0,0.22), 0 0 26px rgba(134,196,158,0.25), 0 0 0 1.5px rgba(134,196,158,0.78); }
+
+  0%,
+  100% {
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12), 0 0 0 1.5px rgba(134, 196, 158, 0.45);
+  }
+
+  50% {
+    box-shadow: 0 24px 52px rgba(0, 0, 0, 0.22), 0 0 26px rgba(134, 196, 158, 0.25), 0 0 0 1.5px rgba(134, 196, 158, 0.78);
+  }
 }
 
 body.theme-starlight-glamour .card-front-photo-frame {
   animation: framePulseStarlight 4.5s ease-in-out infinite;
 }
+
 @keyframes framePulseStarlight {
-  0%, 100% { box-shadow: 0 14px 30px rgba(0,0,0,0.18), 0 0 0 1.5px rgba(203,213,225,0.4); }
-  50%       { box-shadow: 0 24px 56px rgba(0,0,0,0.35), 0 0 28px rgba(203,213,225,0.2), 0 0 0 1.5px rgba(203,213,225,0.7); }
+
+  0%,
+  100% {
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18), 0 0 0 1.5px rgba(203, 213, 225, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.35), 0 0 28px rgba(203, 213, 225, 0.2), 0 0 0 1.5px rgba(203, 213, 225, 0.7);
+  }
 }
 
 /* ── Ornament Divider — Breathing Pulse ─────────────────────── */
@@ -1507,8 +1600,17 @@ body.theme-starlight-glamour .card-front-photo-frame {
 }
 
 @keyframes ornamentBreathe {
-  0%, 100% { opacity: 0.42; transform: scaleX(0.97); }
-  50%       { opacity: 0.85; transform: scaleX(1.03); }
+
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: scaleX(0.97);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scaleX(1.03);
+  }
 }
 
 /* ── Save The Date — Subtle Breathe ─────────────────────────── */
@@ -1517,21 +1619,36 @@ body.theme-starlight-glamour .card-front-photo-frame {
 }
 
 @keyframes stdBreathe {
-  0%, 100% { letter-spacing: 0.25em; opacity: 0.85; }
-  50%       { letter-spacing: 0.3em; opacity: 1; }
+
+  0%,
+  100% {
+    letter-spacing: 0.25em;
+    opacity: 0.85;
+  }
+
+  50% {
+    letter-spacing: 0.3em;
+    opacity: 1;
+  }
 }
 
 /* ── Wreath / Decor SVG — Slow Drift ────────────────────────── */
 .wreath-svg {
   animation: wreathDrift 90s linear infinite;
 }
+
 .wreath-svg-back {
   animation: wreathDrift 120s linear infinite reverse;
 }
 
 @keyframes wreathDrift {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ── Divider Front — Subtle Width Pulse ─────────────────────── */
@@ -1540,8 +1657,17 @@ body.theme-starlight-glamour .card-front-photo-frame {
 }
 
 @keyframes dividerPulse {
-  0%, 100% { width: 44px; opacity: 0.28; }
-  50%       { width: 64px; opacity: 0.5; }
+
+  0%,
+  100% {
+    width: 44px;
+    opacity: 0.28;
+  }
+
+  50% {
+    width: 64px;
+    opacity: 0.5;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1570,64 +1696,222 @@ body.theme-starlight-glamour .card-front-photo-frame {
 
 /* 6 concrete keyframes — no CSS vars inside (cross-browser safe) */
 @keyframes petalA {
-  0%   { opacity: 0;    transform: translate(0, 0)    rotate(0deg); }
-  5%   { opacity: 0.3; }
-  90%  { opacity: 0.12; }
-  100% { opacity: 0;    transform: translate(50px,  110vh) rotate(540deg); }
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  5% {
+    opacity: 0.3;
+  }
+
+  90% {
+    opacity: 0.12;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(50px, 110vh) rotate(540deg);
+  }
 }
+
 @keyframes petalB {
-  0%   { opacity: 0;    transform: translate(0, 0)    rotate(20deg); }
-  5%   { opacity: 0.28; }
-  90%  { opacity: 0.1; }
-  100% { opacity: 0;    transform: translate(-60px, 110vh) rotate(-480deg); }
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(20deg);
+  }
+
+  5% {
+    opacity: 0.28;
+  }
+
+  90% {
+    opacity: 0.1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-60px, 110vh) rotate(-480deg);
+  }
 }
+
 @keyframes petalC {
-  0%   { opacity: 0;    transform: translate(0, 0)    rotate(-15deg); }
-  6%   { opacity: 0.32; }
-  90%  { opacity: 0.12; }
-  100% { opacity: 0;    transform: translate(35px,  110vh) rotate(420deg); }
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-15deg);
+  }
+
+  6% {
+    opacity: 0.32;
+  }
+
+  90% {
+    opacity: 0.12;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(35px, 110vh) rotate(420deg);
+  }
 }
+
 @keyframes petalD {
-  0%   { opacity: 0;    transform: translate(0, 0)    rotate(30deg); }
-  6%   { opacity: 0.26; }
-  90%  { opacity: 0.1; }
-  100% { opacity: 0;    transform: translate(-45px, 110vh) rotate(-380deg); }
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(30deg);
+  }
+
+  6% {
+    opacity: 0.26;
+  }
+
+  90% {
+    opacity: 0.1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-45px, 110vh) rotate(-380deg);
+  }
 }
+
 @keyframes petalE {
-  0%   { opacity: 0;    transform: translate(0, 0)    rotate(-25deg); }
-  5%   { opacity: 0.3; }
-  91%  { opacity: 0.12; }
-  100% { opacity: 0;    transform: translate(65px,  110vh) rotate(600deg); }
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-25deg);
+  }
+
+  5% {
+    opacity: 0.3;
+  }
+
+  91% {
+    opacity: 0.12;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(65px, 110vh) rotate(600deg);
+  }
 }
+
 @keyframes petalF {
-  0%   { opacity: 0;    transform: translate(0, 0)    rotate(10deg); }
-  6%   { opacity: 0.25; }
-  89%  { opacity: 0.09; }
-  100% { opacity: 0;    transform: translate(-30px, 110vh) rotate(-440deg); }
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(10deg);
+  }
+
+  6% {
+    opacity: 0.25;
+  }
+
+  89% {
+    opacity: 0.09;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-30px, 110vh) rotate(-440deg);
+  }
 }
 
 /* Assign each petal a unique position, timing and motion type */
-.pet:nth-child(1)  { left:5%;   animation: petalA  9s   ease-in  0s    infinite; }
-.pet:nth-child(2)  { left:12%;  animation: petalB  12s  ease-in  1.8s  infinite; }
-.pet:nth-child(3)  { left:20%;  animation: petalC  8.5s ease-in  0.5s  infinite; }
-.pet:nth-child(4)  { left:30%;  animation: petalD  11s  ease-in  3.2s  infinite; }
-.pet:nth-child(5)  { left:39%;  animation: petalE  9.5s ease-in  1.4s  infinite; }
-.pet:nth-child(6)  { left:50%;  animation: petalF  13s  ease-in  4.2s  infinite; }
-.pet:nth-child(7)  { left:58%;  animation: petalA  8s   ease-in  0.9s  infinite; }
-.pet:nth-child(8)  { left:67%;  animation: petalB  10.5s ease-in 2.6s  infinite; }
-.pet:nth-child(9)  { left:76%;  animation: petalC  9s   ease-in  1.6s  infinite; }
-.pet:nth-child(10) { left:83%;  animation: petalD  11.5s ease-in 3.8s  infinite; }
-.pet:nth-child(11) { left:91%;  animation: petalE  8.5s ease-in  0.3s  infinite; }
-.pet:nth-child(12) { left:17%;  animation: petalF  14s  ease-in  6s    infinite; width:7px; height:12px; }
-.pet:nth-child(13) { left:44%;  animation: petalC  10s  ease-in  5s    infinite; width:7px; height:12px; }
-.pet:nth-child(14) { left:73%;  animation: petalD  12.5s ease-in 4.6s  infinite; width:7px; height:12px; }
+.pet:nth-child(1) {
+  left: 5%;
+  animation: petalA 9s ease-in 0s infinite;
+}
+
+.pet:nth-child(2) {
+  left: 12%;
+  animation: petalB 12s ease-in 1.8s infinite;
+}
+
+.pet:nth-child(3) {
+  left: 20%;
+  animation: petalC 8.5s ease-in 0.5s infinite;
+}
+
+.pet:nth-child(4) {
+  left: 30%;
+  animation: petalD 11s ease-in 3.2s infinite;
+}
+
+.pet:nth-child(5) {
+  left: 39%;
+  animation: petalE 9.5s ease-in 1.4s infinite;
+}
+
+.pet:nth-child(6) {
+  left: 50%;
+  animation: petalF 13s ease-in 4.2s infinite;
+}
+
+.pet:nth-child(7) {
+  left: 58%;
+  animation: petalA 8s ease-in 0.9s infinite;
+}
+
+.pet:nth-child(8) {
+  left: 67%;
+  animation: petalB 10.5s ease-in 2.6s infinite;
+}
+
+.pet:nth-child(9) {
+  left: 76%;
+  animation: petalC 9s ease-in 1.6s infinite;
+}
+
+.pet:nth-child(10) {
+  left: 83%;
+  animation: petalD 11.5s ease-in 3.8s infinite;
+}
+
+.pet:nth-child(11) {
+  left: 91%;
+  animation: petalE 8.5s ease-in 0.3s infinite;
+}
+
+.pet:nth-child(12) {
+  left: 17%;
+  animation: petalF 14s ease-in 6s infinite;
+  width: 7px;
+  height: 12px;
+}
+
+.pet:nth-child(13) {
+  left: 44%;
+  animation: petalC 10s ease-in 5s infinite;
+  width: 7px;
+  height: 12px;
+}
+
+.pet:nth-child(14) {
+  left: 73%;
+  animation: petalD 12.5s ease-in 4.6s infinite;
+  width: 7px;
+  height: 12px;
+}
 
 /* Per-theme petal colors */
-body.theme-dark-luxury      .pet { background: rgba(212, 175,  55, 0.95); }
-body.theme-royal-elegance   .pet { background: rgba(229, 179, 101, 0.95); }
-body.theme-starlight-glamour .pet { background: rgba(203, 213, 225, 0.95); }
-body.theme-enchanted-forest .pet { background: rgba(134, 196, 158, 0.95); }
-body.theme-light-floral     .pet { background: rgba(201, 149, 108, 0.95); }
+body.theme-dark-luxury .pet {
+  background: rgba(212, 175, 55, 0.95);
+}
+
+body.theme-royal-elegance .pet {
+  background: rgba(229, 179, 101, 0.95);
+}
+
+body.theme-starlight-glamour .pet {
+  background: rgba(203, 213, 225, 0.95);
+}
+
+body.theme-enchanted-forest .pet {
+  background: rgba(134, 196, 158, 0.95);
+}
+
+body.theme-light-floral .pet {
+  background: rgba(201, 149, 108, 0.95);
+}
 
 /* ── Wedding Filigree Corner Ornaments ──────────────────────── */
 .card-flora-corner {
@@ -1645,13 +1929,33 @@ body.theme-light-floral     .pet { background: rgba(201, 149, 108, 0.95); }
   opacity: 0.22;
 }
 
-.sprig-tl { top: 16px;    left: 16px; }
-.sprig-tr { top: 16px;    right: 16px;  transform: scaleX(-1); }
-.sprig-bl { bottom: 16px; left: 16px;   transform: scaleY(-1); }
-.sprig-br { bottom: 16px; right: 16px;  transform: scale(-1); }
+.sprig-tl {
+  top: 16px;
+  left: 16px;
+}
+
+.sprig-tr {
+  top: 16px;
+  right: 16px;
+  transform: scaleX(-1);
+}
+
+.sprig-bl {
+  bottom: 16px;
+  left: 16px;
+  transform: scaleY(-1);
+}
+
+.sprig-br {
+  bottom: 16px;
+  right: 16px;
+  transform: scale(-1);
+}
 
 /* Back card has no photo — ornaments slightly more visible */
-.card-back .card-sprig { opacity: 0.3; }
+.card-back .card-sprig {
+  opacity: 0.3;
+}
 
 /* ── Botanical Ornament Divider — override height ────────────── */
 .card-back-content .ornament-divider {
