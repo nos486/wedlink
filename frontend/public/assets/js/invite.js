@@ -177,8 +177,10 @@ function renderInvitation() {
   }
 
   const msgSection = document.getElementById('message-section');
+  const msgEl = document.getElementById('invite-message');
   if (messageText && messageText.trim()) {
-    document.getElementById('invite-message').textContent = messageText.trim();
+    const formattedMsg = messageText.trim().replace(/\r?\n/g, '<br>');
+    msgEl.innerHTML = formattedMsg;
     msgSection.style.display = 'block';
   } else {
     msgSection.style.display = 'none';
