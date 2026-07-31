@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Vazirmatn:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
 
 @font-face {
   font-family: 'IranNastaliq';
   src: url('../fonts/IranNastaliq-Web.woff2') format('woff2'),
     url('../fonts/IranNastaliq-Web.woff') format('woff');
-  font-weight: 100 900;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -899,14 +899,11 @@ body.layout-3d-card .inv-container {
 
 [dir="rtl"] .inv-names-front,
 [dir="rtl"] .inv-names-back {
-  font-family: 'IranNastaliq', 'Noto Nastaliq Urdu', 'Vazirmatn', sans-serif !important;
+  font-family: 'IranNastaliq', 'Vazirmatn', sans-serif !important;
   font-weight: 400 !important;
   font-style: normal !important;
   letter-spacing: normal !important;
   word-spacing: normal !important;
-  font-variant-ligatures: normal contextual !important;
-  -webkit-font-feature-settings: "liga" 1, "calt" 1, "init" 1, "medi" 1, "fina" 1, "rlig" 1 !important;
-  font-feature-settings: "liga" 1, "calt" 1, "init" 1, "medi" 1, "fina" 1, "rlig" 1 !important;
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
 }
