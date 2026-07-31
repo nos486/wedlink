@@ -184,17 +184,19 @@ function renderInvitation() {
     msgSection.style.display = 'none';
   }
 
-  // Translate countdown labels
+  // Translate countdown labels (Days, Hours, Mins, Secs)
   const labels = document.querySelectorAll('.cd-lbl');
-  if (labels.length === 3) {
+  if (labels.length === 4) {
     if (lang === 'fa') {
       labels[0].textContent = 'روز';
       labels[1].textContent = 'ساعت';
       labels[2].textContent = 'دقیقه';
+      labels[3].textContent = 'ثانیه';
     } else {
       labels[0].textContent = 'Days';
       labels[1].textContent = 'Hours';
       labels[2].textContent = 'Mins';
+      labels[3].textContent = 'Secs';
     }
   }
 
@@ -268,19 +270,23 @@ function startCountdown(dateStr) {
     const days  = Math.floor(diff / 86400000);
     const hours = Math.floor((diff % 86400000) / 3600000);
     const mins  = Math.floor((diff % 3600000)  / 60000);
+    const secs  = Math.floor((diff % 60000) / 1000);
     
     // Format numerals to Persian if lang=fa
-    setCount('cd-days', lang === 'fa' ? toPersianDigits(days) : days);
-    setCount('cd-hours', lang === 'fa' ? toPersianDigits(hours) : hours);
-    setCount('cd-mins', lang === 'fa' ? toPersianDigits(mins) : mins);
+    setCount('cd-days', days, lang);
+    setCount('cd-hours', hours, lang);
+    setCount('cd-mins', mins, lang);
+    setCount('cd-secs', secs, lang);
   }
   tick();
   countdownTimer = setInterval(tick, 1000);
 }
 
-function setCount(id, val) {
+function setCount(id, val, lang) {
   const el = document.getElementById(id);
-  if (el) el.textContent = String(val).padStart(2, '0');
+  if (!el) return;
+  const str = String(val).padStart(2, '0');
+  el.textContent = lang === 'fa' ? toPersianDigits(str) : str;
 }
 
 
