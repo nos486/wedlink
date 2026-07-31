@@ -562,6 +562,28 @@ body.layout-3d-card .inv-container {
   overflow-wrap: break-word;
 }
 
+.card-back-content .inv-countdown {
+  margin: 4px auto 0 auto !important;
+  max-width: 95%;
+  gap: 6px;
+}
+
+.card-back-content .cd-box {
+  padding: 6px 6px;
+  min-width: 48px;
+  border-radius: 10px;
+}
+
+.card-back-content .cd-val {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 1px;
+}
+
+.card-back-content .cd-lbl {
+  font-size: 9.5px;
+}
+
 .invite-actions {
   display: flex;
   align-items: center;
