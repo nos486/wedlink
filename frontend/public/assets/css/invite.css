@@ -362,9 +362,9 @@ body.layout-3d-card .inv-container {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 24px 20px !important;
+  padding: 24px 20px;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -500,10 +500,9 @@ body.layout-3d-card .inv-container {
   width: 100%;
   height: 100%;
   justify-content: center;
-  gap: clamp(8px, 1.5vh, 14px);
+  gap: clamp(10px, 1.8vh, 16px);
   box-sizing: border-box;
-  padding: 16px 0 !important;
-  margin: 0 !important;
+  padding: 12px 0;
   overflow: hidden;
 }
 
@@ -512,8 +511,8 @@ body.layout-3d-card .inv-container {
   font-size: clamp(28px, 5.5vw, 42px);
   font-weight: 300;
   color: var(--inv-text);
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
   line-height: 1.15;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -528,90 +527,78 @@ body.layout-3d-card .inv-container {
   letter-spacing: 0.1em;
   color: var(--inv-accent);
   opacity: 0.7;
-  margin: -2px 0 0 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
   line-height: 1.2;
   font-weight: 500;
   flex-shrink: 0;
 }
 
-.card-back-content .inv-family-back {
-  margin: -2px 0 0 0 !important;
-  padding: 0 !important;
-  flex-shrink: 0;
-}
-
 .card-back-content .inv-eyebrow {
-  margin: 0 !important;
-  padding: 0 !important;
-  flex-shrink: 0;
-}
-
-.card-back-content .inv-names-back {
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
   flex-shrink: 0;
 }
 
 .card-back-content .ornament-divider {
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
   max-width: 140px;
   flex-shrink: 0;
 }
 
 .card-back-content .inv-details {
-  margin: 0 !important;
-  padding: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: clamp(4px, 1vh, 8px) !important;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(5px, 1vh, 9px);
   flex-shrink: 0;
 }
 
 .card-back-content .inv-message {
-  margin: -20px 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
   font-size: clamp(13px, 1.15vw, 15px);
-  line-height: 1.45;
+  line-height: 1.5;
   width: 100%;
   max-width: 96%;
   word-wrap: break-word;
   overflow-wrap: break-word;
   flex: 0 1 auto;
   height: auto;
-  white-space: pre-wrap !important;
+  white-space: pre-wrap;
 }
 
 .card-back-content .inv-message p {
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
 }
 
 .card-back-content .inv-countdown {
-  margin: 0 auto !important;
-  padding: 0 !important;
+  margin: 0 auto;
+  padding: 0;
   width: 100%;
-  max-width: 360px;
-  gap: 6px;
+  max-width: 340px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
 .card-back-content .cd-box {
-  padding: 6px 6px;
-  min-width: 48px;
+  padding: 8px 10px;
+  min-width: 52px;
   border-radius: 12px;
 }
 
 .card-back-content .cd-val {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
-  margin-bottom: 1px;
+  margin-bottom: 2px;
 }
 
 .card-back-content .cd-lbl {
-  font-size: 9px;
+  font-size: 10px;
   opacity: 0.75;
 }
 
@@ -870,28 +857,28 @@ body.layout-3d-card .inv-container {
 
 @media (max-width: 600px) {
   body.layout-3d-card .inv-container {
-    padding: 10px 8px !important;
+    padding: 10px 8px;
   }
 
   .card-perspective {
-    width: min(440px, 92vw) !important;
-    height: clamp(540px, 142vw, 600px) !important;
+    width: min(440px, 92vw);
+    height: clamp(540px, 142vw, 600px);
   }
 
   .card-front,
   .card-back {
-    padding: 20px 16px !important;
+    padding: 20px 16px;
   }
 
   .card-front-photo-frame {
-    width: 175px !important;
-    height: 235px !important;
-    border-radius: 90px 90px 16px 16px !important;
+    width: 175px;
+    height: 235px;
+    border-radius: 90px 90px 16px 16px;
   }
 
   .card-back-content {
-    padding: 16px 0 !important;
-    gap: clamp(6px, 1.4vh, 12px);
+    padding: 10px 0;
+    gap: clamp(7px, 1.5vh, 13px);
   }
 
   .music-toggle-btn {
@@ -996,35 +983,36 @@ body.layout-3d-card .inv-container {
 }
 
 [dir="rtl"] .inv-family-back {
-  font-family: 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif !important;
   font-weight: 500 !important;
   letter-spacing: normal !important;
   text-transform: none !important;
   font-size: clamp(12px, 2.5vw, 14.5px) !important;
-  margin: -4px 0 0 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 [dir="rtl"] .inv-detail-item {
-  flex-direction: row !important;
-  gap: 10px !important;
+  flex-direction: row;
+  gap: 10px;
 }
 
 [dir="rtl"] .cd-lbl {
-  letter-spacing: normal !important;
-  font-weight: 500 !important;
+  letter-spacing: normal;
+  font-weight: 500;
 }
 
 [dir="rtl"] .lang-switcher-btn {
-  font-family: 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif !important;
 }
 
 [dir="rtl"] .inv-message {
-  font-family: 'Vazirmatn', 'Tahoma', 'sans-serif' !important;
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif !important;
   font-style: normal !important;
   font-size: clamp(13px, 1.15vw, 15px) !important;
-  line-height: 1.45 !important;
+  line-height: 1.5 !important;
   font-weight: 450 !important;
-  margin: -20px 0 !important;
+  margin: 0 !important;
   padding: 0 !important;
   flex: 0 1 auto !important;
   height: auto !important;
