@@ -312,13 +312,18 @@ function formatDate(dateStr) {
 }
 
 function formatFaDate(dateStr) {
+  if (!dateStr) return '';
+  if (invitation && invitation.date_fa) {
+    return invitation.date_fa;
+  }
   try {
-    return new Date(dateStr + 'T00:00:00').toLocaleDateString('fa-IR', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    const d = new Date(dateStr + 'T00:00:00');
+    const weekday = new Intl.DateTimeFormat('fa-IR', { weekday: 'long' }).format(d);
+    const day = new Intl.DateTimeFormat('fa-IR', { day: 'numeric' }).format(d);
+    const month = new Intl.DateTimeFormat('fa-IR', { month: 'long' }).format(d);
+    const year = new Intl.DateTimeFormat('fa-IR', { year: 'numeric' }).format(d);
+    
+    return `${weekday} ${day} ${month} ${year}`;
   } catch {
     return dateStr;
   }
