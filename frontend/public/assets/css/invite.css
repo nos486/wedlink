@@ -502,15 +502,6 @@ body.layout-3d-card .inv-container {
   padding: 4px 0;
 }
 
-.inv-back-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  margin: 0 !important;
-}
-
 .inv-names-back {
   font-family: var(--inv-font-script);
   font-size: clamp(26px, 4.5vw, 36px);
@@ -536,7 +527,7 @@ body.layout-3d-card .inv-container {
 }
 
 .card-back-content .inv-family-back {
-  margin: -2px 0 0 0 !important;
+  margin: 0 !important;
 }
 
 .card-back-content .inv-eyebrow {
@@ -548,7 +539,7 @@ body.layout-3d-card .inv-container {
 }
 
 .card-back-content .ornament-divider {
-  margin: 2px 0 0 0 !important;
+  margin: 0 !important;
   max-width: 140px;
 }
 
@@ -556,7 +547,8 @@ body.layout-3d-card .inv-container {
   margin: 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 4px !important;
+  align-items: center !important;
+  gap: clamp(4px, 1vh, 8px) !important;
 }
 
 .card-back-content .inv-message {
